@@ -1,0 +1,20 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# lbh_cultural_evolution
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of lbh_cultural_evolution is to host (and share) the code for creating cultural evolution trees and looking at (cultural) evolutionary patterns.
+
