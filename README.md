@@ -10,4 +10,4 @@ The goal of lbh\_cultural\_evolution is to host (and share) the code used for cr
 Optimizing cost for MAFFT aligning
 ----------------------------------
 
-[Check out this report](https://github.com/maRce10/lbh_cultural_evolution/raw/master/analysis/aliging_songs.html)
+[Check out this report](https://htmlpreview.github.io/?https://github.com/maRce10/lbh_cultural_evolution/raw/master/analysis/aliging_songs.html)
