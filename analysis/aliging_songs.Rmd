@@ -618,7 +618,7 @@ ggplot(agg.same.sgmt, aes(x = different.category, y = gaps, col = data.type)) +
 
 <div class="alert alert-info">
 
--  Higher same category costs produce the highest gap difference
+-  High same category costs produce the highest gap difference regardless of different category costs
 
 </div>
 
