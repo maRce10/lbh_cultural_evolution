@@ -11,12 +11,12 @@ knitr::opts_chunk$set(
 )
 ```
 
-# lbh_cultural_evolution
+# Cultural evolution in long-billed hermits
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of lbh_cultural_evolution is to host (and share) the code used for creating long-billed hermit song cultural evolution trees and analyzing evolutionary patterns.
+The goal of this repository is to host (and share) the code used for creating long-billed hermit song cultural evolution trees and analyzing evolutionary patterns.
 
 ## Analysis steps
 

@@ -1,11 +1,11 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-lbh\_cultural\_evolution
-========================
+Cultural evolution in long-billed hermits
+=========================================
 
 <!-- badges: start -->
 <!-- badges: end -->
-The goal of lbh\_cultural\_evolution is to host (and share) the code used for creating long-billed hermit song cultural evolution trees and analyzing evolutionary patterns.
+The goal of this repository is to host (and share) the code used for creating long-billed hermit song cultural evolution trees and analyzing evolutionary patterns.
 
 Analysis steps
 --------------
