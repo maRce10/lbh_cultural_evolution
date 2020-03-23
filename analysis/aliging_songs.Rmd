@@ -43,6 +43,8 @@ aa <- lapply(x, function(y) {
 
 knitr::opts_knit$set(root.dir = normalizePath(".."))
 
+knitr::opts_chunk$set(dpi = 58, fig.width = 12) 
+
 # ggplot2 theme
 theme_set(theme_classic(base_size = 20))
 
@@ -557,9 +559,7 @@ ggplot(agg.same.category, aes(x = different.category, y = gaps, col = data.type)
   geom_line() +
   scale_color_viridis_d(begin = 0.3, end = 0.7) +
   facet_wrap(~ same.segment, nrow = 3) +
-  labs(y = "# of gaps", x = "Costs for same category") +
-  theme_classic() 
-
+  labs(y = "# of gaps", x = "Costs for same category") 
 ```
 
 <div class="alert alert-info">
@@ -584,8 +584,7 @@ ggplot(agg.diff, aes(x = same.category, y = gaps, col = data.type)) +
   geom_line() +
   scale_color_viridis_d(begin = 0.3, end = 0.7) +
   facet_wrap(~ same.segment, nrow = 3) +
-  labs(y = "# of gaps", x = "Costs for same segments") +
-  theme_classic() 
+  labs(y = "# of gaps", x = "Costs for same segments") 
 
 ```
 
@@ -612,8 +611,7 @@ ggplot(agg.same.sgmt, aes(x = different.category, y = gaps, col = data.type)) +
   geom_line() +
   scale_color_viridis_d(begin = 0.3, end = 0.7) +
   facet_wrap(~ same.category, nrow = 3) +
-  labs(y = "# of gaps", x = "Costs for different category") +
-  theme_classic() 
+  labs(y = "# of gaps", x = "Costs for different category") 
 
 ```
 
@@ -665,8 +663,7 @@ ggplot(agg.same.cat, aes(x = cost.diff, y = gap.diff, col = diff.cats)) +
     geom_pointrange(aes(ymin = gap.diff - sd, ymax = gap.diff + sd), position = pos) +
   geom_line(position = pos) +
   scale_color_viridis_d(begin = 0.2, end = 0.8,alpha = 0.6) +
-  labs(y = "Gaps in real - gaps in simulated", x = "Difference in cost between segment categories") +
-  theme_classic() 
+  labs(y = "Gaps in real - gaps in simulated", x = "Difference in cost between segment categories") 
 
 ```
 
@@ -694,8 +691,7 @@ ggplot(agg.same.cat2, aes(x = cost.diff, y = gap.diff)) +
   geom_hline(linetype="dotted",yintercept = max(agg.same.cat2$gap.diff, na.rm = TRUE)) +
     geom_pointrange(aes(ymin = gap.diff - sd, ymax = gap.diff + sd),  col = viridis::viridis(10)[6]) +
   geom_line( col = viridis::viridis(10)[6]) +
-  labs(y = "Gaps in real - gaps in simulated", x = "Difference in cost between segment categories") +
-  theme_classic() 
+  labs(y = "Gaps in real - gaps in simulated", x = "Difference in cost between segment categories")
 
 
 ```
