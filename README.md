@@ -7,7 +7,7 @@ lbh\_cultural\_evolution
 <!-- badges: end -->
 The goal of lbh\_cultural\_evolution is to host (and share) the code used for creating long-billed hermit song cultural evolution trees and analyzing evolutionary patterns.
 
-Optimizing cost for MAFFT aligning
-----------------------------------
+Analysis steps
+--------------
 
-[Check out this report](https://htmlpreview.github.io/?https://github.com/maRce10/lbh_cultural_evolution/raw/master/analysis/aliging_songs.html)
+#### [Optimizing cost for MAFFT aligning](https://htmlpreview.github.io/?https://raw.githubusercontent.com/maRce10/lbh_cultural_evolution/master/analysis/aliging_songs.html)
