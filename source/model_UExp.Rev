@@ -1,0 +1,35 @@
+############################################################
+# Uncorrelated exponential model on cultural branch rates #
+############################################################
+
+# The rate along each branch is drawn from an exponential prior #
+# This gives the waiting time in years to a change in a 1/20 of a song # 
+branch_rates_mean ~ dnExponential(10.0)
+
+# Specify three scale proposals on the mean of this rate #
+moves.append( mvScale(branch_rates_mean, lambda=0.01, weight=1.0) )
+moves.append( mvScale(branch_rates_mean, lambda=0.1,  weight=1.0) )
+moves.append( mvScale(branch_rates_mean, lambda=1.0,  weight=1.0) )
+
+# Get the number of branches in the tree
+n_branches <- 2 * n_taxa - 2
+
+# Now we will create a vector of stochastic nodes #
+# Each element in the vector represents a branch rate #
+# The branch rates are independent and identically exponentially distributed #
+# with mean equal to the mean branch rate parameter we specified above #
+# The indices of the vector correspond to branch indices in the tree #
+# Using a for-loop, initialize the branch rates and assign a move to each one #
+for(i in 1:n_branches){
+    branch_rates[i] ~ dnExp(1/branch_rates_mean)
+    moves.append( mvScale(branch_rates[i], lambda=1.0,  weight=1.0) )
+    moves.append( mvScale(branch_rates[i], lambda=0.1,  weight=1.0) )
+    moves.append( mvScale(branch_rates[i], lambda=0.01, weight=1.0) )
+}
+
+# add a move on the branch rate vector #
+#  to propose changes to all branch rates simultaneously #
+moves.append( mvVectorScale(branch_rates, lambda=0.01, weight=4.0) )
+moves.append( mvVectorScale(branch_rates, lambda=0.1,  weight=4.0) )
+moves.append( mvVectorScale(branch_rates, lambda=1.0,  weight=4.0) )
+

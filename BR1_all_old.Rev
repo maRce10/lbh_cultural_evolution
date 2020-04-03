@@ -1,0 +1,9 @@
+alignment	= "./data/processed/nexus/BR1_all_old.nex"
+fossils		= "./data/processed/revBayes/fossilsBR1_taxa_all_old.tsv"	 
+rv              = floor(runif(1,100000,999999)[1])
+base_str        = alignment + "_" + fossils + "_" + rv
+
+# Make clade of the extant songs #
+clade_extant = clade("BR1-A1_2014", "BR1-C1_2014", "BR1-E1_2014", "BR1-D2_2014", "BR1-C2_2014", "BR1-E2_2014", "BR1-A2_2014", "BR1-E3_2014", "BR1-F1_2014") # vector with names of all songtypes observed in the last year (e.g. "clade("st1", "st2"))
+
+source("./source/Specimens_control.Rev")

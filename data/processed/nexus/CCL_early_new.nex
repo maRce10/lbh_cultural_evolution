@@ -1,0 +1,15 @@
+#NEXUS
+Begin data;
+dimensions ntax=7 nchar=43;
+format datatype=standard gap=- missing=? symbols="dfmpsu";
+matrix
+
+CCL-I1-2010	--p---------------------mmmmpmmmmpmmmmpmmmm
+CCL-K2-2011	-----uupuduup-dpuupdpuupdd-----------------
+CCL-L1-2013	--puupuppdpppuuuupfdpu---------------------
+CCL-L2-2013	--ppuupffdffpuupppfdpf---------------------
+CCL-M1-2014	------uppdupppdpuppdpuppdd-----------------
+CCL-N1-2015	pppuuuufpppppuuuuff-p----------------------
+CCL-N2-2019	ppppuppppppppuuuppp-p----------------------
+;
+end;

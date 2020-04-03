@@ -1,0 +1,76 @@
+##########################################################################################
+# Joint Fossilized Birth-Death Process prior on the topology and fossil occurrence times #
+##########################################################################################
+
+
+# Define exponential priors on the birth rate and death rate #
+# These represent the waiting time to the invention of a new song #
+# and the waiting time to the historical loss of a song in a lek #
+speciation_rate ~ dnExponential(10)
+extinction_rate ~ dnExponential(10)
+
+# Specify a scale move on the speciation_rate and extinction_rate parameter #
+# This move will be applied with 3 different tuning values (lambda) to help improve mixing #
+# That means proposed changes of three different sizes #
+moves.append( mvScale(speciation_rate, lambda=0.01, weight=5) )
+moves.append( mvScale(speciation_rate, lambda=0.1,  weight=5) )
+moves.append( mvScale(speciation_rate, lambda=1.0,  weight=5) )
+
+moves.append( mvScale(extinction_rate, lambda=0.01, weight=5) )
+moves.append( mvScale(extinction_rate, lambda=0.1,  weight=5) )
+moves.append( mvScale(extinction_rate, lambda=1,    weight=5) )
+
+# Create deterministic nodes for the diversification and turnover rates so that they can be monitored #
+diversification := speciation_rate - extinction_rate
+turnover := extinction_rate/speciation_rate
+
+# Fix the probability of sampling parameter (rho) to 1, #
+# we can assume all extant songs are represented in this analysis #
+rho <- 1.0
+
+# Assume an exponential prior on the rate of sampling fossils (psi) #
+# This is the rate of historical sampling of songs (Recovery rate) #
+# Might make sense to change later #
+psi ~ dnExponential(10) 
+
+# Specify a scale move on the psi parameter #
+# This move will be applied with 3 different tuning values (lambda) to help improve mixing # 
+moves.append( mvScale(psi, lambda=0.01, weight=1) )
+moves.append( mvScale(psi, lambda=0.1,  weight=1) )
+moves.append( mvScale(psi, lambda=1,    weight=1) )
+
+# The FBD is conditioned on a starting time for the process, which is the origin time #
+# Specify a uniform prior on the origin of the lek repertoire #
+# Lek cannot be younger than first song recorded in 1969 #
+# Here, it cannot be older than 969#
+origin_time ~ dnUnif(50.0, 1000.0)
+#origin_time.setValue(60)
+
+# Specify a sliding-window move on the origin_time parameter #
+# This move will be applied with 3 different window widths (delta) to help improve mixing # 
+# This will uniformly sample the origin time parameter within each interval # 
+moves.append( mvSlide(origin_time, delta=0.01, weight=5.0) )
+moves.append( mvSlide(origin_time, delta=0.1,  weight=5.0) )
+moves.append( mvSlide(origin_time, delta=1,    weight=5.0) )
+
+### Define the tree-prior distribution as the fossilized birth-death process ###
+fbd_tree ~ dnFBDRP(origin=origin_time, lambda=speciation_rate, mu=extinction_rate, psi=psi, rho=rho, taxa=taxa)
+
+# We don't make any topoly constraints #
+
+# Specify moves on the tree and node times #
+# These moves update the tree topology 
+moves.append( mvFNPR(fbd_tree, weight=40.0) )
+moves.append( mvCollapseExpandFossilBranch(fbd_tree, origin_time, weight=30.0) )
+
+# These moves update the node ages #
+# Because we are conditioning on the origin time, we must also sample the root node age #
+moves.append( mvNodeTimeSlideUniform(fbd_tree, weight=40.0) )
+moves.append( mvRootTimeSlideUniform(fbd_tree, origin_time, weight=5.0) )
+
+### Create deterministic nodes to monitor various tree statistics ###
+# Monitor the number of sampled ancestors in the FBD-tree #
+num_samp_anc := fbd_tree.numSampledAncestors()
+
+# Monitor the age of the extant songs #
+age_extant := tmrca(fbd_tree, clade_extant)

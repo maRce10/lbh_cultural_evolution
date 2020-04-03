@@ -1,0 +1,48 @@
+#NEXUS
+Begin data;
+dimensions ntax=40 nchar=48;
+format datatype=standard gap=- missing=? symbols="dfmpsu";
+matrix
+
+CCL-A1-1970	----------------mm-mffmmmffmmmffmmmff-----------
+CCL-I1-2010	---------------pmm-mmpmmmmpmmmmpmmmm------------
+CCL-C1-1970	----------------ss-sufsssufsssufsssuf-----------
+CCL-D1-1970	--------usmusmfussusmusmsuss--------------------
+CCL-D2-1970	--------usfusmfummummummmumm--------------------
+CCL-F1-1970	--------ufffffppsspsspssspss--------------------
+CCL-E1-1970	ssss------pffffpss----------------sffffffp------
+CCL-F2-1989	----dpufffpfffdp-------------------ufffffff-----
+CCL-H1-1989	-----pupffffuffp-------------------uuffffuff----
+CCL-J1-1989	-----puffpppfffp-------------------pfffffpff----
+CCL-G1-2008	--------pppppppp-------------------upppppdppppd-
+CCL-G1-2008	--------pppppppp-------------------upppppdppppd-
+CCL-K2-2011	--------uupuduup--------------------dpuupdpuupdd
+CCL-M1-2014	---------uppdupp-------------------pdpuppdpuppdd
+CCL-L1-2013	-----puupuppdppp-------------------uuuupfdpu----
+CCL-L1-2014	-----puupuppdppp-------------------uuuupfdpu----
+CCL-L1-2015	-----puupuppdppp-------------------uuuupfdpu----
+CCL-L1-2016	-----puupuppdppp-------------------uuuupfdpu----
+CCL-L1-2017	-----puupuppdppp-------------------uuuupfdpu----
+CCL-L1-2018	-----puupuppdppp-------------------uuuupfdpu----
+CCL-L1-2019	-----puupuppdppp-------------------uuuupfdpu----
+CCL-N1-2015	---pppuuuufppppp-------------------uuuuffp------
+CCL-N1-2016	---pppuuuufppppp-------------------uuuuffp------
+CCL-N1-2017	---pppuuuufppppp-------------------uuuuffp------
+CCL-N1-2018	---pppuuuufppppp-------------------uuuuffp------
+CCL-N1-2019	---pppuuuufppppp-------------------uuuuffp------
+CCL-N2-2019	---ppppupppppppp-------------------uuupppp------
+CCL-L2-2013	-----ppuupffdffp-------------------uupppfdpf----
+CCL-L2-2014	-----ppuupffdffp-------------------uupppfdpf----
+CCL-L2-2015	-----ppuupffdffp-------------------uupppfdpf----
+CCL-L2-2016	-----ppuupffdffp-------------------uupppfdpf----
+CCL-L2-2017	-----ppuupffdffp-------------------uupppfdpf----
+CCL-L2-2018	-----ppuupffdffp-------------------uupppfdpf----
+CCL-L2-2019	-----ppuupffdffp-------------------uupppfdpf----
+CCL-K1-2008	--------uuuuduuu-------------------uduuuuduuuud-
+CCL-K1-2008	--------uuuuduuu-------------------uduuuuduuuud-
+CCL-K1-2009	--------uuuuduuu-------------------uduuuuduuuud-
+CCL-K1-2010	--------uuuuduuu-------------------uduuuuduuuud-
+CCL-K1-2011	--------uuuuduuu-------------------uduuuuduuuud-
+CCL-K1-2012	--------uuuuduuu-------------------uduuuuduuuud-
+;
+end;
