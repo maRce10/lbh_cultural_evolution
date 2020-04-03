@@ -1,0 +1,704 @@
+---
+title: <center><font size="6"><b>Optimizing MAFFT alignments</b></font></center>
+subtitle: <center><font size="4"><b>Long-billed hermit song cultural evolution</b></font></center>
+author: <center><font size="4"><a href="http://marceloarayasalas.weebly.com/">Marcelo Araya-Salas, PhD</a></font></center>
+date: <center>`r format(Sys.Date(), "%d-%m-%Y")`</center>
+output:
+  html_document:
+    code_folding: hide
+    toc: yes
+    toc_depth: 3
+    toc_float:
+      collapsed: no
+      smooth_scroll: no
+fontsize: 12pt 
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r clean session, eval = TRUE, echo=FALSE, message=FALSE, warning = FALSE}
+
+#clean session
+rm(list = ls())
+
+# unload all non-based packages
+out <- sapply(paste('package:', names(sessionInfo()$otherPkgs), sep = ""), function(x) try(detach(x, unload = FALSE, character.only = TRUE), silent = T))
+
+## vector with package names
+x <- c( "pbapply", "parallel", "ggplot2", "ape"#, "ips","gtools"
+        )
+
+aa <- lapply(x, function(y) {
+  
+  # check if installed, if not then install 
+  if (!y %in% installed.packages()[,"Package"]) 
+    install.packages(y) 
+
+  # load package
+  try(require(y, character.only = T), silent = T)
+})
+```
+
+```{r functions and parameters, eval = TRUE, echo = TRUE}
+
+knitr::opts_knit$set(root.dir = normalizePath(".."))
+
+knitr::opts_chunk$set(dpi = 58, fig.width = 12) 
+
+# ggplot2 theme
+theme_set(theme_classic(base_size = 20))
+
+split_seqs <- function(x) {
+ 
+  # from start to end
+  y <-  sapply(1:20, function(y) 
+     if (y == 1)
+    ifelse(substr(x, start = y + 1, stop = y + 1) == substr(x, start = y, stop = y), 0 , 1) else
+          ifelse(substr(x, start = y - 1, stop = y - 1) == substr(x, start = y, stop = y), 0 , 1)
+    )
+
+  x2 <- strsplit(x, "")[[1]]
+  
+  w1 <- which(y == 1)
+  
+  # to add single elements at the end
+    w1 <- c(w1, 21)
+  if (w1[1] == 1 & w1[2] == 2) w1 <- w1[2:length(w1)]
+    
+  sgmts <- lapply(1:length(w1), function(w){
+    if (w1[w] == w1[1]) paste(x2[1:(w1[w] - 1)], collapse = "")  else
+  paste(x2[w1[w - 1]:(w1[w] - 1)], collapse = "")  
+  })
+
+  return(sgmts)
+}
+
+
+write_lek_fas <- function(x){
+  
+ lk <- unlist(strsplit(x[seq(1, length(x), by = 2)], split = "_"))[seq(1, length(x), by = 2)]
+  
+ lk <- gsub(">", "", paste0(lk, "_"))
+ 
+ out <- sapply(unique(lk), USE.NAMES = FALSE, function(y){
+   
+   
+   wch.lk <- grep(pattern = y, x = x)
+   
+   fl.nms <-tempfile(tmpdir = getwd(), fileext =  paste0("song.seq_",y, "SongsSeq.fa"))
+   
+   writeLines(x[min(wch.lk):(max(wch.lk)+ 1)], con = fl.nms)
+   
+   return(basename(fl.nms))
+ })
+
+ return(out)  
+}
+
+```
+
+```{r create fastas for each lek, eval = FALSE, echo = FALSE}
+
+# create fastas for each lek
+
+###----Alignment of phenotypic sequence data: CSV to fasta format----------------------
+require(seqinr)
+
+dat<-read.csv("./data/raw/segments_by_song_type.csv")
+head(dat)
+
+#Are id's unique?
+length(dat$song.type) == length(unique(dat$song.type)) #OK
+
+#Seqs to strings
+for (i in 3:22){
+dat[,i] <- as.character(dat[,i])
+}
+seqs <- list()
+for (i in 1:length(dat$song.type)){
+  seqs[[i]] <- paste(dat[i,3:22], collapse = "")
+}
+
+#Write fasta file - should we align per lek?
+write.fasta(seqs, dat$song.type, file.out = "~/Dropbox/Investigacion/Cultural_Evolution/SongSeqs.fa", open = "w", nbchar = 60, as.string = FALSE)
+
+
+```
+
+```{r alignments real songs, eval = FALSE, echo = FALSE}
+
+# sgmnts <- read.csv("./data/raw/segments_by_song_type.csv", stringsAsFactors = FALSE)
+# 
+# unq.sgmts <- sort(unique(unlist(sgmnts[, -c(1,2)])))
+
+unq.sgmts <- c("d", "f", "m", "p", "s", "u")
+
+asc.val <- c("0x73", "0x75", "0x70", "0x6D", "0x66", "0x64")
+
+costs <- seq(-2, 2, by = 0.1)
+
+# increasing cost
+incr.cost <- t(combn(costs, 3))
+
+incr.cost <- data.frame(incr.cost, type = "increasing")
+
+all.equal.cost <- matrix(rep(costs, each = 3), ncol = 3, byrow = TRUE)
+
+all.equal.cost <- data.frame(all.equal.cost, type = "all equal")
+
+
+cost.mat <- rbind(incr.cost, all.equal.cost)
+
+names(cost.mat)[1:3] <- c("different.category", "same.category", "same.segment")
+
+cost.mat$cost.vals <- apply(cost.mat[,1:3], 1, paste, collapse = "_")
+
+grd.sgm <- expand.grid(sgmt1 = unq.sgmts, sgmt2 = unq.sgmts)
+
+grd.sgm$type <- "different.category"
+
+trlls <- c("f", "m", "s")
+tones <- c("d", "p", "u")
+grd.sgm$type[grd.sgm$sgmt1 %in% trlls & grd.sgm$sgmt2 %in% trlls] <-  "same.category"
+grd.sgm$type[grd.sgm$sgmt1 %in% tones & grd.sgm$sgmt2 %in% tones] <- "same.category"
+grd.sgm$type[grd.sgm$sgmt1 == grd.sgm$sgmt2] <- "same.segment"
+
+# create combs
+cost.grds <- pblapply(1:nrow(cost.mat), cl = 3, function(x){
+  
+  grd.sgm$cost <- NA
+  grd.sgm$cost[grd.sgm$type == "different.category"] <- cost.mat$different.category[x]
+  grd.sgm$cost[grd.sgm$type == "same.category"] <- cost.mat$same.category[x]
+  grd.sgm$cost[grd.sgm$type == "same.segment"] <- cost.mat$same.segment[x]
+
+  grd.sgm$pair <- paste(grd.sgm$sgmt1, "x", grd.sgm$sgmt2)
+
+  grd.sgm$asc1 <- grd.sgm$sgmt1
+  grd.sgm$asc2 <- grd.sgm$sgmt2
+  
+  for(i in 1:length(unq.sgmts)){
+    grd.sgm$asc1 <- gsub(unq.sgmts[i], asc.val[i], grd.sgm$asc1)
+    grd.sgm$asc2 <- gsub(unq.sgmts[i], asc.val[i], grd.sgm$asc2)
+  }
+
+  grd.sgm$cost.type <- cost.mat$type[x]
+  grd.sgm$cost.vals <- cost.mat$cost.vals[x]
+  
+  return(grd.sgm)
+})
+
+length(cost.grds)
+
+# get leks with more than 5 song types
+leks <- names(table(sgmnts$lek))[table(sgmnts$lek)> 5]
+
+# get leks with more than 5 song types
+leks <- c("BR1", "CCE", "CCL", "HC1", "HC2", "LOC", "SAT", "SJA", "SUR", "TR1", "TR2")
+
+pboptions(type = "timer")
+
+
+out <- pblapply(1:length(cost.grds), cl = parallel::detectCores() - 1, function(y){
+  
+  Y <- cost.grds[[y]]
+  w <- apply(Y[, c("asc1", "asc2", "cost")], 1, paste,  collapse = " ")
+  
+  writeLines(w, con = paste0(y,"_temp_cost_matrix.txt"))
+  
+  out <- lapply(leks, function(i){
+    
+    cll <- paste0("mafft --localpair --maxiterate 10000 --textmatrix ./",y ,"_temp_cost_matrix.txt ./SongSeqs_", i,".fa > temp.",i,y,".aligned.fa 2> temp",i,y,"_mafft_output.txt")
+    
+    system(cll)
+    
+    alg <- readLines(paste0("temp.",i,y,".aligned.fa"))[2]
+    gaps <- nchar(alg) - 20
+    
+    convg <- ifelse(any(grepl("Converged", readLines(paste0("temp",i,y,"_mafft_output.txt")))), "Y", "N")
+    
+    unlink(paste0("temp",i,y,"_mafft_output.txt"))
+    unlink(paste0("temp.",i,y,".aligned.fa"))
+    
+    df <- data.frame(t(Y$cost))
+    names(df) <- Y$pair
+    
+    df2 <- data.frame(lek = i, gaps, convg, cost.type = Y$cost.type[1], Y$cost.vals)
+    
+    return(df2)
+  })
+  
+  unlink(paste0(y,"_temp_cost_matrix.txt"))
+  
+  res <- do.call(rbind, out)
+  
+  return(res)
+})
+
+
+res <- do.call(rbind, out)
+
+saveRDS(res, "./data/processed/aligment_optimization_results_real_leks.RDS")
+
+```
+
+```{r extract subsegments from the same length, eval = FALSE, echo = FALSE}
+
+ss <- readLines("./data/processed/Mafft_align/SongSeqs.fa")
+
+ss <- as.data.frame(matrix(ss, ncol = 2, byrow = TRUE), stringsAsFactors = FALSE)
+
+ss$ss.lk <- substr(ss[, 1], 2, 4)
+
+lk.n <- read.csv("./data/raw/segments_by_song_type.csv", stringsAsFactors = FALSE)
+
+tb <- table(lk.n$lek)
+
+tb <- tb[tb > 5]
+
+lexic.l <- lapply(ss$V2, split_seqs)
+
+lexic <- c(unlist(lexic.l))
+
+length(lexic)
+
+plot(density(sapply(lexic, nchar)))
+
+writeLines(lexic, con = "song_segment_lexic.txt")
+
+
+```
+
+```{r create simulated leks for alignment, eval = FALSE, echo = FALSE}
+
+lexic <- readLines("./data/processed/song_segment_lexic.txt")
+
+sim_song_seqs <- function(x, size = 20) {
+
+  df <- data.frame(x, nchar = nchar(lexic), type = substr(x, 0, 1), stringsAsFactors = FALSE)  
+  
+  song.seq <- c("")
+  
+  while(nchar(song.seq) < 20)
+  {
+  
+    # sample those  that are shorter than 20 - current length and that have a different segment type than the last one
+  smp.sgm <- sample(df$x[df$nchar <= 20 - nchar(song.seq) & df$type != substr(song.seq, nchar(song.seq) -1, nchar(song.seq))], 1)  
+    
+    song.seq <- paste0(song.seq, smp.sgm)
+  }
+
+  return(song.seq)  
+}
+
+set.seed(10)
+sim.songs.seqs <- pbreplicate(n = 1000, sim_song_seqs(lexic))
+
+writeLines(sim.songs.seqs, con = "./data/processed/1000_simulated_song_sequences.txt")
+
+
+lk.n <- read.csv("./data/raw/segments_by_song_type.csv", stringsAsFactors = FALSE)
+
+tb <- table(lk.n$lek)
+
+tb <- tb[tb > 5]
+
+sim.lks <- paste0(">LK", 1:length(tb))
+
+# addd unique number to each song type from same sim lek
+n <- 1
+  for(i in 2:length(lks))
+    n[i] <- ifelse(lks[i] == lks[i - 1], n[i - 1] + 1, 1)
+  
+smp.sim.songs <- pbreplicate(100,{
+  
+  smp <- sample(sim.songs.seqs, sum(tb))
+  
+  lks <- unlist(lapply(1:length(sim.lks), function(x) rep(sim.lks[x], each = tb[x])))
+  
+  lks <- paste(lks, n, sep = "_")
+  
+  sim.sngs.mft <- c(matrix(c(lks, smp), nrow = 2, byrow = TRUE))
+  
+  sim.sngs.mft
+  }, simplify = FALSE)
+                          
+saveRDS(smp.sim.songs, "100_simulated_song_sets.RDS")
+
+```
+
+```{r alignments simulated songs, eval = FALSE, echo = FALSE}
+smp.sim.songs <- readRDS("./data/processed/100_simulated_song_sets.RDS")
+
+unq.sgmts <- c("d", "f", "m", "p", "s", "u")
+
+asc.val <- c("0x73", "0x75", "0x70", "0x6D", "0x66", "0x64")
+
+costs <- round(seq(-2, 2, by = 0.25), 1)
+
+# increasing cost
+incr.cost <- t(combn(costs, 3))
+
+incr.cost <- data.frame(incr.cost, type = "increasing")
+
+# all.equal.cost <- matrix(rep(costs, each = 3), ncol = 3, byrow = TRUE)
+# 
+# all.equal.cost <- data.frame(all.equal.cost, type = "all equal")
+# 
+# 
+# cost.mat <- rbind(incr.cost, all.equal.cost)
+
+cost.mat <- incr.cost
+
+names(cost.mat)[1:3] <- c("different.category", "same.category", "same.segment")
+
+cost.mat$cost.vals <- apply(cost.mat[,1:3], 1, paste, collapse = "_")
+
+grd.sgm <- expand.grid(sgmt1 = unq.sgmts, sgmt2 = unq.sgmts)
+
+grd.sgm$type <- "different.category"
+
+trlls <- c("f", "m", "s")
+tones <- c("d", "p", "u")
+grd.sgm$type[grd.sgm$sgmt1 %in% trlls & grd.sgm$sgmt2 %in% trlls] <-  "same.category"
+grd.sgm$type[grd.sgm$sgmt1 %in% tones & grd.sgm$sgmt2 %in% tones] <- "same.category"
+grd.sgm$type[grd.sgm$sgmt1 == grd.sgm$sgmt2] <- "same.segment"
+
+# create combs
+cost.grds <- pblapply(1:nrow(cost.mat), cl = 3, function(x){
+  
+  grd.sgm$cost <- NA
+  grd.sgm$cost[grd.sgm$type == "different.category"] <- cost.mat$different.category[x]
+  grd.sgm$cost[grd.sgm$type == "same.category"] <- cost.mat$same.category[x]
+  grd.sgm$cost[grd.sgm$type == "same.segment"] <- cost.mat$same.segment[x]
+
+  grd.sgm$pair <- paste(grd.sgm$sgmt1, "x", grd.sgm$sgmt2)
+
+  grd.sgm$asc1 <- grd.sgm$sgmt1
+  grd.sgm$asc2 <- grd.sgm$sgmt2
+  
+  for(i in 1:length(unq.sgmts)){
+    grd.sgm$asc1 <- gsub(unq.sgmts[i], asc.val[i], grd.sgm$asc1)
+    grd.sgm$asc2 <- gsub(unq.sgmts[i], asc.val[i], grd.sgm$asc2)
+  }
+
+  grd.sgm$cost.type <- cost.mat$type[x]
+  grd.sgm$cost.vals <- cost.mat$cost.vals[x]
+  
+  return(grd.sgm)
+})
+
+length(cost.grds)
+
+# get leks with more than 5 song types
+# leks <- names(table(sgmnts$lek))[table(sgmnts$lek)> 5]
+
+# get leks with more than 5 song types
+leks <- c("BR1", "CCE", "CCL", "HC1", "HC2", "LOC", "SAT", "SJA", "SUR", "TR1", "TR2")
+
+pboptions(type = "timer")
+
+setwd("./data/processed/simulated_songs_seqs")
+  
+sim.fa <- unlist(lapply(smp.sim.songs, write_lek_fas))
+
+out <- pblapply(1:length(cost.grds), cl = parallel::detectCores() - 1, function(y){
+  
+  Y <- cost.grds[[y]]
+  w <- apply(Y[, c("asc1", "asc2", "cost")], 1, paste,  collapse = " ")
+  
+  writeLines(w, con = paste0(y,"_temp_cost_matrix.txt"))
+  
+  out <- lapply(sim.fa[1:2], function(i){
+    
+    cll <- paste0("mafft --localpair --maxiterate 10000 --textmatrix ./",y ,"_temp_cost_matrix.txt ./", i," > temp.",i,y,".aligned.fa 2> temp",i,y,"_mafft_output.txt")
+    
+    system(cll)
+    
+    alg <- readLines(paste0("temp.",i,y,".aligned.fa"))[2]
+    gaps <- nchar(alg) - 20
+    
+    convg <- ifelse(any(grepl("Converged", readLines(paste0("temp",i,y,"_mafft_output.txt")))), "Y", "N")
+    
+    unlink(paste0("temp",i,y,"_mafft_output.txt"))
+    unlink(paste0("temp.",i,y,".aligned.fa"))
+    
+    df <- data.frame(t(Y$cost))
+    names(df) <- Y$pair
+    
+    df2 <- data.frame(lek = i, gaps, convg, cost.type = Y$cost.type[1], Y$cost.vals[1])
+    
+    return(df2)
+  })
+  
+  unlink(paste0(y,"_temp_cost_matrix.txt"))
+  
+  res <- do.call(rbind, out)
+  
+  return(res)
+})
+
+setwd("..")
+
+
+```
+
+```{r read aligment results and aggregate, eval = FALSE, echo= FALSE}
+
+al.csvs <- list.files(path = "./data/processed/sim_align_results", pattern = "\\.csv$", full.names = TRUE)
+
+sim.res.l <- pblapply(al.csvs, read.csv)
+
+sim.res <- do.call(rbind, sim.res.l)
+
+saveRDS(sim.res, "./data/processed/aligment_optimization_results_simulated_leks.RDS")
+```
+
+
+```{read sim seq data, eval = FALSE, echo = FALSE}
+
+sim.res <- readRDS("./data/processed/aligment_optimization_results_simulated_leks.RDS")
+
+real.res <- read.csv("./data/processed/aligment_optimization_results_real_leks.RDS")
+
+names(real.res)[5] <- names(sim.res)[5] <- "cost.vals"
+
+real.res$data.type <- "real"
+
+
+sim.res$data.type <- "simulated"
+
+res <- rbind(real.res, sim.res)
+
+table(res$convg, res$data.type)
+
+head(res)
+
+res$cost.vals <- gsub("0.0999999999999999", "0.01", res$cost.vals)
+
+agg.res <- aggregate(gaps ~ cost.vals + data.type, data = res, mean)
+
+head(agg.res)
+
+
+agg.res$sd <- aggregate(gaps ~ cost.vals + data.type, data = res, sd)$gaps
+
+length(unique(agg.res$cost.vals))
+
+agg.res.cnvg <- aggregate(gaps ~ cost.vals + data.type, data = res[res$convg == "Y", ], mean)
+
+head(agg.res)
+
+
+agg.res.cnvg$sd <- aggregate(gaps ~ cost.vals + data.type, data = res[res$convg == "Y", ], sd)$gaps
+
+
+
+agg.res.cnvg$convg <- "only converged"
+
+agg.res$convg <- "converged and non-converged"
+
+agg <- rbind(agg.res, agg.res.cnvg)
+
+write.csv(agg, "./data/processed/costs_simulation_results.csv", row.names = FALSE)
+
+```
+
+# Optimization of alignment costs
+
+- different category: fast_trill- flat_pure_tone
+- same segment: fast_trill-fast_trill 
+- same category: fast_trill- slow_trill
+- Costs were always increasing: different category < same category < same segment
+- Same segment costs were all positive
+- Horizontal dotted line shows the highest gap difference between real and simulated data 
+
+
+## Same category costs aggregated
+
+*Same segment costs in facet label
+
+```{r stats on simulation, eval = TRUE, echo = TRUE, fig.width = 12, fig.height = 10, message=FALSE, warning = FALSE}
+
+cost.res <- read.csv("./data/processed/costs_simulation_results.csv", stringsAsFactors = FALSE)
+
+cost.res <- cost.res[cost.res$convg != "converged and non-converged" ,]
+
+cost.res <- cost.res[cost.res$cost.vals %in% cost.res$cost.vals[cost.res$data.type != "real"], ]
+
+
+cost.res <- tidyr::separate(cost.res, "cost.vals", into = c("different.category", "same.category", "same.segment"), FALSE, sep = "_")
+
+cost.res <- cost.res[cost.res$same.segment > 0, ]
+
+cost.res$different.category <- as.numeric(cost.res$different.category)
+cost.res$same.category <- as.numeric(cost.res$same.category)
+cost.res$same.segment <- as.numeric(cost.res$same.segment)
+
+# sapply(cost.res, function(x) length(unique(x)))
+
+cost.diff <- sapply(unique(cost.res$cost.vals), USE.NAMES = FALSE, function(x){
+  
+mean(cost.res$gaps[cost.res$cost.vals == x & cost.res$data.type != "real"] - 
+  cost.res$gaps[cost.res$cost.vals == x & cost.res$data.type == "real"])
+})
+
+
+cost.diff.df <- cost.res[1:length(cost.diff), ]
+
+cost.diff.df$gaps <- cost.diff
+cost.diff.df$data.type <- "difference"
+
+cost.res <- rbind(cost.res, cost.diff.df)
+
+agg.same.category <- aggregate(cbind(gaps, sd) ~ same.segment + different.category + data.type, cost.res, mean)
+
+
+ggplot(agg.same.category, aes(x = different.category, y = gaps, col = data.type)) +
+   geom_hline(linetype="dotted", yintercept = max(agg.same.category$gaps[agg.same.category$data.type == "difference"], na.rm = TRUE)) +
+  geom_pointrange(aes(ymin = gaps - sd, ymax = gaps + sd)) +
+  geom_line() +
+  scale_color_viridis_d(begin = 0.3, end = 0.7) +
+  facet_wrap(~ same.segment, nrow = 3) +
+  labs(y = "# of gaps", x = "Costs for same category") 
+```
+
+<div class="alert alert-info">
+
+No clear effect of same category cost
+
+</div>
+
+
+## Different category costs aggregated
+
+*Same category costs in facet label
+
+```{r stats on simulation 2, eval = TRUE, echo = TRUE, fig.width = 12, fig.height = 10, message=FALSE, warning = FALSE}
+
+
+agg.diff <- aggregate(cbind(gaps, sd) ~ same.category + same.segment + data.type, cost.res, mean)
+
+ggplot(agg.diff, aes(x = same.category, y = gaps, col = data.type)) +
+     geom_hline(linetype="dotted", yintercept = max(agg.diff$gaps[agg.diff$data.type == "difference"], na.rm = TRUE)) +
+  geom_pointrange(aes(ymin = gaps - sd, ymax = gaps + sd)) +
+  geom_line() +
+  scale_color_viridis_d(begin = 0.3, end = 0.7) +
+  facet_wrap(~ same.segment, nrow = 3) +
+  labs(y = "# of gaps", x = "Costs for same segments") 
+
+```
+
+<div class="alert alert-info">
+
+- The higher the same segment cost the better
+- No clear effect of different category cost
+
+
+</div>
+
+## Same segment costs aggregated
+
+*Same category costs in facet label
+
+```{r stats on simulation 3, eval = TRUE, echo = TRUE, fig.width = 12, fig.height = 10, message=FALSE, warning = FALSE}
+
+
+agg.same.sgmt <- aggregate(cbind(gaps, sd) ~ same.category + different.category + data.type, cost.res, mean)
+
+ggplot(agg.same.sgmt, aes(x = different.category, y = gaps, col = data.type)) +
+  geom_pointrange(aes(ymin = gaps - sd, ymax = gaps + sd)) +
+     geom_hline(linetype="dotted", yintercept = max(agg.same.sgmt$gaps[agg.same.sgmt$data.type == "difference"], na.rm = TRUE)) +
+  geom_line() +
+  scale_color_viridis_d(begin = 0.3, end = 0.7) +
+  facet_wrap(~ same.category, nrow = 3) +
+  labs(y = "# of gaps", x = "Costs for different category") 
+
+```
+
+
+<div class="alert alert-info">
+
+-  High same category costs produce the highest gap difference regardless of different category costs
+
+</div>
+
+
+## Difference between same segment and different category costs
+
+- Horizontal dotted line shows the maximum gap difference between real and simulated data
+
+```{r stats on simulation 4, eval = TRUE, echo = TRUE, fig.width = 12, fig.height = 7, message=FALSE, warning = FALSE}
+
+combs <- t(combn(c("different.category", "same.category", "same.segment"), 2))
+
+cost.diff.l <- lapply(1:nrow(combs), function(y){
+  
+  X <- cost.res[cost.res$data.type == "difference",]
+  
+  names(X)[names(X) == "gaps"] <- "gap.diff"
+  
+  X$cost.diff <- X[, combs[y, 2]] - X[, combs[y, 1]]
+  
+  X$diff.cats <- paste(combs[y,], collapse = "-")
+  
+  if (X$diff.cats[1] == "different.category-same.segment") {X$cost.diff <- X$cost.diff / 2 
+  
+  X$diff.cats <- "different.category-same.segment / 2"
+  }
+  return(X)
+}
+)
+
+cost.diff <- do.call(rbind, cost.diff.l)
+
+agg.same.cat <- aggregate(gap.diff ~ cost.diff + diff.cats, data = cost.diff, FUN = mean)
+
+agg.same.cat$sd <- aggregate(gap.diff ~ cost.diff + diff.cats, data = cost.diff, FUN = sd)$gap.diff
+
+# position of points in ggplot2 
+pos <- position_dodge(width= 0.5)
+
+ggplot(agg.same.cat, aes(x = cost.diff, y = gap.diff, col = diff.cats)) +
+  geom_hline(linetype="dotted",yintercept = max(agg.same.cat$gap.diff, na.rm = TRUE)) +
+    geom_pointrange(aes(ymin = gap.diff - sd, ymax = gap.diff + sd), position = pos) +
+  geom_line(position = pos) +
+  scale_color_viridis_d(begin = 0.2, end = 0.8,alpha = 0.6) +
+  labs(y = "Gaps in real - gaps in simulated", x = "Difference in cost between segment categories") 
+
+```
+
+<div class="alert alert-info">
+
+-  Difference in cost between *same segment* and *same category* should not be higher than ~1.5 nor lower than ~0.7
+
+-  Difference in cost between *same segment* and *different category* doesn't really matter
+
+</div>
+
+### Average across the adjacent categories
+
+```{r stats on simulation 5, eval = TRUE, echo = TRUE, fig.width = 10, fig.height = 7, message=FALSE, warning = FALSE}
+
+
+agg.same.cat2 <- aggregate(gap.diff ~ cost.diff, data = cost.diff[cost.diff$diff.cats != "different.category-same.segment / 2",], FUN = mean)
+
+agg.same.cat2$sd <- aggregate(gap.diff ~ cost.diff, data = cost.diff[cost.diff$diff.cats != "different.category-same.segment / 2",], FUN = sd)$gap.diff
+
+# position of points in ggplot2 
+pos <- position_dodge(width= 0.1)
+
+ggplot(agg.same.cat2, aes(x = cost.diff, y = gap.diff)) +
+  geom_hline(linetype="dotted",yintercept = max(agg.same.cat2$gap.diff, na.rm = TRUE)) +
+    geom_pointrange(aes(ymin = gap.diff - sd, ymax = gap.diff + sd),  col = viridis::viridis(10)[6]) +
+  geom_line( col = viridis::viridis(10)[6]) +
+  labs(y = "Gaps in real - gaps in simulated", x = "Difference in cost between segment categories")
+
+
+```
+
+<div class="alert alert-info">
+
+-  A cost difference between adjacent categories of `r  agg.same.cat2$cost.diff[which.max(agg.same.cat2$gap.diff)]` produces the highest gap difference between real and simulated data sets
+
+</div>
+

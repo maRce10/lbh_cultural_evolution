@@ -1,0 +1,3 @@
+      taxa <- readTaxonData(fossils)
+alignment= "BR1_all_old.nex"
+fossils= "BR1_taxa_all_old.tsv"

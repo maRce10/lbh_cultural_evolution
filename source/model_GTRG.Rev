@@ -1,0 +1,35 @@
+#####################################
+# GTR+G segment substitution model #
+#####################################
+
+# Initialize the parameters of substitution matrix #
+# Both the stationary frequencies and exchangeability rates #
+# are drawn from uniform Dirichlet distributions #
+
+# First the stationary frequencies of the 6 segment types #
+sf_hp <- v(1,1,1,1,1,1)
+sf ~ dnDirichlet(sf_hp)
+
+# Then the exchangeability rates = 15 for 6 segment types#
+er_hp <- v(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)
+er ~ dnDirichlet(er_hp)
+
+moves.append( mvSimplexElementScale(er, alpha=10.0, weight=20.0) )
+moves.append( mvSimplexElementScale(sf, alpha=10.0, weight=20.0) )
+
+# Create the matrix #
+Q_song := fnGTR(er,sf)
+
+# Create a discretized gamma distribution of rate categories  #
+# the shape parameter is drawn from an exponential prior #
+alpha_song ~ dnExponential( 1.0 )
+
+moves.append( mvScale(alpha_song, lambda=0.01, weight=5.0) )
+moves.append( mvScale(alpha_song, lambda=0.1,  weight=5.0) )
+moves.append( mvScale(alpha_song, lambda=1,    weight=5.0) )
+
+rates_song := fnDiscretizeGamma( alpha_song, alpha_song, 4 )
+
+### Create the substitution model and clamp with observed songdata data ###
+phySong ~ dnPhyloCTMC(tree=fbd_tree, Q=Q_song, siteRates=rates_song, branchRates=branch_rates, type="Standard")
+phySong.clamp(song)

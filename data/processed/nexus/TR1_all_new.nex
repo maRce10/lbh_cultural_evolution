@@ -1,0 +1,41 @@
+#NEXUS
+Begin data;
+dimensions ntax=33 nchar=46;
+format datatype=standard gap=- missing=? symbols="dfmpsu";
+matrix
+
+TR1-A1-2007	-----------pmmpp-pmmpppmmpppmmpp--------------
+TR1-C1-2009	-----------pss--------------smmmmmmussssmmmmm-
+TR1-D2-2011	------------mm--------------mmmmmmmmmmmmmmmmmm
+TR1-D2-2012	------------mm--------------mmmmmmmmmmmmmmmmmm
+TR1-D2-2013	------------mm--------------mmmmmmmmmmmmmmmmmm
+TR1-D2-2014	------------mm--------------mmmmmmmmmmmmmmmmmm
+TR1-D4-2012	------------ds--------------mmsspmmmdmmdmmmdmm
+TR1-D4-2013	------------ds--------------mmsspmmmdmmdmmmdmm
+TR1-D4-2014	------------ds--------------mmsspmmmdmmdmmmdmm
+TR1-D1-2009	------------ss--------------ssssmsssssssssssss
+TR1-D1-2010	------------ss--------------ssssmsssssssssssss
+TR1-D1-2011	------------ss--------------ssssmsssssssssssss
+TR1-D1-2012	------------ss--------------ssssmsssssssssssss
+TR1-D1-2013	------------ss--------------ssssmsssssssssssss
+TR1-D1-2014	------------ss--------------ssssmsssssssssssss
+TR1-D3-2012	----------dpss--------------sdssssddsssdssss--
+TR1-D3-2013	----------dpss--------------sdssssddsssdssss--
+TR1-D3-2014	----------dpss--------------sdssssddsssdssss--
+TR1-D5-2013	---usu----spmp--------------mpmpmdsdsusds-----
+TR1-D5-2014	---usu----spmp--------------mpmpmdsdsusds-----
+TR1-E1-2011	-puuuf----ffdpdu-uuufffddp--------------------
+TR1-E4-2012	dpuuuf----ffdddp-uuuffffd---------------------
+TR1-E4-2013	dpuuuf----ffdddp-uuuffffd---------------------
+TR1-F1-2011	---uufddudffdudfdfuufff-----------------------
+TR1-F1-2012	---uufddudffdudfdfuufff-----------------------
+TR1-F1-2013	---uufddudffdudfdfuufff-----------------------
+TR1-F1-2014	---uufddudffdudfdfuufff-----------------------
+TR1-F2-2014	ssffsff--sffssffsffsff------------------------
+TR1-E2-2011	---usmp---ufdumm--pumpumdum-m-----------------
+TR1-E3-2011	---uufp---ufdufd--pufpufduf-d-----------------
+TR1-E3-2012	---uufp---ufdufd--pufpufduf-d-----------------
+TR1-E3-2013	---uufp---ufdufd--pufpufduf-d-----------------
+TR1-E3-2014	---uufp---ufdufd--pufpufduf-d-----------------
+;
+end;
