@@ -16,7 +16,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r clean session, eval = TRUE, echo=FALSE, message=FALSE, warning = FALSE}
+```{r clean session, eval = TRUE, echo=TRUE, message=FALSE, warning = FALSE}
 
 #clean session
 rm(list = ls())
@@ -25,7 +25,7 @@ rm(list = ls())
 out <- sapply(paste('package:', names(sessionInfo()$otherPkgs), sep = ""), function(x) try(detach(x, unload = FALSE, character.only = TRUE), silent = T))
 
 ## vector with package names
-x <- c( "pbapply", "parallel", "ggplot2", "ape", "seqinr", "ips","gtools", "seqmagick", "ggmsa", "revbayes/RevKnitr"
+x <- c( "pbapply", "parallel", "ggplot2", "ape", "seqinr", "ips","gtools", "seqmagick", "ggmsa"
         )
 
 aa <- lapply(x, function(y) {
@@ -317,7 +317,7 @@ out
 
 ```
 
-```{r}
+```{r create nexus files, eval = TRUE,  echo = TRUE}
 
 
 all.algs <- list.files(pattern = ".fa$", path = "./data/processed/mafft_alignments/")
@@ -365,14 +365,13 @@ for (j in leks){
 
 ```
 
-
 ```{r revbayes loop}
 
 dat <- read.csv("./data/raw/segments_by_song_type.csv", stringsAsFactors = FALSE)
 
 yrs <- read.csv("./data/raw/year_range_by_song_type.csv", stringsAsFactors = FALSE)
 
-yrs$song.type.year <- paste(yrs$song.type, yrs$year, sep = "_")
+yrs$song.type.year <- paste(yrs$song.type, yrs$year, sep = "-")
 
 
 alignment	<- c("optimal", "ER") # ER = equal rates
