@@ -16,7 +16,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r clean session, eval = TRUE, echo=TRUE, message=FALSE, warning = FALSE}
+```{r clean session, eval = TRUE, echo=FALSE, message=FALSE, warning = FALSE}
 
 #clean session
 rm(list = ls())
@@ -416,12 +416,7 @@ out
 
 ```
 
-<<<<<<< HEAD
 ```{r save nexus files, eval = FALSE,  echo = TRUE}
-=======
-```{r create nexus files, eval = TRUE,  echo = TRUE}
-
->>>>>>> 26d435e12b337cfd22829689cf28ad2aa86dfd30
 
 ### Convert fasta alignment to nexus
 # read all alignments
@@ -454,7 +449,6 @@ Nex.file <-list.files(pattern = ".nex$", path = "./data/processed/nexus/", full.
 
 ```
 
-<<<<<<< HEAD
 ```{r revbayes loop, eval = FALSE,  echo = TRUE}
 
 dat <- read.csv("./data/raw/segments_by_song_type.csv", stringsAsFactors = FALSE)
@@ -497,17 +491,8 @@ out <- lapply(nexs[grepl("optimal", nexs)], function(x){
 })
 
 
-# grd <- expand.grid(lek = leks, alignment = alignment, use_old_fossils = use_old_fossils, use_all_fossils = use_all_fossils)
-# 
-# templ <- readLines("./data/processed/revBayes/template.Rev")
-# 
-# algs <- list.files(path = "./data/processed/nexus", pattern = "\\.nex$")
-# 
-# algs <- grep(pattern = "optimal", algs, value = TRUE)
-# 
-# # grd <- grd[grd$alignment == "optimal", ]
 
-out <- lapply(nexs, cl = detectCores() - 1, function(x){
+out <- pblapply(nexs, cl = detectCores() - 1, function(x){
   
   yrs.lek <- yrs[yrs$lek == substring(x, 0, 3) ,]
   last.year.songs <- yrs.lek$song.type.year[yrs.lek$year == max(yrs.lek$year)]
@@ -542,9 +527,6 @@ out <- lapply(nexs, cl = detectCores() - 1, function(x){
 ```
 
 ```{r revbayes loop, eval = FALSE,  echo = TRUE}
-=======
-```{r revbayes loop}
->>>>>>> 26d435e12b337cfd22829689cf28ad2aa86dfd30
 
 dat <- read.csv("./data/raw/segments_by_song_type.csv", stringsAsFactors = FALSE)
 
@@ -640,7 +622,8 @@ out <- pblapply(1:nrow(grd), cl = detectCores() - 1, function(x){
     
      system(cll,  show.output.on.console = FALSE)
 })
-                                                                                                                                                                          # ~/Documents/Marcelo/song_alignment/lbh_cultural_evolution/output/data/processed/nexus/                                                                                                                                                                                                         
+
+ output <- list.files(path = "~/Documents/Marcelo/song_alignment/lbh_cultural_evolution/output/data/processed/nexus/", recursive = TRUE)                                                                                                                                    basename(output)                                                                     
 
   
 ```
