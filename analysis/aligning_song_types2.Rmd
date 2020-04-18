@@ -493,48 +493,24 @@ out <- pblapply(prank_seqs_early, function(x) {
 
 
 
+# remove best.fas suffix
+prank_algn <- list.files(path = "./data/processed/mafft_alignments", pattern = "best.fas", full.name = TRUE)
 
-```
-
-```{r alignments real songs prank BETI, eval = FALSE,  echo = TRUE}
-
-# written by Beti
-filepath <- "~/Dropbox/Cultural_Evolution/Mafft_align/"
-prefix <- "SongSeqs_"
-leks <- c("BR1", "CCE", "CCL", "HC1", "HC2", "LOC", "SAT", "SJA", "SUR", "TR1", "TR2")
-suffix <- ".fa"
-prankpath <-"~/Dropbox/Cultural_Evolution/Prank_align/"
-
-for (i in 1:length(leks)){
-  fname <-paste0(filepath, prefix, leks[i], suffix)
-  dat <- readLines(fname)
-  dat <- gsub(pattern = "f", replacement = "C", x = dat) # trill to pyrimidine
-  dat <- gsub(pattern = "s", replacement = "T", x = dat) # trill to pyrimidine
-  dat <- gsub(pattern = "m", replacement = "Y", x = dat) # medium trill treated as ambiguous between fast and slow
-  dat <- gsub(pattern = "u", replacement = "A", x = dat) # tone to purine
-  dat <- gsub(pattern = "d", replacement = "G", x = dat) # tone to purine
-  dat <- gsub(pattern = "p", replacement = "R", x = dat) # flat tone treated as ambiguous between upwards and downwards
-  write(x = dat, file = paste0(prankpath, "Prank_",leks[i], suffix))
-}
-
-setwd("~/Dropbox/Cultural_Evolution/Prank_align/")
-for (i in 1:length(leks)){
-  system(paste0("prank -d=", "Prank_",leks[i], suffix, " -o=", "Prank_",leks[i], " -iterate=100 -kappa=2"))
-}
+file.rename(from = prank_algn, to = gsub(".best.fas$", "", prank_algn))
 
 
 ```
-
 
 ```{r add new sequences prank, eval = FALSE,   echo = TRUE}
 
 #add new sequences only for optimal so far
 
-alg <- list.files(path = "./data/processed/mafft_alignments", pattern = "alignment.fa$", full.names = TRUE)
+alg <- list.files(path = "./data/processed/mafft_alignments", pattern = "prank", full.names = TRUE)
 
 # and new
 rest.seqs <- list.files(path = "./data/processed/song_sequences", pattern = "rest", full.names = TRUE)
 
+rest.seqs <- grep("prank", rest.seqs, value = TRUE)
 
 out <- lapply(leks, function(x){
   
@@ -542,12 +518,11 @@ out <- lapply(leks, function(x){
   lk.alg <- grep(x, alg, value = TRUE)
 
   for(w  in lk.alg){
-    cost_mat <- ifelse(grepl("optimal", w), "optimal", "all.equal")
+    cost_mat <- "prank"
     use_old_fossils <- ifelse(grepl("old", w), "old", "new")
   
     cll <- paste0("mafft --anysymbol --keeplength --add ", grep(paste0("new_", x), rest.seqs, value = TRUE)," --reorder ", file.path("./data/processed/mafft_alignments", paste(x, cost_mat, "early", use_old_fossils ,"alignment.fa", sep = "_")), " > ",     file.path("./data/processed/mafft_alignments", paste(x, cost_mat, "all", use_old_fossils ,"alignment.fa", sep = "_")))
 
-  
     system(cll)
     }
   })
