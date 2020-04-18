@@ -429,8 +429,9 @@ for (j in all.algs){
   cost_mat <- ifelse(grepl("optimal", j), "optimal", "all.equal")
   use_old_fossils <- ifelse(grepl("old", j), "old", "new")
   
+  
   # paste together call
-  cll <- paste0(" perl ./source/convertfasta2nex.pl ./data/processed/mafft_alignments/", grep("all_new", sub.algs, value = TRUE), " > ",  "./data/processed/nexus/", gsub("\\.fa$", ".nex", j))
+  cll <- paste0(" perl ./source/convertfasta2nex.pl ./data/processed/mafft_alignments/", j, " > ",  "./data/processed/nexus/", gsub("\\.fa$", ".nex", j))
 
  # call perl
  system(cll)  
@@ -449,82 +450,6 @@ Nex.file <-list.files(pattern = ".nex$", path = "./data/processed/nexus/", full.
 
 ```
 
-```{r revbayes loop, eval = FALSE,  echo = TRUE}
-
-dat <- read.csv("./data/raw/segments_by_song_type.csv", stringsAsFactors = FALSE)
-
-yrs <- read.csv("./data/raw/year_range_by_song_type.csv", stringsAsFactors = FALSE)
-
-yrs$song.type.year <- paste(yrs$song.type, yrs$year, sep = "-")
-
-nexs <- list.files(path = "data/processed/nexus", pattern = ".nex$")
-
-# create taxa tsv files for revBayes 
-#(run only over the optimals as fossils for optimal and all.equal  are the same)
-out <- lapply(nexs[grepl("optimal", nexs)], function(x){
-  
- # get lek fossils
-  X <- yrs[yrs$lek == substring(x, 0, 3), ]
-  X$taxon <- X$song.type.year
-  
-  # get last year as 0
-  X$max <- X$min <- max(X$year) - X$year
-  
-  # order by year
-  X <- X[order(X$song.type, X$year), ]
-  
-  
-  # only first appearance of song type/fossil including before 2008   
-  if (grepl("early", x))
-    X <- X[!duplicated(X$song.type), ]
-   
-  # only after 2000
-  if (grepl("new", x)) 
-    X <- X[X$year > 2000, ]  
-  
-  # name of tsv (taxa) file
-  tsv.name <- gsub("optimal", "taxa", x)
-  tsv.name <- gsub("_alignment.nex", ".tsv", tsv.name)
-  
-  write.table(X[, c("taxon", "min", "max")], file = paste0("./data/processed/fossils/", tsv.name),  sep = "\t", quote = FALSE, row.names = FALSE)
-  
-})
-
-
-
-out <- pblapply(nexs, cl = detectCores() - 1, function(x){
-  
-  yrs.lek <- yrs[yrs$lek == substring(x, 0, 3) ,]
-  last.year.songs <- yrs.lek$song.type.year[yrs.lek$year == max(yrs.lek$year)]
-  
-  last.year.songs <- paste0(paste0('"', last.year.songs), '"')
-  
-  last.year.songs <- paste0("clade(", paste0(last.year.songs, collapse = ", "), ")")
-  
-     # name of tsv (taxa) file
-    tsv.name <- gsub("optimal", "taxa", x)
-    tsv.name <- file.path("./data/processed/fossils", gsub("_alignment.nex", ".tsv", tsv.name))
-    
-    templ <- suppressWarnings(readLines("./source/template.Rev"))
-
-    templ[1] <- gsub("aligment.name", file.path("./data/processed/nexus", x), templ[1])
-    templ[2] <- gsub("tsv.file", tsv, templ[2])
-    templ[7] <- gsub("LAST.SONG.TYPES", last.year.songs, templ[7])
-    
-    
-    fl.nm.rb <- file.path("./source", gsub("_alignment.nex", ".Rev", x))
-     
-    writeLines(templ, con = fl.nm.rb)
-
-    # cll <- paste0("~/Downloads/revbayes/projects/cmake/rb ", fl.nm.rb)
-    cll <- paste0("~/Documents/Marcelo/song_alignment/boost_1_71_0/revbayes/projects/cmake/rb ", fl.nm.rb) 
-    
-     system(cll,  show.output.on.console = FALSE)
-})
-                                                                                                                                                                          # ~/Documents/Marcelo/song_alignment/lbh_cultural_evolution/output/data/processed/nexus/                                                                                                                                                                                                         
-
-  
-```
 
 ```{r revbayes loop, eval = FALSE,  echo = TRUE}
 
@@ -581,19 +506,26 @@ out <- lapply(unique(leks), function(x)
   
 } )
 
-
+# make all possible combinations
 grd <- expand.grid(lek = leks, alignment = alignment, use_old_fossils = use_old_fossils, use_all_fossils = use_all_fossils)
 
-templ <- readLines("./data/processed/revBayes/template.Rev")
+templ <- readLines("./source/template.Rev")
 
 algs <- list.files(path = "./data/processed/nexus", pattern = "\\.nex$")
 
 algs <- grep(pattern = "optimal", algs, value = TRUE)
 
-# grd <- grd[grd$alignment == "optimal", ]
+grd <- grd[order(grd$lek), ]
+
+# remove leks with output
+current.output <- list.files(pattern = "log$|trees$", path = "./output/revbayes", recursive = TRUE)
+
+done.leks <- unique(substr(current.output, start = 0, 3))
+
+grd <- grd[!grd$lek %in% done.leks, ]
 
 
-out <- pblapply(1:nrow(grd), cl = detectCores() - 1, function(x){
+out <- pblapply(1:nrow(grd), cl = 4, function(x){
   
   yrs.lek <- yrs[yrs$lek == grd$lek[x],]
   last.year.songs <- yrs.lek$song.type.year[yrs.lek$year == max(yrs.lek$year)]
@@ -602,7 +534,7 @@ out <- pblapply(1:nrow(grd), cl = detectCores() - 1, function(x){
   
   last.year.songs <- paste0("clade(", paste0(last.year.songs, collapse = ", "), ")")
   
- nx <- paste0("./data/processed/nexus/", grd$lek[x], "_", grd$use_all_fossils[x], "_", grd$use_old_fossils[x], ".nex")
+ nx <- paste0("./data/processed/nexus/", grd$lek[x], "_", grd$alignment[x], "_", grd$use_all_fossils[x], "_", grd$use_old_fossils[x], "_alignment.nex")
   
   tsv <- paste0("./data/processed/revBayes/fossils/", grd$lek[x], "_taxa_", grd$use_all_fossils[x], "_", grd$use_old_fossils[x], ".tsv")
   
@@ -621,9 +553,18 @@ out <- pblapply(1:nrow(grd), cl = detectCores() - 1, function(x){
     cll <- paste0("~/Documents/Marcelo/song_alignment/boost_1_71_0/revbayes/projects/cmake/rb ", fl.nm.rb) 
     
      system(cll,  show.output.on.console = FALSE)
-})
 
- output <- list.files(path = "~/Documents/Marcelo/song_alignment/lbh_cultural_evolution/output/data/processed/nexus/", recursive = TRUE)                                                                                                                                    basename(output)                                                                     
+    # copy ouput files to  /output/revbayes/
+      new.output <- list.files(pattern = "log$|trees$", recursive = TRUE)
+    
+    copied.output <- list.files(pattern = "log$|trees$", path = "./output/revbayes/", recursive = TRUE)
+    
+    new.output <- new.output[!basename(new.output) %in% copied.output]
+    
+    if (length(new.output > 0))
+    file.copy(from = output, to =file.path("./output/revbayes/", basename(output)))
+
+})
 
   
 ```
