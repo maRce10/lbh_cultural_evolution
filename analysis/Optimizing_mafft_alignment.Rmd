@@ -125,7 +125,7 @@ write.fasta(seqs, dat$song.type, file.out = "~/Dropbox/Investigacion/Cultural_Ev
 
 ```
 
-```{r alignments real songs, eval = FALSE, echo = FALSE}
+```{r mafft alignments real songs, eval = FALSE, echo = FALSE}
 
 # sgmnts <- read.csv("./data/raw/segments_by_song_type.csv", stringsAsFactors = FALSE)
 # 
