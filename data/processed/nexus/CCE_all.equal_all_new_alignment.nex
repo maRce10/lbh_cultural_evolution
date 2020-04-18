@@ -1,6 +1,6 @@
 #NEXUS
 Begin data;
-dimensions ntax=25 nchar=31;
+dimensions ntax=22 nchar=31;
 format datatype=standard gap=- missing=? symbols="dfmpsu";
 matrix
 
@@ -8,26 +8,23 @@ CCE-I3-2011	-----------mmppdummddmmppdmmddu
 CCE-I4-2018	--------pmmmmdffpfummmmdffpu---
 CCE-I5-2018	--------ummmmdpupmummmmdpupm---
 CCE-J1-2011	----------mmmdpmmmdpmmmdpmmmdp-
-CCE-J1-2012	----------mmmdpmmmdpmmmdpmmmdp-
-CCE-J1-2013	----------mmmdpmmmdpmmmdpmmmdp-
-CCE-J1-2014	----------mmmdpmmmdpmmmdpmmmdp-
 CCE-K1-2011	----------psfddusfddssfdddsfdd-
 CCE-J2-2014	fffpffffpffffdffffdf-----------
-CCE-I2-2008	-ffpffffdffffddfffdff----------
-CCE-I2-2009	-ffpffffdffffddfffdff----------
-CCE-I2-2010	-ffpffffdffffddfffdff----------
-CCE-I2-2011	-ffpffffdffffddfffdff----------
-CCE-I2-2012	-ffpffffdffffddfffdff----------
-CCE-I2-2013	-ffpffffdffffddfffdff----------
-CCE-I2-2014	-ffpffffdffffddfffdff----------
-CCE-I1-2008	----fffddduffddfffdddd---------
-CCE-I1-2009	----fffddduffddfffdddd---------
-CCE-I1-2010	----fffddduffddfffdddd---------
-CCE-I1-2011	----fffddduffddfffdddd---------
-CCE-I1-2012	----fffddduffddfffdddd---------
-CCE-I1-2013	----fffddduffddfffdddd---------
-CCE-I1-2014	----fffddduffddfffdddd---------
-CCE-H1-2008	------------------sssssssssssss
-CCE-H1-2009	------------------sssssssssssss
+CCE-J1-2012	YYYGRYYYGRYYYGRYYYGR-----------
+CCE-J1-2013	YYYGRYYYGRYYYGRYYYGR-----------
+CCE-J1-2014	YYYGRYYYGRYYYGRYYYGR-----------
+CCE-H1-2009	--------------------TTTTTTTTTTT
+CCE-I1-2009	-------------------------------
+CCE-I1-2010	-------------------------------
+CCE-I1-2011	-------------------------------
+CCE-I1-2012	-------------------------------
+CCE-I1-2013	-------------------------------
+CCE-I1-2014	-------------------------------
+CCE-I2-2009	-------------------------------
+CCE-I2-2010	-------------------------------
+CCE-I2-2011	-------------------------------
+CCE-I2-2012	-------------------------------
+CCE-I2-2013	-------------------------------
+CCE-I2-2014	-------------------------------
 ;
 end;

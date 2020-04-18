@@ -5,29 +5,29 @@ format datatype=standard gap=- missing=? symbols="dfmpsu";
 matrix
 
 SJA-C1-2010	---------pp-------------mmmmmmmmppmmmmmmud
-SJA-C1-2011	---------pp-------------mmmmmmmmppmmmmmmud
-SJA-C1-2012	---------pp-------------mmmmmmmmppmmmmmmud
-SJA-C1-2013	---------pp-------------mmmmmmmmppmmmmmmud
-SJA-C1-2014	---------pp-------------mmmmmmmmppmmmmmmud
-SJA-C1-2015	---------pp-------------mmmmmmmmppmmmmmmud
-SJA-C1-2016	---------pp-------------mmmmmmmmppmmmmmmud
-SJA-C1-2017	---------pp-------------mmmmmmmmppmmmmmmud
-SJA-C1-2018	---------pp-------------mmmmmmmmppmmmmmmud
 SJA-D1-2012	--dmmm--md--------------mmmmdmmm--mdmmmm--
-SJA-D1-2013	--dmmm--md--------------mmmmdmmm--mdmmmm--
-SJA-D1-2014	--dmmm--md--------------mmmmdmmm--mdmmmm--
 SJA-E1-2012	--pmmm--mp--------------mmmmpmmm--mpmmmm--
 SJA-D4-2014	--mmmm--mff--------------mmmpmmp--mmmmmm--
 SJA-D2-2013	---mmmfmmf----------------mmfmmf-pmmfmm-f-
-SJA-D2-2014	---mmmfmmf----------------mmfmmf-pmmfmm-f-
 SJA-D3-2013	---mmmffmf--------------mmmmmmmm--mmmmm---
 SJA-F1-2012	-----mffuff------------dmmmmmmmm--mmmmm---
-SJA-F1-2013	-----mffuff------------dmmmmmmmm--mmmmm---
-SJA-F1-2014	-----mffuff------------dmmmmmmmm--mmmmm---
 SJA-F5-2018	udsmmm------------------mmmdpdsm--mmmmmd--
 SJA-F2-2013	-----mffmff---------------mmfdmf-fmffdm-fd
-SJA-F2-2014	-----mffmff---------------mmfdmf-fmffdm-fd
 SJA-F3-2012	u----mffffffffuffffffffd------------------
+SJA-C1-2011	R----RYYYYYYYYRRYYYYYYAG------------------
+SJA-C1-2012	R----RYYYYYYYYRRYYYYYYAG------------------
+SJA-C1-2013	R----RYYYYYYYYRRYYYYYYAG------------------
+SJA-C1-2014	R----RYYYYYYYYRRYYYYYYAG------------------
+SJA-C1-2015	R----RYYYYYYYYRRYYYYYYAG------------------
+SJA-C1-2016	R----RYYYYYYYYRRYYYYYYAG------------------
+SJA-C1-2017	R----RYYYYYYYYRRYYYYYYAG------------------
+SJA-C1-2018	R----RYYYYYYYYRRYYYYYYAG------------------
+SJA-F1-2013	------YYYYYYYY--YYYYYY--------------------
+SJA-F1-2014	------YYYYYYYY--YYYYYY--------------------
 SJA-F4-2018	u----m--mffffdudupmffffdm---------------p-
+SJA-D1-2013	-----GYYGYYYYGYYYYGYYYY-------------------
+SJA-D1-2014	-----GYYGYYYYGYYYYGYYYY-------------------
+SJA-D2-2014	-----YYYYCYYCYYCRYYCYYC-------------------
+SJA-F2-2014	------YYCCYYCGYCCYCCGYCG------------------
 ;
 end;

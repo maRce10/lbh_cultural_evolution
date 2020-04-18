@@ -702,3 +702,13 @@ ggplot(agg.same.cat2, aes(x = cost.diff, y = gap.diff)) +
 
 </div>
 
+
+---
+
+<font size="4">R session information</font>
+
+```{r session info, echo=F}
+
+sessionInfo()
+
+```
