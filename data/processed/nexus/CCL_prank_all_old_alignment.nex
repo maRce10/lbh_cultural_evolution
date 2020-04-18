@@ -1,0 +1,46 @@
+#NEXUS
+Begin data;
+dimensions ntax=38 nchar=23;
+format datatype=standard gap=- missing=? symbols="dfmpsu";
+matrix
+
+CCL-G1-2008	-ppppppppupppppdppppd--
+CCL-N2-2019	-ppppuppppppppuuupppp--
+CCL-N1-2015	-pppuuuufpppppuuuuffp--
+CCL-N1-2016	-pppuuuufpppppuuuuffp--
+CCL-N1-2017	-pppuuuufpppppuuuuffp--
+CCL-N1-2018	-pppuuuufpppppuuuuffp--
+CCL-N1-2019	-pppuuuufpppppuuuuffp--
+CCL-M1-2014	-uppdupppdpuppdpuppdd--
+CCL-K2-2011	-uupuduupdpuupdpuupdd--
+CCL-K1-2008	-uuuuduuuuduuuuduuuud--
+CCL-K1-2009	-uuuuduuuuduuuuduuuud--
+CCL-K1-2010	-uuuuduuuuduuuuduuuud--
+CCL-K1-2011	-uuuuduuuuduuuuduuuud--
+CCL-K1-2012	-uuuuduuuuduuuuduuuud--
+CCL-L1-2013	---puupuppdpppuuuupfdpu
+CCL-L1-2014	---puupuppdpppuuuupfdpu
+CCL-L1-2015	---puupuppdpppuuuupfdpu
+CCL-L1-2016	---puupuppdpppuuuupfdpu
+CCL-L1-2017	---puupuppdpppuuuupfdpu
+CCL-L1-2018	---puupuppdpppuuuupfdpu
+CCL-L1-2019	---puupuppdpppuuuupfdpu
+CCL-L2-2013	--ppuupffd-ffpuupppfdpf
+CCL-L2-2014	--ppuupffd-ffpuupppfdpf
+CCL-L2-2015	--ppuupffd-ffpuupppfdpf
+CCL-L2-2016	--ppuupffd-ffpuupppfdpf
+CCL-L2-2017	--ppuupffd-ffpuupppfdpf
+CCL-L2-2018	--ppuupffd-ffpuupppfdpf
+CCL-L2-2019	--ppuupffd-ffpuupppfdpf
+CCL-E1-1970	sssspffffps---ssffffffp
+CCL-F2-1989	-dpu-fffp-fffdpufffffff
+CCL-J1-1989	--pu-ffpppfffppfffffpff
+CCL-H1-1989	--pupffff-uffpuuffffuff
+CCL-A1-1970	---mmmffmmmffmmmffmmmff
+CCL-I1-2010	-pmmmmpmmmmpmmmmpmmmm--
+CCL-D1-1970	-usmusmfussusmusmsuss--
+CCL-D2-1970	-usfusmfummummummmumm--
+CCL-C1-1970	---sssufsssufsssufsssuf
+CCL-F1-1970	---ufffffppsspsspssspss
+;
+end;

@@ -558,7 +558,10 @@ all.algs <- list.files(pattern = ".fa$", path = "./data/processed/mafft_alignmen
 for (j in all.algs){
 
   lek <- substring(j, 0, 3) 
-  cost_mat <- ifelse(grepl("optimal", j), "optimal", "all.equal")
+  cost_mat <- if(grepl("optimal", j)) "optimal" 
+  cost_mat <- if(grepl("all.equal", j)) "all.equal" 
+  cost_mat <- if(grepl("prank", j)) "prank" 
+  
   use_old_fossils <- ifelse(grepl("old", j), "old", "new")
   
   
@@ -573,9 +576,27 @@ for (j in all.algs){
 Nex.file <-list.files(pattern = ".nex$", path = "./data/processed/nexus/", full.names = TRUE)
 
  
- for(i in Nex.file){  
+for(i in Nex.file){  
    align <- readLines(i)
     align[4] <- 'format datatype=standard gap=- missing=? symbols="dfmpsu";'
+    
+    # change seqs back to sound segments
+    if (grepl("prank", i)){
+
+      seqs <- align[7:(length(align)-2)]   
+      sep <- separate(data.frame(seqs = seqs),col = "seqs",sep =   "\t", into = c("song", "seqs")) 
+      
+      
+      # replace song segments with bases
+        sep$seqs <- gsub(pattern = "C", replacement = "f", x = sep$seqs) # trill to pyrimidine
+        sep$seqs <- gsub(pattern = "T", replacement = "s", x = sep$seqs) # trill to pyrimidine
+      sep$seqs <- gsub(pattern = "Y", replacement = "m", x = sep$seqs) # medium trill treated as ambiguous between fast and slow
+      sep$seqs <- gsub(pattern = "A", replacement = "u", x = sep$seqs) # tone to purine
+      sep$seqs <- gsub(pattern = "G", replacement = "d", x = sep$seqs) # tone to purine
+      sep$seqs <- gsub(pattern = "R", replacement = "p", x = sep$seqs)
+    
+         align[7:(length(align)-2)] <- paste0(sep$song, "\t", sep$seqs)       
+                   }
     write(align, i)
 }
 
@@ -592,7 +613,7 @@ yrs <- read.csv("./data/raw/year_range_by_song_type.csv", stringsAsFactors = FAL
 yrs$song.type.year <- paste(yrs$song.type, yrs$year, sep = "-")
 
 
-alignment	<- c("optimal", "all.equal") # ER = equal rates
+alignment	<- c("optimal", "all.equal", "prank") # ER = equal rates
 
 # use all fosils (e.g. SURA-2011, SURA-2012, )
 use_all_fossils <- c("all", "early")
@@ -654,7 +675,7 @@ current.output <- list.files(pattern = "log$|trees$", path = "./output/revbayes"
 
 done.leks <- unique(substr(current.output, start = 0, 3))
 
-grd <- grd[!grd$lek %in% done.leks, ]
+grd <- grd[!(grd$lek %in% done.leks & grd$alignment != "prank"), ]
 
 
 out <- pblapply(1:nrow(grd), cl = 4, function(x){

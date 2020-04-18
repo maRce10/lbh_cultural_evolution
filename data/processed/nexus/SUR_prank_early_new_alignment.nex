@@ -1,0 +1,32 @@
+#NEXUS
+Begin data;
+dimensions ntax=24 nchar=38;
+format datatype=standard gap=- missing=? symbols="dfmpsu";
+matrix
+
+SUR-G1-2008	------------------pmmmmpmmmmpmmmmpmmmm
+SUR-J1-2010	------------------pmmmmpmmmmpmmmmpmmmm
+SUR-J2-2012	------------------pmmmmpmmmmpmmmmpmmmm
+SUR-H3-2011	uuuuffdppsuuuufffppm------------------
+SUR-J6-2017	------------------ppssmmmmmmpsssmmmmmm
+SUR-J4-2014	------------------psssssspssssspssssss
+SUR-J5-2017	------------------ppsssssssspfssssssss
+SUR-J7-2019	------------------ppssssssssppssssssss
+SUR-K4-2015	------------------psppppsppppsppppsppp
+SUR-I1-2008	------------------pffpppffppppfpppffpp
+SUR-K1-2012	------------------pffffpffffuffffuffff
+SUR-L1-2012	------------------pffffpffpfpffffpffff
+SUR-K2-2012	------------------psfffpffffpsfffpffff
+SUR-K3-2014	------------------psfffssfffspfffpffff
+SUR-J3-2012	------------------pfffffffffpfffffffff
+SUR-K5-2018	------------------pudfffffffpdpfffffff
+SUR-F1-2008	------------------ffffffffffpfpfpffpff
+SUR-F3-2009	------------------pmfpfffpffpfppffffff
+SUR-F4-2011	------------------uffpffffffpffpffffff
+SUR-F2-2008	------------------umfuffffffuffuffffff
+SUR-F5-2011	------------------uffuffffffuffuffffff
+SUR-K6-2019	------------------ufffffffffusffffffff
+SUR-H2-2010	------------------uupdfuufdfuufdfuufdf
+SUR-H1-2008	------------------uufdduufdduufduuufdd
+;
+end;

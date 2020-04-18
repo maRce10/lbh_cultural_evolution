@@ -1,0 +1,28 @@
+#NEXUS
+Begin data;
+dimensions ntax=20 nchar=24;
+format datatype=standard gap=- missing=? symbols="dfmpsu";
+matrix
+
+LOC-F2-2019	sssspsmmmmsssspssmmd----
+LOC-F1-2017	psssssmmfdsssfmsmmfd----
+LOC-D1-2017	pusssssfffuusssssmff----
+LOC-C1-2017	---ummmmfffffummmmffff-f
+LOC-C1-2018	---ummmmfffffummmmffff-f
+LOC-C1-2019	---ummmmfffffummmmffff-f
+LOC-G1-2017	---usmmffffffussmmffff-f
+LOC-E1-2017	---usssmffffdpmmmmmfff-d
+LOC-A2-2012	---fffffffffffffffffff-f
+LOC-A2-2013	---fffffffffffffffffff-f
+LOC-A2-2014	---fffffffffffffffffff-f
+LOC-A2-2015	---fffffffffffffffffff-f
+LOC-A2-2016	---fffffffffffffffffff-f
+LOC-A2-2017	---fffffffffffffffffff-f
+LOC-G2-2019	---pmffffffffppmffffff-f
+LOC-A1-2010	----mmmmfmmmmfmmmmfmmmmf
+LOC-A1-2011	----mmmmfmmmmfmmmmfmmmmf
+LOC-A1-2012	----mmmmfmmmmfmmmmfmmmmf
+LOC-A1-2013	----mmmmfmmmmfmmmmfmmmmf
+LOC-A1-2014	----mmmmfmmmmfmmmmfmmmmf
+;
+end;
