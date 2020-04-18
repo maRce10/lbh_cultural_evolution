@@ -1,0 +1,14 @@
+#NEXUS
+Begin data;
+dimensions ntax=6 nchar=24;
+format datatype=standard gap=- missing=? symbols="dfmpsu";
+matrix
+
+HC1-K1-2011	--pppppppppppp--pppppppp
+HC1-L1-2011	--ppmppppmpppp--mmpppmpp
+HC1-K3-2011	--pfppfdppfppf--pppfppfp
+HC1-C4-2011	--pfdpufdpfdpf--dpffdpfd
+HC1-M1-2011	pufpdpuf--fppffpdpffpp--
+HC1-K2-2011	uusf--ffppppuu--ssffpppp
+;
+end;

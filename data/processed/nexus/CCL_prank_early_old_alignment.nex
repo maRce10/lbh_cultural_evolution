@@ -1,0 +1,26 @@
+#NEXUS
+Begin data;
+dimensions ntax=18 nchar=23;
+format datatype=standard gap=- missing=? symbols="dfmpsu";
+matrix
+
+CCL-G1-2008	-ppppppppupppppdppppd--
+CCL-N2-2019	-ppppuppppppppuuupppp--
+CCL-M1-2014	-uppdupppdpuppdpuppdd--
+CCL-L1-2013	---puupuppdpppuuuupfdpu
+CCL-N1-2015	-pppuuuufpppppuuuuffp--
+CCL-K1-2008	-uuuuduuuuduuuuduuuud--
+CCL-K2-2011	-uupuduupdpuupdpuupdd--
+CCL-L2-2013	--ppuupffd-ffpuupppfdpf
+CCL-A1-1970	---mmmffmmmffmmmffmmmff
+CCL-I1-2010	-pmmmmpmmmmpmmmmpmmmm--
+CCL-D1-1970	-usmusmfussusmusmsuss--
+CCL-D2-1970	-usfusmfummummummmumm--
+CCL-C1-1970	---sssufsssufsssufsssuf
+CCL-F1-1970	---ufffffppsspsspssspss
+CCL-E1-1970	sssspffffps---ssffffffp
+CCL-F2-1989	-dpu-fffp-fffdpufffffff
+CCL-J1-1989	--pu-ffpppfffppfffffpff
+CCL-H1-1989	--pupffff-uffpuuffffuff
+;
+end;

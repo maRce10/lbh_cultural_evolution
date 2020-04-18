@@ -1,0 +1,35 @@
+#NEXUS
+Begin data;
+dimensions ntax=27 nchar=33;
+format datatype=standard gap=- missing=? symbols="dfmpsu";
+matrix
+
+SJA-A1-1972	---------ppffffffffppuff-ffppf---
+SJA-F3-2012	---------umffffffffuffff-ffffd---
+SJA-B1-1972	---------ppmffffpppppmmf-ffppp---
+SJA-F4-2018	---------ummffffdudupmff-ffdmp---
+SJA-F2-2013	-----------mffmffmmfdmffmffdmfd--
+SJA-F2-2014	-----------mffmffmmfdmffmffdmfd--
+SJA-D1-2012	--------dmmmmdm--mmmdmmmmdmmmm---
+SJA-D1-2013	--------dmmmmdm--mmmdmmmmdmmmm---
+SJA-D1-2014	--------dmmmmdm--mmmdmmmmdmmmm---
+SJA-E1-2012	------p--mmmmpm--mmmpmmmmpmmmm---
+SJA-D4-2014	----------mmmmmffmmmpmmpmmmmmm---
+SJA-D2-2013	----------mmmfmmfmmfmmfpmmfmmf---
+SJA-D2-2014	----------mmmfmmfmmfmmfpmmfmmf---
+SJA-C1-2010	------p--pmmmmm--mmmp--pmmmmmm-ud
+SJA-C1-2011	------p--pmmmmm--mmmp--pmmmmmm-ud
+SJA-C1-2012	------p--pmmmmm--mmmp--pmmmmmm-ud
+SJA-C1-2013	------p--pmmmmm--mmmp--pmmmmmm-ud
+SJA-C1-2014	------p--pmmmmm--mmmp--pmmmmmm-ud
+SJA-C1-2015	------p--pmmmmm--mmmp--pmmmmmm-ud
+SJA-C1-2016	------p--pmmmmm--mmmp--pmmmmmm-ud
+SJA-C1-2017	------p--pmmmmm--mmmp--pmmmmmm-ud
+SJA-C1-2018	------p--pmmmmm--mmmp--pmmmmmm-ud
+SJA-F5-2018	------u--dsmmmm--mmdpdsmmmmmmd---
+SJA-F1-2012	--mffuffdmmmm--------mmmmmmmmm---
+SJA-F1-2013	--mffuffdmmmm--------mmmmmmmmm---
+SJA-F1-2014	--mffuffdmmmm--------mmmmmmmmm---
+SJA-D3-2013	mmmffmf--mmmm--------mmmmmmmmm---
+;
+end;
