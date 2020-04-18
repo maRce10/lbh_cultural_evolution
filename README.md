@@ -1,13 +1,35 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-Cultural evolution in long-billed hermits
-=========================================
+# Cultural evolution in long-billed hermits
 
-<!-- badges: start -->
-<!-- badges: end -->
-The goal of this repository is to host (and share) the code used for creating long-billed hermit song cultural evolution trees and analyzing evolutionary patterns.
+> Unvailing the evolutionary dynamics that generated complex vocalizations in hummingbirds
 
-Analysis steps
---------------
+![Example figure](./img/example_fig.png)
 
-#### [Optimizing cost for MAFFT aligning](https://htmlpreview.github.io/?https://raw.githubusercontent.com/maRce10/lbh_cultural_evolution/master/analysis/aliging_songs.html)
+## Table of contents
+* [General info](#general-info)
+* [Analyses](#Analyses)
+* [To do list](#to-do-list)
+* [Contact](#contact)
+
+## General info
+
+Code used for creating long-billed hermit song cultural evolution trees and analyzing evolutionary patterns.
+
+## Analysis
+
+* [Optimizing cost for MAFFT alignments](https://rpubs.com/marcelo-araya-salas/601010)
+* [Aligning song sequences with mafft and prank](https://rpubs.com/marcelo-araya-salas/601065)
+
+## In progress
+
+* Making trees with RevBayes
+
+## To-do list
+
+* Optimize prank alignments
+
+## Status
+Project is: _in progress_
+
+## Contact
+Created by [Marcelo Araya-Salas](https://marceloarayasalas.weebly.com/) - feel free to contact me!

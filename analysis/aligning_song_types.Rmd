@@ -16,7 +16,8 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r clean session, eval = TRUE, echo=TRUE, message=FALSE, warning = FALSE}
+#### Clean session and load packages
+```{r clean session and load packages, eval = TRUE, message=FALSE, warning = FALSE}
 
 #clean session
 rm(list = ls())
@@ -25,7 +26,7 @@ rm(list = ls())
 out <- sapply(paste('package:', names(sessionInfo()$otherPkgs), sep = ""), function(x) try(detach(x, unload = FALSE, character.only = TRUE), silent = T))
 
 ## vector with package names
-x <- c( "pbapply", "parallel", "ggplot2", "ape", "seqinr", "ips","gtools", "seqmagick", "ggmsa"
+x <- c( "pbapply", "parallel", "ggplot2", "ape", "seqinr", "ips","gtools", "seqmagick", "ggmsa", "cowplot", "tidyr"
         )
 
 aa <- lapply(x, function(y) {
@@ -37,14 +38,16 @@ aa <- lapply(x, function(y) {
   # load package
   try(require(y, character.only = T), silent = T)
 })
+
 ```
 
-```{r functions and parameters, eval = TRUE, echo = TRUE}
+#### Functions and parameters
+```{r functions and parameters, eval = TRUE}
 
 #functions and parameters
 knitr::opts_knit$set(root.dir = normalizePath(".."))
 
-knitr::opts_chunk$set(dpi = 58, fig.width = 12) 
+knitr::opts_chunk$set(dpi = 50, fig.width = 12) 
 
 # ggplot2 theme
 theme_set(theme_classic(base_size = 20))
@@ -99,7 +102,8 @@ write_lek_fas <- function(x){
 leks <- c("BR1", "CCE", "CCL", "HC1", "HC2", "LOC", "SAT", "SJA", "SUR", "TR1", "TR2")
 ```
 
-```{r create fastas for each lek, eval = FALSE,  echo = TRUE}
+#### Create fastas for mafft
+```{r create fastas for each lek mafft, eval = FALSE}
 
 # create fastas for each lek
 
@@ -162,7 +166,7 @@ write.fasta(sequences = as.list(dat.early.new$seqs[dat.early.new$lek == i]), nam
 
 ```
 
-```{r test aligning, eval = FALSE,  echo = TRUE}
+```{r test aligning, eval = FALSE, echo = FALSE}
 # alignments real songs
 
 # add using or not song types before 2008
@@ -251,7 +255,8 @@ pboptions(type = "timer")
     
 ```
 
-```{r alignments real songs, eval = FALSE,  echo = TRUE}
+#### Aligning with mafft
+```{r alignments real songs mafft, eval = FALSE}
 # alignments real songs
 
 # add using or not song types before 2008
@@ -369,7 +374,8 @@ write.csv(res, "./output/aligment_gaps_and_convergence_results.csv")
 
 ```
 
-```{r add new sequences, eval = FALSE,   echo = TRUE}
+#### Add new sequences to mafft alignments
+```{r add new sequences mafft, eval = FALSE}
 
 #add new sequences only for optimal so far
 
@@ -397,31 +403,178 @@ out <- lapply(leks, function(x){
 
 ```
 
+#### Create fastas for prank
+```{r create fastas for each lek prank, eval = FALSE}
+
+# create fastas for each lek
+
+###----Alignment of phenotypic sequence data: CSV to fasta format----------------------
+
+dat <- read.csv("./data/raw/segments_by_song_type.csv", stringsAsFactors = FALSE)
+yrs <- read.csv("./data/raw/year_range_by_song_type.csv", stringsAsFactors = FALSE)
+
+#Are id's unique?
+length(dat$song.type) == length(unique(dat$song.type)) #OK
+
+# seq as a single column
+dat$seqs <- sapply(1:nrow(dat), function(i)  paste(dat[i,3:22], collapse = "")
+)
+
+# replace song segments with bases
+dat$seqs <- gsub(pattern = "f", replacement = "C", x = dat$seqs) # trill to pyrimidine
+  dat$seqs <- gsub(pattern = "s", replacement = "T", x = dat$seqs) # trill to pyrimidine
+  dat$seqs <- gsub(pattern = "m", replacement = "Y", x = dat$seqs) # medium trill treated as ambiguous between fast and slow
+  dat$seqs <- gsub(pattern = "u", replacement = "A", x = dat$seqs) # tone to purine
+  dat$seqs <- gsub(pattern = "d", replacement = "G", x = dat$seqs) # tone to purine
+  dat$seqs <- gsub(pattern = "p", replacement = "R", x = dat$seqs)
+
+
+# one for each songtype year
+dat.yr <- yrs
+
+dat.yr$song.type.year <- paste(dat.yr$song.type, dat.yr$year, sep = "-")
+
+dat.yr <- dat.yr[dat.yr$lek %in% leks, ]
+
+
+dat.yr <- merge(dat.yr, dat[, c("song.type", "seqs")], by = "song.type")
+
+
+# only 1 year per song type and using before 2008
+dat.all.old <- dat.yr[order(dat.yr$song.type, dat.yr$year), ]
+
+# only 1 year per song type and using before 2008
+dat.early.old <- dat.all.old[!duplicated(dat.all.old$song.type), ]
+
+# only 1 year per song type and exlcuding before 2008
+dat.all.new <- dat.all.old[dat.all.old$year > 2000, ]
+
+# only 1 year per song type and using before 2008
+dat.early.new <- dat.early.old[dat.early.old$year > 2000, ]
+
+# rest of song type years (without earliest)
+dat.rest.old <- dat.all.old[!dat.all.old$song.type.year %in% dat.early.old$song.type.year,]
+
+dat.rest.new <- dat.all.new[!dat.all.new$song.type.year %in% dat.early.new$song.type.year,]
+
+
+# by lek all song types
+for(i in leks){
+  
+# all old
+write.fasta(sequences = as.list(dat.rest.old$seqs[dat.rest.old$lek == i]), names = dat.rest.old$song.type.year[dat.rest.old$lek == i], file.out = paste0("./data/processed/song_sequences/song_seqs_rest_old_", i, "_prank.fa"), open = "w", nbchar = 60, as.string = FALSE)
+
+# early old
+write.fasta(sequences = as.list(dat.early.old$seqs[dat.early.old$lek == i]), names = dat.early.old$song.type.year[dat.early.old$lek == i], file.out = paste0("./data/processed/song_sequences/song_seqs_early_old_", i, "_prank.fa"), open = "w", nbchar = 60, as.string = FALSE)
+
+# all new
+write.fasta(sequences = as.list(dat.rest.new$seqs[dat.rest.new$lek == i]), names = dat.rest.new$song.type.year[dat.rest.new$lek == i], file.out = paste0("./data/processed/song_sequences/song_seqs_rest_new_", i, "_prank.fa"), open = "w", nbchar = 60, as.string = FALSE)
+
+# early new
+write.fasta(sequences = as.list(dat.early.new$seqs[dat.early.new$lek == i]), names = dat.early.new$song.type.year[dat.early.new$lek == i], file.out = paste0("./data/processed/song_sequences/song_seqs_early_new_", i, "_prank.fa"), open = "w", nbchar = 60, as.string = FALSE)
+  }
+
+```
+
+#### Aligning with prank
+```{r alignments real songs prank, eval = FALSE}
+
+prank_seqs <- list.files(path = "./data/processed/song_sequences", pattern = "prank")
+
+# get only early ones
+prank_seqs_early <- grep("early", prank_seqs, value = TRUE) 
+
+# get rest
+prank_seqs_rest <- grep("rest", prank_seqs, value = TRUE) 
+
+out <- pblapply(prank_seqs_early, function(x) {
+
+  lek <- sapply(strsplit(x, "_", fixed = TRUE), "[[", 5)
+  all.fossils <- sapply(strsplit(x, "_", fixed = TRUE), "[[", 4)
+  old.fossils <- sapply(strsplit(x, "_", fixed = TRUE), "[[", 3)
+  
+  cll <- paste0("prank -d=./data/processed/song_sequences/", x, " -o=./data/processed/mafft_alignments/", lek, "_prank_", old.fossils, "_", all.fossils,"_alignment.fa -iterate=100 -kappa=2")
+
+  system(cll)
+  })
+
+
+
+# remove best.fas suffix
+prank_algn <- list.files(path = "./data/processed/mafft_alignments", pattern = "best.fas", full.name = TRUE)
+
+file.rename(from = prank_algn, to = gsub(".best.fas$", "", prank_algn))
+
+
+```
+
+#### Add new sequences to prank alignments
+```{r add new sequences prank, eval = FALSE}
+
+#add new sequences only for optimal so far
+
+alg <- list.files(path = "./data/processed/mafft_alignments", pattern = "prank", full.names = TRUE)
+
+# and new
+rest.seqs <- list.files(path = "./data/processed/song_sequences", pattern = "rest", full.names = TRUE)
+
+rest.seqs <- grep("prank", rest.seqs, value = TRUE)
+
+out <- lapply(leks, function(x){
+  
+  # get alignments for x lek
+  lk.alg <- grep(x, alg, value = TRUE)
+
+  for(w  in lk.alg){
+    cost_mat <- "prank"
+    use_old_fossils <- ifelse(grepl("old", w), "old", "new")
+  
+    cll <- paste0("mafft --anysymbol --keeplength --add ", grep(paste0("new_", x), rest.seqs, value = TRUE)," --reorder ", file.path("./data/processed/mafft_alignments", paste(x, cost_mat, "early", use_old_fossils ,"alignment.fa", sep = "_")), " > ",     file.path("./data/processed/mafft_alignments", paste(x, cost_mat, "all", use_old_fossils ,"alignment.fa", sep = "_")))
+
+    system(cll)
+    }
+  })
+
+```
+
 # Plot alignments
 
-optimal (1 sample per song type): diff type = 0.5, same category = 1.25, same segment = 2
 
-- "full" contains species as song type-year, added later with MAFFT option --keeplength
+Mafft optimal costs:
 
-```{r plot alignments, eval = TRUE,  echo = TRUE, out.width = "100%", out.height = "100%", warning= FALSE, message=FALSE}
+- diff type = 0.5 (i.e. trill vs pure tone)
+- same category = 1.25 (i.e. slow trill vs fast trill)
+- same segment = 2 (i.e. slow trill vs slow trill)
+
+Mafft agonostics (all equal) costs:
+
+- diff type = 1.1 (i.e. trill vs pure tone)
+- same category = 1.1 (i.e. slow trill vs fast trill)
+- same segment = 1 (i.e. slow trill vs slow trill)
+
+Prank: probabilistic multiple alignment program based on a novel algorithm that treats insertions correctly and avoids over-estimation of the number of deletion events
+
+#### Make plots
+```{r plot alignments, eval = TRUE, warning=FALSE, message=FALSE}
 
 #plot alignments
 seqs <- list.files(path = "./data/processed/mafft_alignments", pattern = "\\.fa$", full.names = TRUE)
 
-out <- lapply(seqs, function(i){
+# remove those wtih repeated species
+seqs <- grep("early", seqs, value = TRUE)
+
+algn_plots <- lapply(seqs, function(i){
   ggmsa(i, color = "Chemistry_AA") + ggtitle(gsub("_|\\.fa", " ", basename(i)))
   })
 
-out
+names(algn_plots) <- basename(seqs)
+
+algn_plots
 
 ```
 
-<<<<<<< HEAD
-```{r save nexus files, eval = FALSE,  echo = TRUE}
-=======
-```{r create nexus files, eval = TRUE,  echo = TRUE}
-
->>>>>>> 26d435e12b337cfd22829689cf28ad2aa86dfd30
+# Save nexus files
+```{r save nexus files, eval = FALSE}
 
 ### Convert fasta alignment to nexus
 # read all alignments
@@ -431,11 +584,15 @@ all.algs <- list.files(pattern = ".fa$", path = "./data/processed/mafft_alignmen
 for (j in all.algs){
 
   lek <- substring(j, 0, 3) 
-  cost_mat <- ifelse(grepl("optimal", j), "optimal", "all.equal")
+  cost_mat <- if(grepl("optimal", j)) "optimal" 
+  cost_mat <- if(grepl("all.equal", j)) "all.equal" 
+  cost_mat <- if(grepl("prank", j)) "prank" 
+  
   use_old_fossils <- ifelse(grepl("old", j), "old", "new")
   
+  
   # paste together call
-  cll <- paste0(" perl ./source/convertfasta2nex.pl ./data/processed/mafft_alignments/", grep("all_new", sub.algs, value = TRUE), " > ",  "./data/processed/nexus/", gsub("\\.fa$", ".nex", j))
+  cll <- paste0(" perl ./source/convertfasta2nex.pl ./data/processed/mafft_alignments/", j, " > ",  "./data/processed/nexus/", gsub("\\.fa$", ".nex", j))
 
  # call perl
  system(cll)  
@@ -445,203 +602,39 @@ for (j in all.algs){
 Nex.file <-list.files(pattern = ".nex$", path = "./data/processed/nexus/", full.names = TRUE)
 
  
- for(i in Nex.file){  
+for(i in Nex.file){  
    align <- readLines(i)
     align[4] <- 'format datatype=standard gap=- missing=? symbols="dfmpsu";'
+    
+    # change seqs back to sound segments
+    if (grepl("prank", i)){
+
+      seqs <- align[7:(length(align)-2)]   
+      sep <- separate(data.frame(seqs = seqs),col = "seqs",sep =   "\t", into = c("song", "seqs")) 
+      
+      
+      # replace song segments with bases
+        sep$seqs <- gsub(pattern = "C", replacement = "f", x = sep$seqs) # trill to pyrimidine
+        sep$seqs <- gsub(pattern = "T", replacement = "s", x = sep$seqs) # trill to pyrimidine
+      sep$seqs <- gsub(pattern = "Y", replacement = "m", x = sep$seqs) # medium trill treated as ambiguous between fast and slow
+      sep$seqs <- gsub(pattern = "A", replacement = "u", x = sep$seqs) # tone to purine
+      sep$seqs <- gsub(pattern = "G", replacement = "d", x = sep$seqs) # tone to purine
+      sep$seqs <- gsub(pattern = "R", replacement = "p", x = sep$seqs)
+    
+         align[7:(length(align)-2)] <- paste0(sep$song, "\t", sep$seqs)       
+                   }
     write(align, i)
 }
 
 
 ```
 
-<<<<<<< HEAD
-```{r revbayes loop, eval = FALSE,  echo = TRUE}
+---
 
-dat <- read.csv("./data/raw/segments_by_song_type.csv", stringsAsFactors = FALSE)
+<font size="4">R session information</font>
 
-yrs <- read.csv("./data/raw/year_range_by_song_type.csv", stringsAsFactors = FALSE)
+```{r session info, echo=F}
 
-yrs$song.type.year <- paste(yrs$song.type, yrs$year, sep = "-")
+sessionInfo()
 
-nexs <- list.files(path = "data/processed/nexus", pattern = ".nex$")
-
-# create taxa tsv files for revBayes 
-#(run only over the optimals as fossils for optimal and all.equal  are the same)
-out <- lapply(nexs[grepl("optimal", nexs)], function(x){
-  
- # get lek fossils
-  X <- yrs[yrs$lek == substring(x, 0, 3), ]
-  X$taxon <- X$song.type.year
-  
-  # get last year as 0
-  X$max <- X$min <- max(X$year) - X$year
-  
-  # order by year
-  X <- X[order(X$song.type, X$year), ]
-  
-  
-  # only first appearance of song type/fossil including before 2008   
-  if (grepl("early", x))
-    X <- X[!duplicated(X$song.type), ]
-   
-  # only after 2000
-  if (grepl("new", x)) 
-    X <- X[X$year > 2000, ]  
-  
-  # name of tsv (taxa) file
-  tsv.name <- gsub("optimal", "taxa", x)
-  tsv.name <- gsub("_alignment.nex", ".tsv", tsv.name)
-  
-  write.table(X[, c("taxon", "min", "max")], file = paste0("./data/processed/fossils/", tsv.name),  sep = "\t", quote = FALSE, row.names = FALSE)
-  
-})
-
-
-# grd <- expand.grid(lek = leks, alignment = alignment, use_old_fossils = use_old_fossils, use_all_fossils = use_all_fossils)
-# 
-# templ <- readLines("./data/processed/revBayes/template.Rev")
-# 
-# algs <- list.files(path = "./data/processed/nexus", pattern = "\\.nex$")
-# 
-# algs <- grep(pattern = "optimal", algs, value = TRUE)
-# 
-# # grd <- grd[grd$alignment == "optimal", ]
-
-out <- lapply(nexs, cl = detectCores() - 1, function(x){
-  
-  yrs.lek <- yrs[yrs$lek == substring(x, 0, 3) ,]
-  last.year.songs <- yrs.lek$song.type.year[yrs.lek$year == max(yrs.lek$year)]
-  
-  last.year.songs <- paste0(paste0('"', last.year.songs), '"')
-  
-  last.year.songs <- paste0("clade(", paste0(last.year.songs, collapse = ", "), ")")
-  
-     # name of tsv (taxa) file
-    tsv.name <- gsub("optimal", "taxa", x)
-    tsv.name <- file.path("./data/processed/fossils", gsub("_alignment.nex", ".tsv", tsv.name))
-    
-    templ <- suppressWarnings(readLines("./source/template.Rev"))
-
-    templ[1] <- gsub("aligment.name", file.path("./data/processed/nexus", x), templ[1])
-    templ[2] <- gsub("tsv.file", tsv, templ[2])
-    templ[7] <- gsub("LAST.SONG.TYPES", last.year.songs, templ[7])
-    
-    
-    fl.nm.rb <- file.path("./source", gsub("_alignment.nex", ".Rev", x))
-     
-    writeLines(templ, con = fl.nm.rb)
-
-    # cll <- paste0("~/Downloads/revbayes/projects/cmake/rb ", fl.nm.rb)
-    cll <- paste0("~/Documents/Marcelo/song_alignment/boost_1_71_0/revbayes/projects/cmake/rb ", fl.nm.rb) 
-    
-     system(cll,  show.output.on.console = FALSE)
-})
-                                                                                                                                                                          # ~/Documents/Marcelo/song_alignment/lbh_cultural_evolution/output/data/processed/nexus/                                                                                                                                                                                                         
-
-  
 ```
-
-```{r revbayes loop, eval = FALSE,  echo = TRUE}
-=======
-```{r revbayes loop}
->>>>>>> 26d435e12b337cfd22829689cf28ad2aa86dfd30
-
-dat <- read.csv("./data/raw/segments_by_song_type.csv", stringsAsFactors = FALSE)
-
-yrs <- read.csv("./data/raw/year_range_by_song_type.csv", stringsAsFactors = FALSE)
-
-yrs$song.type.year <- paste(yrs$song.type, yrs$year, sep = "-")
-
-
-alignment	<- c("optimal", "all.equal") # ER = equal rates
-
-# use all fosils (e.g. SURA-2011, SURA-2012, )
-use_all_fossils <- c("all", "early")
-
-# include also fossils before 2008
-use_old_fossils <-  c("old", "new")
-
-
-# create taxa tsv files for revBayes
-out <- lapply(unique(leks), function(x)
-{
-  
-  X <- yrs[yrs$lek == x, ]
-  X$taxon <- X$song.type.year
-  
-  X$max <- X$min <- max(X$year) - X$year
-  
-  # all fossils including before 2008
-  all.old <- X <- X[order(X$song.type, X$year), ]
-  
-  write.table(all.old[, c("taxon", "min", "max")], file = paste0("./data/processed/revBayes/fossils/", x, "_taxa_all_old.tsv"),  sep = "\t", quote = FALSE, row.names = FALSE)
-
-  # only first appearance of song type/fossil including before 2008   
-  early.old <- X[!duplicated(X$song.type), ]
-  
-  write.table(early.old[, c("taxon", "min", "max")], file = paste0("./data/processed/revBayes/fossils/", x,  "_taxa_early_old.tsv"), sep = "\t", quote = FALSE, row.names = FALSE)
-
-  
-  Y <- X[X$year > 2007, ] 
-  Y <- Y[order(Y$song.type, Y$year), ]
-  
-  # all fossils excluding before 2008
-  all.new <- Y
-  
-    write.table(all.new[, c("taxon", "min", "max")], file = paste0("./data/processed/revBayes/fossils/", x,  "_taxa_all_new.tsv"), sep = "\t", quote = FALSE, row.names = FALSE)
-
-
-  # only first appearance of song type/fossil including before 2008   
-  early.new <- Y[!duplicated(Y$song.type), ]
-  
-  write.table(early.new[, c("taxon", "min", "max")], file = paste0("./data/processed/revBayes/fossils/", x,  "_taxa_early_new.tsv"), sep = "\t", quote = FALSE, row.names = FALSE)
-
-  
-} )
-
-
-grd <- expand.grid(lek = leks, alignment = alignment, use_old_fossils = use_old_fossils, use_all_fossils = use_all_fossils)
-
-templ <- readLines("./data/processed/revBayes/template.Rev")
-
-algs <- list.files(path = "./data/processed/nexus", pattern = "\\.nex$")
-
-algs <- grep(pattern = "optimal", algs, value = TRUE)
-
-# grd <- grd[grd$alignment == "optimal", ]
-
-
-out <- pblapply(1:nrow(grd), cl = detectCores() - 1, function(x){
-  
-  yrs.lek <- yrs[yrs$lek == grd$lek[x],]
-  last.year.songs <- yrs.lek$song.type.year[yrs.lek$year == max(yrs.lek$year)]
-  
-  last.year.songs <- paste0(paste0('"', last.year.songs), '"')
-  
-  last.year.songs <- paste0("clade(", paste0(last.year.songs, collapse = ", "), ")")
-  
- nx <- paste0("./data/processed/nexus/", grd$lek[x], "_", grd$use_all_fossils[x], "_", grd$use_old_fossils[x], ".nex")
-  
-  tsv <- paste0("./data/processed/revBayes/fossils/", grd$lek[x], "_taxa_", grd$use_all_fossils[x], "_", grd$use_old_fossils[x], ".tsv")
-  
-    templ <- readLines("./source/template.Rev")
-
-    templ[1] <- gsub("aligment.name", nx, templ[1])
-    templ[2] <- gsub("tsv.file", tsv, templ[2])
-    templ[7] <- gsub("LAST.SONG.TYPES", last.year.songs, templ[7])
-    
-    
-    fl.nm.rb <- paste0("./source/", grd$lek[x], "_", grd$use_all_fossils[x], "_", grd$use_old_fossils[x],".Rev")
-     
-    writeLines(templ, con = fl.nm.rb)
-
-    # cll <- paste0("~/Downloads/revbayes/projects/cmake/rb ", fl.nm.rb)
-    cll <- paste0("~/Documents/Marcelo/song_alignment/boost_1_71_0/revbayes/projects/cmake/rb ", fl.nm.rb) 
-    
-     system(cll,  show.output.on.console = FALSE)
-})
-                                                                                                                                                                          # ~/Documents/Marcelo/song_alignment/lbh_cultural_evolution/output/data/processed/nexus/                                                                                                                                                                                                         
-
-  
-```
-

@@ -1,6 +1,6 @@
 #NEXUS
 Begin data;
-dimensions ntax=40 nchar=48;
+dimensions ntax=38 nchar=48;
 format datatype=standard gap=- missing=? symbols="dfmpsu";
 matrix
 
@@ -15,34 +15,32 @@ CCL-F2-1989	----dpufffpfffdp-------------------ufffffff-----
 CCL-H1-1989	-----pupffffuffp-------------------uuffffuff----
 CCL-J1-1989	-----puffpppfffp-------------------pfffffpff----
 CCL-G1-2008	--------pppppppp-------------------upppppdppppd-
-CCL-G1-2008	--------pppppppp-------------------upppppdppppd-
 CCL-K2-2011	--------uupuduup--------------------dpuupdpuupdd
 CCL-M1-2014	---------uppdupp-------------------pdpuppdpuppdd
 CCL-L1-2013	-----puupuppdppp-------------------uuuupfdpu----
-CCL-L1-2014	-----puupuppdppp-------------------uuuupfdpu----
-CCL-L1-2015	-----puupuppdppp-------------------uuuupfdpu----
-CCL-L1-2016	-----puupuppdppp-------------------uuuupfdpu----
-CCL-L1-2017	-----puupuppdppp-------------------uuuupfdpu----
-CCL-L1-2018	-----puupuppdppp-------------------uuuupfdpu----
-CCL-L1-2019	-----puupuppdppp-------------------uuuupfdpu----
 CCL-N1-2015	---pppuuuufppppp-------------------uuuuffp------
-CCL-N1-2016	---pppuuuufppppp-------------------uuuuffp------
-CCL-N1-2017	---pppuuuufppppp-------------------uuuuffp------
-CCL-N1-2018	---pppuuuufppppp-------------------uuuuffp------
-CCL-N1-2019	---pppuuuufppppp-------------------uuuuffp------
 CCL-N2-2019	---ppppupppppppp-------------------uuupppp------
 CCL-L2-2013	-----ppuupffdffp-------------------uupppfdpf----
-CCL-L2-2014	-----ppuupffdffp-------------------uupppfdpf----
-CCL-L2-2015	-----ppuupffdffp-------------------uupppfdpf----
-CCL-L2-2016	-----ppuupffdffp-------------------uupppfdpf----
-CCL-L2-2017	-----ppuupffdffp-------------------uupppfdpf----
-CCL-L2-2018	-----ppuupffdffp-------------------uupppfdpf----
-CCL-L2-2019	-----ppuupffdffp-------------------uupppfdpf----
 CCL-K1-2008	--------uuuuduuu-------------------uduuuuduuuud-
-CCL-K1-2008	--------uuuuduuu-------------------uduuuuduuuud-
-CCL-K1-2009	--------uuuuduuu-------------------uduuuuduuuud-
-CCL-K1-2010	--------uuuuduuu-------------------uduuuuduuuud-
-CCL-K1-2011	--------uuuuduuu-------------------uduuuuduuuud-
-CCL-K1-2012	--------uuuuduuu-------------------uduuuuduuuud-
+CCL-K1-2009	AG----------------------------------------------
+CCL-K1-2010	AG----------------------------------------------
+CCL-K1-2011	AG----------------------------------------------
+CCL-K1-2012	AG----------------------------------------------
+CCL-L1-2014	CGRA--------------------------------------------
+CCL-L1-2015	CGRA--------------------------------------------
+CCL-L1-2016	CGRA--------------------------------------------
+CCL-L1-2017	CGRA--------------------------------------------
+CCL-L1-2018	CGRA--------------------------------------------
+CCL-L1-2019	CGRA--------------------------------------------
+CCL-N1-2016	CR----------------------------------------------
+CCL-N1-2017	CR----------------------------------------------
+CCL-N1-2018	CR----------------------------------------------
+CCL-N1-2019	CR----------------------------------------------
+CCL-L2-2014	CGRC--------------------------------------------
+CCL-L2-2015	CGRC--------------------------------------------
+CCL-L2-2016	CGRC--------------------------------------------
+CCL-L2-2017	CGRC--------------------------------------------
+CCL-L2-2018	CGRC--------------------------------------------
+CCL-L2-2019	CGRC--------------------------------------------
 ;
 end;
