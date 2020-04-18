@@ -1,5 +1,5 @@
-alignment	= "./data/processed/nexus/CCE_all.equal_early_new_alignment.nex"
-fossils	= "./data/processed/revBayes/fossils/BR1_taxa_all_new.tsv"
+alignment	= "./data/processed/nexus/CCE_all.equal_all_old_alignment.nex"
+fossils	= "./data/processed/revBayes/fossils/CCE_taxa_all_old.tsv"
 rv = floor(runif(1,100000,999999)[1])
 base_str = alignment + "_" + fossils + "_" + rv
 
