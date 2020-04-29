@@ -10,21 +10,21 @@ SAT-C1-1989	---------ufff-----------------fffpffpffpfffpff
 SAT-C2-1989	---------uffu-----------------uffuffusfusffuff
 SAT-E1-1989	--------pufff-----------------fffppppffffffpp-
 SAT-G3-2014	--------mmfff----mm-----------fffmmfffmmfff---
+SAT-G3-2015	--------mmfff----mm-----------fffmmfffmmfff---
+SAT-G3-2016	--------mmfff----mm-----------fffmmfffmmfff---
+SAT-G3-2017	--------mmfff----mm-----------fffmmfffmmfff---
 SAT-D1-1989	---dpsssmmfffdpssmmf----------fff-------------
 SAT-D2-1989	---dpssmmmfffdpssmmm----------fff-------------
 SAT-G4-2017	----psmmmfffffpssmmf----------ffff------------
 SAT-D3-1989	---ummmmmmfff-psmmmmm--------mff--------------
 SAT-F2-2013	ussusspmmmpmm-pmmdmmd-------------------------
 SAT-G1-2013	-----sssmm-----sssmmssssssssmm----------------
+SAT-G1-2014	-----sssmm-----sssmmssssssssmm----------------
+SAT-G1-2015	-----sssmm-----sssmmssssssssmm----------------
+SAT-G1-2016	-----sssmm-----sssmmssssssssmm----------------
+SAT-G1-2017	-----sssmm-----sssmmssssssssmm----------------
 SAT-G2-2013	-----ssmmm-----ssmmmssmmmssmmm----------------
-SAT-G1-2014	-----TTTYY-----TTTYYTTTTTTTTYY----------------
-SAT-G1-2015	-----TTTYY-----TTTYYTTTTTTTTYY----------------
-SAT-G1-2016	-----TTTYY-----TTTYYTTTTTTTTYY----------------
-SAT-G1-2017	-----TTTYY-----TTTYYTTTTTTTTYY----------------
-SAT-G2-2014	--------TTYYY--TTYYYTT--------YYYTTYYY--------
-SAT-G3-2015	-----------YY--CCCYYCCC-------YYCCCYYCCC------
-SAT-G3-2016	-----------YY--CCCYYCCC-------YYCCCYYCCC------
-SAT-G3-2017	-----------YY--CCCYYCCC-------YYCCCYYCCC------
+SAT-G2-2014	-----ssmmm-----ssmmmssmmmssmmm----------------
 SAT-F1-1989	---------dppu-----------------uuupppdppuuuuppp
 ;
 end;

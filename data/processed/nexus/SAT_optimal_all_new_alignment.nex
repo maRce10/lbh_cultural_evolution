@@ -6,16 +6,16 @@ matrix
 
 SAT-F2-2013	ussus------spmmmpmmpmmdmmd--------------
 SAT-G1-2013	sssmm------sssmmssssssssmm--------------
+SAT-G1-2014	sssmm------sssmmssssssssmm--------------
+SAT-G1-2015	sssmm------sssmmssssssssmm--------------
+SAT-G1-2016	sssmm------sssmmssssssssmm--------------
+SAT-G1-2017	sssmm------sssmmssssssssmm--------------
 SAT-G2-2013	ssmmm------ssmmmssmmmssmmm--------------
-SAT-G1-2014	TTTYY------TTTYYTTTTTTTTYY--------------
-SAT-G1-2015	TTTYY------TTTYYTTTTTTTTYY--------------
-SAT-G1-2016	TTTYY------TTTYYTTTTTTTTYY--------------
-SAT-G1-2017	TTTYY------TTTYYTTTTTTTTYY--------------
-SAT-G2-2014	TTYYY------TTYYYTTYYYTTYYY--------------
-SAT-G3-2015	---YY------CCCYYCCCYYCCCYYCCC-----------
-SAT-G3-2016	---YY------CCCYYCCCYYCCCYYCCC-----------
-SAT-G3-2017	---YY------CCCYYCCCYYCCCYYCCC-----------
+SAT-G2-2014	ssmmm------ssmmmssmmmssmmm--------------
 SAT-G3-2014	---mmfff----------------mmfffmmff-fmmfff
+SAT-G3-2015	---mmfff----------------mmfffmmff-fmmfff
+SAT-G3-2016	---mmfff----------------mmfffmmff-fmmfff
+SAT-G3-2017	---mmfff----------------mmfffmmff-fmmfff
 SAT-G4-2017	psmmmfffffpss-----------mmfff--ff-------
 SAT-H1-2017	ps---ffffff---------------fff--fffffffff
 ;
