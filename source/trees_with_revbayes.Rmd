@@ -118,6 +118,8 @@ algs <- list.files(path = "./data/processed/nexus", pattern = "\\.nex$")
 
 grd <- grd[order(grd$lek), ]
 
+grd$output <- apply(grd, 1, paste, collapse = "_")
+
 # remove leks with output
 current.output <- list.files(pattern = "log$|trees$", path = "./output/revbayes", recursive = TRUE)
 
@@ -125,7 +127,6 @@ done.leks <- unique(substr(current.output, start = 0, 3))
 
 grd <- grd[!(grd$lek %in% done.leks & grd$alignment != "prank"), ]
 
-nrow(grd)
 
 out <- pblapply(1:nrow(grd), cl = 4, function(x){
   
@@ -144,11 +145,11 @@ out <- pblapply(1:nrow(grd), cl = 4, function(x){
 
     templ[1] <- gsub("aligment.name", nx, templ[1])
     templ[2] <- gsub("tsv.file", tsv, templ[2])
-    templ[8] <- gsub("LAST.SONG.TYPES", last.year.songs, templ[8])
-    templ[4] <- gsub("output.base.name", gsub("_alignment.nex", "",  basename(nx)), templ[4])
+    templ[4] <- gsub("output.base.name", file.path("./output/revbayes", grd$output[x]), templ[4])
+    templ[10] <- gsub("LAST.SONG.TYPES", last.year.songs, templ[8])
+   
     
-    
-    fl.nm.rb <- paste0("./source/", grd$lek[x], "_", grd$use_all_fossils[x], "_", grd$use_old_fossils[x],".Rev")
+    fl.nm.rb <- paste0("./source/", grd$output[x], ".Rev")
      
     writeLines(templ, con = fl.nm.rb)
 
