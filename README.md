@@ -1,7 +1,7 @@
 
 # Cultural evolution in long-billed hermits
 
-> Unvailing the evolutionary dynamics that generated complex vocalizations in hummingbirds
+> creating long-billed hermit song cultural evolution trees and analyzing evolutionary patterns
 
 ![Example figure](./img/example_fig.png)
 
