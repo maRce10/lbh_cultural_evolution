@@ -1,6 +1,6 @@
 #NEXUS
 Begin data;
-dimensions ntax=26 nchar=48;
+dimensions ntax=31 nchar=48;
 format datatype=standard gap=- missing=? symbols="dfmpsu";
 matrix
 
@@ -10,6 +10,11 @@ HC1-J1-1997	-------------------------ppssuuusssppsssuusss---
 HC1-I1-1997	-------------------------uusfpppsfdppsfdppsfd---
 HC1-F1-1992	--------------------------psspppsspppsspppsspp--
 HC1-F2-1992	us-----------------------ppsspppssppsssssps-----
+HC1-F2-1993	us-----------------------ppsspppssppsssssps-----
+HC1-F2-1994	us-----------------------ppsspppssppsssssps-----
+HC1-F2-1995	us-----------------------ppsspppssppsssssps-----
+HC1-F2-1996	us-----------------------ppsspppssppsssssps-----
+HC1-F2-1997	us-----------------------ppsspppssppsssssps-----
 HC1-K1-2011	-------------------------pppppppppppppppppppp---
 HC1-K1-2012	-------------------------pppppppppppppppppppp---
 HC1-K1-2013	-------------------------pppppppppppppppppppp---

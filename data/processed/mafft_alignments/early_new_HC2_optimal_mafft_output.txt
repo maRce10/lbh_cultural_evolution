@@ -1,172 +1,0 @@
-outputhat23=16
-treein = 0
-compacttree = 0
-stacksize: 8192 kb
-nalphabets = 256
-Score(s=0x73,s=0x73)=2.000000
-Score(u=0x75,s=0x73)=0.500000
-Score(p=0x70,s=0x73)=0.500000
-Score(m=0x6d,s=0x73)=1.250000
-Score(f=0x66,s=0x73)=0.500000
-Score(d=0x64,s=0x73)=1.250000
-Score(s=0x73,u=0x75)=0.500000
-Score(u=0x75,u=0x75)=2.000000
-Score(p=0x70,u=0x75)=1.250000
-Score(m=0x6d,u=0x75)=0.500000
-Score(f=0x66,u=0x75)=1.250000
-Score(d=0x64,u=0x75)=0.500000
-Score(s=0x73,p=0x70)=0.500000
-Score(u=0x75,p=0x70)=1.250000
-Score(p=0x70,p=0x70)=2.000000
-Score(m=0x6d,p=0x70)=0.500000
-Score(f=0x66,p=0x70)=1.250000
-Score(d=0x64,p=0x70)=0.500000
-Score(s=0x73,m=0x6d)=1.250000
-Score(u=0x75,m=0x6d)=0.500000
-Score(p=0x70,m=0x6d)=0.500000
-Score(m=0x6d,m=0x6d)=2.000000
-Score(f=0x66,m=0x6d)=0.500000
-Score(d=0x64,m=0x6d)=1.250000
-Score(s=0x73,f=0x66)=0.500000
-Score(u=0x75,f=0x66)=1.250000
-Score(p=0x70,f=0x66)=1.250000
-Score(m=0x6d,f=0x66)=0.500000
-Score(f=0x66,f=0x66)=2.000000
-Score(d=0x64,f=0x66)=0.500000
-Score(s=0x73,d=0x64)=1.250000
-Score(u=0x75,d=0x64)=0.500000
-Score(p=0x70,d=0x64)=0.500000
-Score(m=0x6d,d=0x64)=1.250000
-Score(f=0x66,d=0x64)=0.500000
-Score(d=0x64,d=0x64)=2.000000
-All-to-all alignment.
-    0 / 6    1 / 6    2 / 6    3 / 6    4 / 6tbfast-pair (text) Version 7.450
-alg=L, model=Extended, 2.00, -0.10, +0.10, noshift, amax=0.0
-0 thread(s)
-
-outputhat23=16
-Loading 'hat3.seed' ... 
-done.
-Writing hat3 for iterative refinement
-nalphabets = 256
-Score(s=0x73,s=0x73)=2.000000
-Score(u=0x75,s=0x73)=0.500000
-Score(p=0x70,s=0x73)=0.500000
-Score(m=0x6d,s=0x73)=1.250000
-Score(f=0x66,s=0x73)=0.500000
-Score(d=0x64,s=0x73)=1.250000
-Score(s=0x73,u=0x75)=0.500000
-Score(u=0x75,u=0x75)=2.000000
-Score(p=0x70,u=0x75)=1.250000
-Score(m=0x6d,u=0x75)=0.500000
-Score(f=0x66,u=0x75)=1.250000
-Score(d=0x64,u=0x75)=0.500000
-Score(s=0x73,p=0x70)=0.500000
-Score(u=0x75,p=0x70)=1.250000
-Score(p=0x70,p=0x70)=2.000000
-Score(m=0x6d,p=0x70)=0.500000
-Score(f=0x66,p=0x70)=1.250000
-Score(d=0x64,p=0x70)=0.500000
-Score(s=0x73,m=0x6d)=1.250000
-Score(u=0x75,m=0x6d)=0.500000
-Score(p=0x70,m=0x6d)=0.500000
-Score(m=0x6d,m=0x6d)=2.000000
-Score(f=0x66,m=0x6d)=0.500000
-Score(d=0x64,m=0x6d)=1.250000
-Score(s=0x73,f=0x66)=0.500000
-Score(u=0x75,f=0x66)=1.250000
-Score(p=0x70,f=0x66)=1.250000
-Score(m=0x6d,f=0x66)=0.500000
-Score(f=0x66,f=0x66)=2.000000
-Score(d=0x64,f=0x66)=0.500000
-Score(s=0x73,d=0x64)=1.250000
-Score(u=0x75,d=0x64)=0.500000
-Score(p=0x70,d=0x64)=0.500000
-Score(m=0x6d,d=0x64)=1.250000
-Score(f=0x66,d=0x64)=0.500000
-Score(d=0x64,d=0x64)=2.000000
-Gap Penalty = -1.53, +0.00, +0.00
-tbutree = 1, compacttree = 0
-Constructing a UPGMA tree ... 
-    0 / 6
-done.
-
-Progressive alignment ... 
-STEP     1 /5 STEP     2 /5 STEP     3 /5 
-Reallocating..done. *alloclen = 1045
-STEP     4 /5 STEP     5 /5 
-done.
-tbfast (text) Version 7.450
-alg=A, model=Extended, 1.53, -0.00, -0.00, noshift, amax=0.0
-1 thread(s)
-
-minimumweight = 0.000010
-autosubalignment = 0.000000
-nthread = 0
-randomseed = 0
-blosum -2 / kimura 200
-poffset = 0
-niter = 16
-sueff_global = 0.100000
-nadd = 16
-Loading 'hat3' ... done.
-nalphabets = 256
-Score(s=0x73,s=0x73)=2.000000
-Score(u=0x75,s=0x73)=0.500000
-Score(p=0x70,s=0x73)=0.500000
-Score(m=0x6d,s=0x73)=1.250000
-Score(f=0x66,s=0x73)=0.500000
-Score(d=0x64,s=0x73)=1.250000
-Score(s=0x73,u=0x75)=0.500000
-Score(u=0x75,u=0x75)=2.000000
-Score(p=0x70,u=0x75)=1.250000
-Score(m=0x6d,u=0x75)=0.500000
-Score(f=0x66,u=0x75)=1.250000
-Score(d=0x64,u=0x75)=0.500000
-Score(s=0x73,p=0x70)=0.500000
-Score(u=0x75,p=0x70)=1.250000
-Score(p=0x70,p=0x70)=2.000000
-Score(m=0x6d,p=0x70)=0.500000
-Score(f=0x66,p=0x70)=1.250000
-Score(d=0x64,p=0x70)=0.500000
-Score(s=0x73,m=0x6d)=1.250000
-Score(u=0x75,m=0x6d)=0.500000
-Score(p=0x70,m=0x6d)=0.500000
-Score(m=0x6d,m=0x6d)=2.000000
-Score(f=0x66,m=0x6d)=0.500000
-Score(d=0x64,m=0x6d)=1.250000
-Score(s=0x73,f=0x66)=0.500000
-Score(u=0x75,f=0x66)=1.250000
-Score(p=0x70,f=0x66)=1.250000
-Score(m=0x6d,f=0x66)=0.500000
-Score(f=0x66,f=0x66)=2.000000
-Score(d=0x64,f=0x66)=0.500000
-Score(s=0x73,d=0x64)=1.250000
-Score(u=0x75,d=0x64)=0.500000
-Score(p=0x70,d=0x64)=0.500000
-Score(m=0x6d,d=0x64)=1.250000
-Score(f=0x66,d=0x64)=0.500000
-Score(d=0x64,d=0x64)=2.000000
-
-    0 / 6
-Segment   1/  1    1-  55
-STEP 001-001-0  accepted.STEP 001-001-1  rejected.STEP 001-002-0  rejected.STEP 001-002-1  rejected.STEP 001-003-0  rejected.STEP 001-003-1  rejected.STEP 001-004-0  accepted.STEP 001-004-1  rejected.STEP 001-005-1  rejected.STEP 002-005-1  rejected.STEP 002-004-0  identical.   STEP 002-004-1  rejected.STEP 002-003-0  rejected.STEP 002-003-1  rejected.STEP 002-002-0  rejected.STEP 002-002-1  rejected.STEP 002-001-0  rejected.STEP 002-001-1  rejected.STEP 003-001-0  rejected.
-Converged.
-
-done
-dvtditr (text) Version 7.450
-alg=A, model=Extended, 1.53, -0.00, -0.00, noshift, amax=0.0
-0 thread(s)
-
-
-Strategy:
- L-INS-i (Probably most accurate, very slow)
- Iterative refinement method (<16) with LOCAL pairwise alignment information
-
-If unsure which option to use, try 'mafft --auto input > output'.
-For more information, see 'mafft --help', 'mafft --man' and the mafft page.
-
-The default gap scoring scheme has been changed in version 7.110 (2013 Oct).
-It tends to insert more gaps into gap-rich regions than previous versions.
-To disable this change, add the --leavegappyregion option.
-

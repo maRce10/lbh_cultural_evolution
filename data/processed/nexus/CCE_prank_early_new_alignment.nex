@@ -5,13 +5,13 @@ format datatype=standard gap=- missing=? symbols="dfmpsu";
 matrix
 
 CCE-H1-2008	-------ssssssssssssssssssss---
-CCE-I4-2018	pm-----mmmdffpfummmmdffpu-----
-CCE-I5-2018	um-----mmmdpupmummmmdpupm-----
+CCE-I4-2018	-----pmmmmdffpfummmmdffpu-----
+CCE-I5-2018	-----ummmmdpupmummmmdpupm-----
 CCE-J1-2011	-------mmmdpmmmdpmmmdpmmmdp---
 CCE-I3-2011	-------mmppdummddmmppdmmddu---
 CCE-I1-2008	-------fffddduffd--dddfffdd-dd
-CCE-I2-2008	---ffpffffd---fff--fddfffdff--
-CCE-J2-2014	--fffpffffp---fff--fdffffdf---
+CCE-I2-2008	-ffpf--fffd---fff--fddfffdff--
+CCE-J2-2014	fffpf--fffp---fff--fdffffdf---
 CCE-K1-2011	-------psfddusfddssfdddsfdd---
 ;
 end;

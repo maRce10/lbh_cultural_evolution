@@ -1,8 +1,0 @@
-#NEXUS
-Begin data;
-dimensions ntax=0 nchar=;
-format datatype=standard gap=- missing=? symbols="dfmpsu";
-matrix
-
-;
-end;

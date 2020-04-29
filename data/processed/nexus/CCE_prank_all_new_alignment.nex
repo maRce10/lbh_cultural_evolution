@@ -12,8 +12,8 @@ CCE-J1-2013	-------mmmdpmmmdpmmmdpmmmdp---
 CCE-J1-2014	-------mmmdpmmmdpmmmdpmmmdp---
 CCE-I3-2011	-------mmppdummddmmppdmmddu---
 CCE-K1-2011	-------psfddusfddssfdddsfdd---
-CCE-I4-2018	pm-----mmmdffpfummmmdffpu-----
-CCE-I5-2018	um-----mmmdpupmummmmdpupm-----
+CCE-I4-2018	-----pmmmmdffpfummmmdffpu-----
+CCE-I5-2018	-----ummmmdpupmummmmdpupm-----
 CCE-I1-2008	-------fffddduffd--dddfffdd-dd
 CCE-I1-2009	-------fffddduffd--dddfffdd-dd
 CCE-I1-2010	-------fffddduffd--dddfffdd-dd
@@ -21,13 +21,13 @@ CCE-I1-2011	-------fffddduffd--dddfffdd-dd
 CCE-I1-2012	-------fffddduffd--dddfffdd-dd
 CCE-I1-2013	-------fffddduffd--dddfffdd-dd
 CCE-I1-2014	-------fffddduffd--dddfffdd-dd
-CCE-I2-2008	---ffpffffd---fff--fddfffdff--
-CCE-I2-2009	---ffpffffd---fff--fddfffdff--
-CCE-I2-2010	---ffpffffd---fff--fddfffdff--
-CCE-I2-2011	---ffpffffd---fff--fddfffdff--
-CCE-I2-2012	---ffpffffd---fff--fddfffdff--
-CCE-I2-2013	---ffpffffd---fff--fddfffdff--
-CCE-I2-2014	---ffpffffd---fff--fddfffdff--
-CCE-J2-2014	--fffpffffp---fff--fdffffdf---
+CCE-I2-2008	-ffpf--fffd---fff--fddfffdff--
+CCE-I2-2009	-ffpf--fffd---fff--fddfffdff--
+CCE-I2-2010	-ffpf--fffd---fff--fddfffdff--
+CCE-I2-2011	-ffpf--fffd---fff--fddfffdff--
+CCE-I2-2012	-ffpf--fffd---fff--fddfffdff--
+CCE-I2-2013	-ffpf--fffd---fff--fddfffdff--
+CCE-I2-2014	-ffpf--fffd---fff--fddfffdff--
+CCE-J2-2014	fffpf--fffp---fff--fdffffdf---
 ;
 end;
