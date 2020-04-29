@@ -1,14 +1,17 @@
 #NEXUS
 Begin data;
-dimensions ntax=6 nchar=31;
+dimensions ntax=9 nchar=47;
 format datatype=standard gap=- missing=? symbols="dfmpsu";
 matrix
 
-CCE-I3-2011	-----------mmppdummddmmppdmmddu
-CCE-I4-2018	--------pmmmmdffpfummmmdffpu---
-CCE-I5-2018	--------ummmmdpupmummmmdpupm---
-CCE-J1-2011	----------mmmdpmmmdpmmmdpmmmdp-
-CCE-J2-2014	fffpffffpffffdffffdf-----------
-CCE-K1-2011	----------psfddusfddssfdddsfdd-
+CCE-H1-2008	ssssssssssssssssssss---------------------------
+CCE-I1-2008	------------------------fffddduffdd---ddfffdddd
+CCE-I2-2008	--------------------ffpffffd---ffff---ddfffdff-
+CCE-I3-2011	-------------------------mmppdummdd-mmppdmmddu-
+CCE-I4-2018	----------------------pmmmmdffpfumm-mmdffpu----
+CCE-I5-2018	----------------------ummmmdpupmumm-mmdpupm----
+CCE-J1-2011	------------------------mmmdpmmmdpm-mmdpmmmdp--
+CCE-J2-2014	-------------------fffpffffp---ffff---dffffdf--
+CCE-K1-2011	------------------------psfd-dusfddssfdddsfdd--
 ;
 end;

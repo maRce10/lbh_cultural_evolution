@@ -40,7 +40,14 @@ Score(m=0x6d,d=0x64)=1.000000
 Score(f=0x66,d=0x64)=1.000000
 Score(d=0x64,d=0x64)=1.500000
 All-to-all alignment.
-    0 / 6    1 / 6    2 / 6    3 / 6    4 / 6tbfast-pair (text) Version 7.450
+    0 / 9maxwm <- 0.0 
+maxwm <- 0.0 
+maxwm <- 0.0 
+maxwm <- 0.0 
+maxwm <- 0.0 
+maxwm <- 0.0 
+maxwm <- 0.0 
+    1 / 9    2 / 9    3 / 9    4 / 9    5 / 9    6 / 9    7 / 9tbfast-pair (text) Version 7.450
 alg=L, model=Extended, 2.00, -0.10, +0.10, noshift, amax=0.0
 0 thread(s)
 
@@ -88,13 +95,13 @@ Score(d=0x64,d=0x64)=1.500000
 Gap Penalty = -1.53, +0.00, +0.00
 tbutree = 1, compacttree = 0
 Constructing a UPGMA tree ... 
-    0 / 6
+    0 / 9
 done.
 
 Progressive alignment ... 
-STEP     1 /5 STEP     2 /5 
-Reallocating..done. *alloclen = 1042
-STEP     3 /5 STEP     4 /5 STEP     5 /5 
+STEP     1 /8 STEP     2 /8 STEP     3 /8 STEP     4 /8 
+Reallocating..done. *alloclen = 1045
+STEP     5 /8 STEP     6 /8 STEP     7 /8 STEP     8 /8 
 done.
 tbfast (text) Version 7.450
 alg=A, model=Extended, 1.53, -0.00, -0.00, noshift, amax=0.0
@@ -148,9 +155,9 @@ Score(m=0x6d,d=0x64)=1.000000
 Score(f=0x66,d=0x64)=1.000000
 Score(d=0x64,d=0x64)=1.500000
 
-    0 / 6
-Segment   1/  1    1-  32
-STEP 001-001-0  identical.   STEP 001-001-1  identical.   STEP 001-002-0  identical.   STEP 001-002-1  identical.   STEP 001-003-0  rejected.STEP 001-003-1  identical.   STEP 001-004-0  identical.   STEP 001-004-1  identical.   STEP 001-005-1  rejected.STEP 002-005-1  rejected.STEP 002-004-0  identical.   STEP 002-004-1  identical.   
+    0 / 9
+Segment   1/  1    1-  48
+STEP 001-001-0  identical.   STEP 001-001-1  identical.   STEP 001-002-0  identical.   STEP 001-002-1  identical.   STEP 001-003-0  identical.   STEP 001-003-1  identical.   STEP 001-004-0  identical.   STEP 001-004-1  rejected.STEP 001-005-0  rejected.STEP 001-005-1  identical.   STEP 001-006-0  identical.   STEP 001-006-1  identical.   STEP 001-007-0  rejected.STEP 001-007-1  identical.   STEP 001-008-1  rejected.STEP 002-008-1  rejected.STEP 002-007-0  rejected.STEP 002-007-1  identical.   
 Converged.
 
 done

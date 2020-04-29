@@ -40,17 +40,19 @@ Score(m=0x6d,d=0x64)=1.000000
 Score(f=0x66,d=0x64)=1.000000
 Score(d=0x64,d=0x64)=1.500000
 All-to-all alignment.
-    0 / 12    1 / 12maxwm <- 0.0 
+    0 / 13maxwm <- 0.0 
+maxwm <- 0.0 
+    1 / 13    2 / 13maxwm <- 0.0 
 maxwm <- 0.0 
 maxwm <- 0.0 
 maxwm <- 0.0 
-    2 / 12maxwm <- 0.0 
+    3 / 13maxwm <- 0.0 
 maxwm <- 0.0 
 maxwm <- 0.0 
 maxwm <- 0.0 
 maxwm <- 0.0 
 maxwm <- 0.0 
-    3 / 12    4 / 12    5 / 12    6 / 12    7 / 12    8 / 12    9 / 12   10 / 12tbfast-pair (text) Version 7.450
+    4 / 13    5 / 13    6 / 13    7 / 13    8 / 13    9 / 13   10 / 13   11 / 13tbfast-pair (text) Version 7.450
 alg=L, model=Extended, 2.00, -0.10, +0.10, noshift, amax=0.0
 0 thread(s)
 
@@ -98,13 +100,13 @@ Score(d=0x64,d=0x64)=1.500000
 Gap Penalty = -1.53, +0.00, +0.00
 tbutree = 1, compacttree = 0
 Constructing a UPGMA tree ... 
-    0 / 12   10 / 12
+    0 / 13   10 / 13
 done.
 
 Progressive alignment ... 
-STEP     1 /11 STEP     2 /11 STEP     3 /11 STEP     4 /11 
+STEP     1 /12 STEP     2 /12 STEP     3 /12 STEP     4 /12 
 Reallocating..done. *alloclen = 1042
-STEP     5 /11 STEP     6 /11 STEP     7 /11 STEP     8 /11 STEP     9 /11 STEP    10 /11 STEP    11 /11 
+STEP     5 /12 STEP     6 /12 STEP     7 /12 STEP     8 /12 STEP     9 /12 STEP    10 /12 STEP    11 /12 STEP    12 /12 
 done.
 tbfast (text) Version 7.450
 alg=A, model=Extended, 1.53, -0.00, -0.00, noshift, amax=0.0
@@ -158,9 +160,9 @@ Score(m=0x6d,d=0x64)=1.000000
 Score(f=0x66,d=0x64)=1.000000
 Score(d=0x64,d=0x64)=1.500000
 
-    0 / 12   10 / 12
+    0 / 13   10 / 13
 Segment   1/  1    1-  56
-STEP 001-001-0  identical.   STEP 001-001-1  identical.   STEP 001-002-0  identical.   STEP 001-002-1  identical.   STEP 001-003-0  identical.   STEP 001-003-1  identical.   STEP 001-004-0  identical.   STEP 001-004-1  identical.   STEP 001-005-0  rejected.STEP 001-005-1  rejected.STEP 001-006-0  accepted.STEP 001-006-1  identical.   STEP 001-007-0  identical.   STEP 001-007-1  identical.   STEP 001-008-0  identical.   STEP 001-008-1  accepted.STEP 001-009-0  identical.   STEP 001-009-1  accepted.STEP 001-010-0  rejected.STEP 001-010-1  rejected.STEP 001-011-1  rejected.STEP 002-011-1  rejected.STEP 002-010-0  rejected.STEP 002-010-1  rejected.STEP 002-009-0  identical.   STEP 002-009-1  identical.   STEP 002-008-0  rejected.STEP 002-008-1  identical.   STEP 002-007-0  identical.   STEP 002-007-1  identical.   STEP 002-006-0  rejected.STEP 002-006-1  identical.   STEP 002-005-0  identical.   STEP 002-005-1  rejected.STEP 002-004-0  identical.   STEP 002-004-1  identical.   STEP 002-003-0  rejected.STEP 002-003-1  identical.   STEP 002-002-0  identical.   STEP 002-002-1  identical.   STEP 002-001-0  identical.   STEP 002-001-1  rejected.
+STEP 001-001-0  identical.   STEP 001-001-1  identical.   STEP 001-002-0  identical.   STEP 001-002-1  rejected.STEP 001-003-0  identical.   STEP 001-003-1  identical.   STEP 001-004-0  identical.   STEP 001-004-1  identical.   STEP 001-005-0  rejected.STEP 001-005-1  rejected.STEP 001-006-0  rejected.STEP 001-006-1  identical.   STEP 001-007-0  identical.   STEP 001-007-1  rejected.STEP 001-008-0  identical.   STEP 001-008-1  accepted.STEP 001-009-0  rejected.STEP 001-009-1  rejected.STEP 001-010-0  identical.   STEP 001-010-1  rejected.STEP 001-011-0  rejected.STEP 001-011-1  accepted.STEP 001-012-1  identical.   STEP 002-012-1  identical.   STEP 002-011-0  identical.   STEP 002-011-1  identical.   STEP 002-010-0  identical.   STEP 002-010-1  identical.   STEP 002-009-0  rejected.STEP 002-009-1  rejected.STEP 002-008-0  identical.   STEP 002-008-1  accepted.STEP 002-007-0  identical.   STEP 002-007-1  rejected.STEP 002-006-0  accepted.STEP 002-006-1  identical.   STEP 002-005-0  rejected.STEP 002-005-1  rejected.STEP 002-004-0  identical.   STEP 002-004-1  identical.   STEP 002-003-0  identical.   STEP 002-003-1  identical.   STEP 002-002-0  identical.   STEP 002-002-1  rejected.STEP 002-001-0  identical.   STEP 002-001-1  rejected.STEP 003-001-0  identical.   STEP 003-001-1  rejected.STEP 003-002-0  identical.   STEP 003-002-1  rejected.STEP 003-003-0  identical.   STEP 003-003-1  identical.   STEP 003-004-0  identical.   STEP 003-004-1  identical.   STEP 003-005-0  rejected.STEP 003-005-1  rejected.STEP 003-006-0  identical.   STEP 003-006-1  identical.   STEP 003-007-0  identical.   STEP 003-007-1  rejected.STEP 003-008-0  identical.   
 Converged.
 
 done

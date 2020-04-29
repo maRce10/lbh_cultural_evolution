@@ -18,6 +18,8 @@ editor_options:
 
 
 ```{r revbayes loop, eval = FALSE, echo = TRUE}
+#selected leks
+sel_leks <- c("SUR", "CCE", "HC1", "BR1", "TR1")
 
 dat <- read.csv("./data/raw/segments_by_song_type.csv", stringsAsFactors = FALSE)
 
@@ -35,7 +37,7 @@ use_old_fossils <-  c("old", "new")
 
 
 # create taxa tsv files for revBayes
-out <- lapply(unique(leks), function(x)
+out <- lapply(unique(sel_leks), function(x)
 {
   
   X <- yrs[yrs$lek == x, ]
@@ -46,12 +48,12 @@ out <- lapply(unique(leks), function(x)
   # all fossils including before 2008
   all.old <- X <- X[order(X$song.type, X$year), ]
   
-  write.table(all.old[, c("taxon", "min", "max")], file = paste0("./data/processed/revBayes/fossils/", x, "_taxa_all_old.tsv"),  sep = "\t", quote = FALSE, row.names = FALSE)
+  write.table(all.old[, c("taxon", "min", "max")], file = paste0("./data/processed/fossils/", x, "_taxa_all_old.tsv"),  sep = "\t", quote = FALSE, row.names = FALSE)
 
   # only first appearance of song type/fossil including before 2008   
   early.old <- X[!duplicated(X$song.type), ]
   
-  write.table(early.old[, c("taxon", "min", "max")], file = paste0("./data/processed/revBayes/fossils/", x,  "_taxa_early_old.tsv"), sep = "\t", quote = FALSE, row.names = FALSE)
+  write.table(early.old[, c("taxon", "min", "max")], file = paste0("./data/processed/fossils/", x,  "_taxa_early_old.tsv"), sep = "\t", quote = FALSE, row.names = FALSE)
 
   
   Y <- X[X$year > 2007, ] 
@@ -60,13 +62,13 @@ out <- lapply(unique(leks), function(x)
   # all fossils excluding before 2008
   all.new <- Y
   
-    write.table(all.new[, c("taxon", "min", "max")], file = paste0("./data/processed/revBayes/fossils/", x,  "_taxa_all_new.tsv"), sep = "\t", quote = FALSE, row.names = FALSE)
+    write.table(all.new[, c("taxon", "min", "max")], file = paste0("./data/processed/fossils/", x,  "_taxa_all_new.tsv"), sep = "\t", quote = FALSE, row.names = FALSE)
 
 
   # only first appearance of song type/fossil including before 2008   
   early.new <- Y[!duplicated(Y$song.type), ]
   
-  write.table(early.new[, c("taxon", "min", "max")], file = paste0("./data/processed/revBayes/fossils/", x,  "_taxa_early_new.tsv"), sep = "\t", quote = FALSE, row.names = FALSE)
+  write.table(early.new[, c("taxon", "min", "max")], file = paste0("./data/processed/fossils/", x,  "_taxa_early_new.tsv"), sep = "\t", quote = FALSE, row.names = FALSE)
 
   
 } )
@@ -103,14 +105,14 @@ out <- pblapply(1:nrow(grd), cl = 4, function(x){
   
  nx <- paste0("./data/processed/nexus/", grd$lek[x], "_", grd$alignment[x], "_", grd$use_all_fossils[x], "_", grd$use_old_fossils[x], "_alignment.nex")
   
-  tsv <- paste0("./data/processed/revBayes/fossils/", grd$lek[x], "_taxa_", grd$use_all_fossils[x], "_", grd$use_old_fossils[x], ".tsv")
+  tsv <- paste0("./data/processed/fossils/", grd$lek[x], "_taxa_", grd$use_all_fossils[x], "_", grd$use_old_fossils[x], ".tsv")
   
     templ <- readLines("./source/template.Rev")
 
     templ[1] <- gsub("aligment.name", nx, templ[1])
     templ[2] <- gsub("tsv.file", tsv, templ[2])
     templ[4] <- gsub("output.base.name", file.path("./output/revbayes", grd$output[x]), templ[4])
-    templ[10] <- gsub("LAST.SONG.TYPES", last.year.songs, templ[8])
+    templ[10] <- gsub("LAST.SONG.TYPES", last.year.songs, templ[10])
    
     
     fl.nm.rb <- paste0("./source/", grd$output[x], ".Rev")

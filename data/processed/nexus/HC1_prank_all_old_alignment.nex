@@ -1,34 +1,39 @@
 #NEXUS
 Begin data;
-dimensions ntax=26 nchar=34;
+dimensions ntax=31 nchar=31;
 format datatype=standard gap=- missing=? symbols="dfmpsu";
 matrix
 
-HC1-A2-1997	----------uumdduummduumm---duumm-d
-HC1-D1-1991	----------uummpuummpuuss---puumm-p
-HC1-C1-1991	----------uuudduuudduuud---duuud-d
-HC1-H1-1997	----------uuudduuudduupd---duupd-d
-HC1-A1-1991	----------pusddpusddpuss---dpuss-d
-HC1-C2-1991	----------uuduudmuuduudu---uduuu-d
-HC1-C3-1997	----------uufuuffuuduudu---uuduu-d
-HC1-G1-1997	----------psssspsssspsss---sdsss-s
-HC1-J1-1997	----------ppssuuusssppss---suuss-s
-HC1-F2-1992	--------usppsspppssppsss---s--sp-s
-HC1-F1-1992	-----------psspppsspppssppps--sp-p
-HC1-L1-2011	----------ppmppppmppppmmppp---mp-p
-HC1-K1-2011	----------ppppppppppppppppp---pp-p
-HC1-K1-2012	----------ppppppppppppppppp---pp-p
-HC1-K1-2013	----------ppppppppppppppppp---pp-p
-HC1-E1-1992	----------ppmmpdmppmmpdmpmm---mp-m
-HC1-K2-2011	uusfffpp--ppuussf--fp---pp-------p
-HC1-K2-2012	uusfffpp--ppuussf--fp---pp-------p
-HC1-K2-2013	uusfffpp--ppuussf--fp---pp-------p
-HC1-K3-2011	------pf--ppfdppfppfpppfpp-----f-p
-HC1-C4-2011	------pf--dpufdpfdpfdpffdp-----f-d
-HC1-C4-2012	------pf--dpufdpfdpfdpffdp-----f-d
-HC1-C4-2013	------pf--dpufdpfdpfdpffdp-----f-d
-HC1-F3-1997	-----pmf--ppmfppfd--upfudp-----fpu
-HC1-M1-2011	---pufpd--puffppf--fpdpffp-------p
-HC1-I1-1997	----uusf--pp--psfd--ppsfdpp---sf-d
+HC1-K3-2011	------pfppfdppfppfpppfppf----p-
+HC1-C4-2011	------pfdpufdpfdpfdpffdpf----d-
+HC1-C4-2012	------pfdpufdpfdpfdpffdpf----d-
+HC1-C4-2013	------pfdpufdpfdpfdpffdpf----d-
+HC1-F3-1997	--p---mfppmfppfd--upfudpf---pu-
+HC1-M1-2011	---pufpdpuffppf--fpdpffp-----p-
+HC1-L1-2011	--------ppmppppmppppmmpppm--pp-
+HC1-K1-2011	--------pppppppppppppppppp--pp-
+HC1-K1-2012	--------pppppppppppppppppp--pp-
+HC1-K1-2013	--------pppppppppppppppppp--pp-
+HC1-E1-1992	--------ppmmpdmppmmpdmpmmm--pm-
+HC1-G1-1997	--------psssspsssspsss---sdssss
+HC1-J1-1997	--------ppssuuusssppss---suusss
+HC1-F2-1992	us------ppsspppssppsss---s--sps
+HC1-F2-1993	us------ppsspppssppsss---s--sps
+HC1-F2-1994	us------ppsspppssppsss---s--sps
+HC1-F2-1995	us------ppsspppssppsss---s--sps
+HC1-F2-1996	us------ppsspppssppsss---s--sps
+HC1-F2-1997	us------ppsspppssppsss---s--sps
+HC1-F1-1992	---------psspppsspppssppps--spp
+HC1-A1-1991	--------pusddpusddpussdpus--sd-
+HC1-A2-1997	--------uumdduummduummduum--md-
+HC1-D1-1991	--------uummpuummpuusspuum--mp-
+HC1-C1-1991	--------uuudduuudduuudduuu--dd-
+HC1-H1-1997	--------uuudduuudduupdduup--dd-
+HC1-C2-1991	--------uuduudmuuduuduuduu--ud-
+HC1-C3-1997	--------uufuuffuuduuduuudu--ud-
+HC1-I1-1997	--------uusfpppsfdppsfdpps--fd-
+HC1-K2-2011	--------uusfffppppuussffpp--pp-
+HC1-K2-2012	--------uusfffppppuussffpp--pp-
+HC1-K2-2013	--------uusfffppppuussffpp--pp-
 ;
 end;

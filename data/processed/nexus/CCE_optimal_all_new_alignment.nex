@@ -1,33 +1,33 @@
 #NEXUS
 Begin data;
-dimensions ntax=25 nchar=43;
+dimensions ntax=25 nchar=39;
 format datatype=standard gap=- missing=? symbols="dfmpsu";
 matrix
 
-CCE-I3-2011	---mmppdummddmmppdmmd--------------------du
-CCE-I4-2018	pmmmmdffpfummmmdffpu-----------------------
-CCE-I5-2018	ummmmdpupmummmmdpupm-----------------------
-CCE-J1-2011	--mmmdpmmmdpmmmdpmmm---------------------dp
-CCE-J1-2012	--mmmdpmmmdpmmmdpmmm---------------------dp
-CCE-J1-2013	--mmmdpmmmdpmmmdpmmm---------------------dp
-CCE-J1-2014	--mmmdpmmmdpmmmdpmmm---------------------dp
-CCE-K1-2011	------psfddusfddssfdddsf-----------------dd
-CCE-H1-2008	------ssssssssssssssssss-----------------ss
-CCE-H1-2009	------ssssssssssssssssss-----------------ss
-CCE-J2-2014	-----------------------fffpffffpffffdffffdf
-CCE-I2-2008	------------------------ffpffffdffffddfffdf
-CCE-I2-2009	------------------------ffpffffdffffddfffdf
-CCE-I2-2010	------------------------ffpffffdffffddfffdf
-CCE-I2-2011	------------------------ffpffffdffffddfffdf
-CCE-I2-2012	------------------------ffpffffdffffddfffdf
-CCE-I2-2013	------------------------ffpffffdffffddfffdf
-CCE-I2-2014	------------------------ffpffffdffffddfffdf
-CCE-I1-2008	----------------------------fffdffddddfffdd
-CCE-I1-2009	----------------------------fffdffddddfffdd
-CCE-I1-2010	----------------------------fffdffddddfffdd
-CCE-I1-2011	----------------------------fffdffddddfffdd
-CCE-I1-2012	----------------------------fffdffddddfffdd
-CCE-I1-2013	----------------------------fffdffddddfffdd
-CCE-I1-2014	----------------------------fffdffddddfffdd
+CCE-H1-2008	------------------ssssssssssssssssssss-
+CCE-H1-2009	------------------ssssssssssssssssssss-
+CCE-I3-2011	-------------------mmppdummddmmppdmmddu
+CCE-I4-2018	----------------pmmmmdffpfummmmdffpu---
+CCE-I5-2018	----------------ummmmdpupmummmmdpupm---
+CCE-J1-2011	------------------mmmdpmmmdpmmmdpmmmdp-
+CCE-J1-2012	------------------mmmdpmmmdpmmmdpmmmdp-
+CCE-J1-2013	------------------mmmdpmmmdpmmmdpmmmdp-
+CCE-J1-2014	------------------mmmdpmmmdpmmmdpmmmdp-
+CCE-I1-2008	---------fffddduffddddfffdddd----------
+CCE-I1-2009	---------fffddduffddddfffdddd----------
+CCE-I1-2010	---------fffddduffddddfffdddd----------
+CCE-I1-2011	---------fffddduffddddfffdddd----------
+CCE-I1-2012	---------fffddduffddddfffdddd----------
+CCE-I1-2013	---------fffddduffddddfffdddd----------
+CCE-I1-2014	---------fffddduffddddfffdddd----------
+CCE-K1-2011	----------psfddusfddssf--dddsfdd-------
+CCE-I2-2008	-ffpffffdffffddfffd------------------ff
+CCE-I2-2009	-ffpffffdffffddfffd------------------ff
+CCE-I2-2010	-ffpffffdffffddfffd------------------ff
+CCE-I2-2011	-ffpffffdffffddfffd------------------ff
+CCE-I2-2012	-ffpffffdffffddfffd------------------ff
+CCE-I2-2013	-ffpffffdffffddfffd------------------ff
+CCE-I2-2014	-ffpffffdffffddfffd------------------ff
+CCE-J2-2014	fffpffffpffffdffffd------------------f-
 ;
 end;
