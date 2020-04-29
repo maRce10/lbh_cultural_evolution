@@ -1,7 +1,8 @@
 alignment	= "aligment.name"
 fossils	= "tsv.file"
 rv = floor(runif(1,100000,999999)[1])
-base_str = alignment + "_" + fossils + "_" + rv
+output_file_name = "output.base.name"
+base_str = output_file_name + "_" + rv
 
 # Make clade of the extant songs #
 clade_extant = LAST.SONG.TYPES # vector with names of all songtypes observed in the last year (e.g. "clade("st1", "st2"))

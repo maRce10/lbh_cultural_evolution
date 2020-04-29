@@ -144,7 +144,8 @@ out <- pblapply(1:nrow(grd), cl = 4, function(x){
 
     templ[1] <- gsub("aligment.name", nx, templ[1])
     templ[2] <- gsub("tsv.file", tsv, templ[2])
-    templ[7] <- gsub("LAST.SONG.TYPES", last.year.songs, templ[7])
+    templ[8] <- gsub("LAST.SONG.TYPES", last.year.songs, templ[8])
+    templ[4] <- gsub("output.base.name", gsub("_alignment.nex", "",  basename(nx)), templ[4])
     
     
     fl.nm.rb <- paste0("./source/", grd$lek[x], "_", grd$use_all_fossils[x], "_", grd$use_old_fossils[x],".Rev")
