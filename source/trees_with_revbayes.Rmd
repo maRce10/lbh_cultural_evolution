@@ -16,48 +16,12 @@ editor_options:
   chunk_output_type: console
 ---
 
-## Selecting leks for analysis
-```{r selecting leks}
+
+```{r revbayes loop, eval = FALSE, echo = TRUE}
 
 dat <- read.csv("./data/raw/segments_by_song_type.csv", stringsAsFactors = FALSE)
 
 yrs <- read.csv("./data/raw/year_range_by_song_type.csv", stringsAsFactors = FALSE)
-
-print("song types per lek")
-stl <- tapply(dat$song.type, dat$lek, length)
-
-print("year per lek")
-ypl <- tapply(yrs$year, yrs$lek, function(x) length(unique(x)))
-
-print("year range per lek")
-yrpl <- tapply(yrs$year, yrs$lek, function(x) max(x) - min(x))
-
-print("year range per lek")
-gpl <- yrpl - ypl + 1
-set.seed(1011)
-rnd_var <- rnorm(n = length(stl), mean = 2, sd = 1)
-
-cols <- rep("white", length(gpl))
-cols[which(names(gpl) %in%  c("SUR", "CCE", "HC1", "BR1", "TR1"))] <- viridis::viridis(10, alpha = 0.5)[3]
-
-plot(stl, ypl + rnd_var, col = cols, xlab = "# of song types", ylab = "# of years sampled", pch = 20, cex = 9)
-text(stl, ypl+ rnd_var, labels = names(stl), cex = 2)
-
-plot(stl, yrpl+ rnd_var, col = cols, cex = 9, pch = 20, xlab = "# of song types", ylab = "year range")
-text(stl, yrpl+ rnd_var, labels = names(stl), cex = 2)
-
-plot(gpl, yrpl+  rnd_var, col = cols, cex = 9, pch = 20, xlab = "# of year gaps", ylab = "year range")
-text(gpl, yrpl+ rnd_var, labels = names(stl), cex = 2)
-
-
-#selected leks
-sel_leks <- c("SUR", "CCE", "HC1", "BR1", "TR1")
-
-```
-
-
-
-```{r revbayes loop, eval = FALSE, echo = TRUE}
 
 yrs$song.type.year <- paste(yrs$song.type, yrs$year, sep = "-")
 
