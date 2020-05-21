@@ -109,16 +109,16 @@ dat <- read.csv("./data/raw/segments_by_song_type.csv", stringsAsFactors = FALSE
 
 yrs <- read.csv("./data/raw/year_range_by_song_type.csv", stringsAsFactors = FALSE)
 
-print("song types per lek")
+#song types per lek
 stl <- tapply(dat$song.type, dat$lek, length)
 
-print("year per lek")
+#year per lek
 ypl <- tapply(yrs$year, yrs$lek, function(x) length(unique(x)))
 
-print("year range per lek")
+# year range per lek
 yrpl <- tapply(yrs$year, yrs$lek, function(x) max(x) - min(x))
 
-print("year range per lek")
+# year range per lek
 gpl <- yrpl - ypl + 1
 set.seed(1011)
 rnd_var <- rnorm(n = length(stl), mean = 2, sd = 1)
@@ -134,7 +134,6 @@ text(stl, yrpl+ rnd_var, labels = names(stl), cex = 2)
 
 plot(gpl, yrpl+  rnd_var, col = cols, cex = 9, pch = 20, xlab = "# of year gaps", ylab = "year range")
 text(gpl, yrpl+ rnd_var, labels = names(stl), cex = 2)
-
 
 #selected leks
 sel_leks <- c("SUR", "CCE", "HC1", "BR1", "TR1")
@@ -189,12 +188,15 @@ dat.rest.new <- dat.all.new[!dat.all.new$song.type.year %in% dat.early.new$song.
 
 # by lek all song types
 for(i in sel_leks){
-  
+
+    
 # all old
-write.fasta(sequences = as.list(dat.rest.old$seqs[dat.rest.old$lek == i]), names = dat.rest.old$song.type.year[dat.rest.old$lek == i], file.out = paste0("./data/processed/song_sequences/song_seqs_rest_old_", i, ".fa"), open = "w", nbchar = 60, as.string = FALSE)
+if (any(dat.yr$year[dat.yr$lek == i] < 2000))
+  write.fasta(sequences = as.list(dat.rest.old$seqs[dat.rest.old$lek == i]), names = dat.rest.old$song.type.year[dat.rest.old$lek == i], file.out = paste0("./data/processed/song_sequences/song_seqs_rest_old_", i, ".fa"), open = "w", nbchar = 60, as.string = FALSE)
 
 # early old
-write.fasta(sequences = as.list(dat.early.old$seqs[dat.early.old$lek == i]), names = dat.early.old$song.type.year[dat.early.old$lek == i], file.out = paste0("./data/processed/song_sequences/song_seqs_early_old_", i, ".fa"), open = "w", nbchar = 60, as.string = FALSE)
+if (any(dat.yr$year[dat.yr$lek == i] < 2000))
+  write.fasta(sequences = as.list(dat.early.old$seqs[dat.early.old$lek == i]), names = dat.early.old$song.type.year[dat.early.old$lek == i], file.out = paste0("./data/processed/song_sequences/song_seqs_early_old_", i, ".fa"), open = "w", nbchar = 60, as.string = FALSE)
 
 # all new
 write.fasta(sequences = as.list(dat.rest.new$seqs[dat.rest.new$lek == i]), names = dat.rest.new$song.type.year[dat.rest.new$lek == i], file.out = paste0("./data/processed/song_sequences/song_seqs_rest_new_", i, ".fa"), open = "w", nbchar = 60, as.string = FALSE)
@@ -206,6 +208,7 @@ write.fasta(sequences = as.list(dat.early.new$seqs[dat.early.new$lek == i]), nam
 ```
 
 ```{r test aligning, eval = FALSE, echo = FALSE}
+
 # alignments real songs
 
 # add using or not song types before 2008
@@ -379,6 +382,7 @@ out <- pblapply(1:length(cost.grds), cl = parallel::detectCores() - 1, function(
   
   writeLines(w, con = paste0("./data/processed/mafft_alignments/",Y$cost.type[1],"_cost_matrix.txt"))
   
+  
   out <- lapply(sel_leks, function(i){
     
     # don't do those with no data before 2008
@@ -508,9 +512,11 @@ dat.rest.new <- dat.all.new[!dat.all.new$song.type.year %in% dat.early.new$song.
 for(i in sel_leks){
   
 # all old
+  if (any(dat.yr$year[dat.yr$lek == i] < 2000))
 write.fasta(sequences = as.list(dat.rest.old$seqs[dat.rest.old$lek == i]), names = dat.rest.old$song.type.year[dat.rest.old$lek == i], file.out = paste0("./data/processed/song_sequences/song_seqs_rest_old_", i, "_prank.fa"), open = "w", nbchar = 60, as.string = FALSE)
 
 # early old
+  if (any(dat.yr$year[dat.yr$lek == i] < 2000))
 write.fasta(sequences = as.list(dat.early.old$seqs[dat.early.old$lek == i]), names = dat.early.old$song.type.year[dat.early.old$lek == i], file.out = paste0("./data/processed/song_sequences/song_seqs_early_old_", i, "_prank.fa"), open = "w", nbchar = 60, as.string = FALSE)
 
 # all new

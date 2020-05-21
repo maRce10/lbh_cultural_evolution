@@ -41,7 +41,7 @@ Score(f=0x66,d=0x64)=0.500000
 Score(d=0x64,d=0x64)=2.000000
 All-to-all alignment.
     0 / 21    1 / 21    2 / 21    3 / 21    4 / 21maxwm <- 0.0 
-    5 / 21    6 / 21    7 / 21    8 / 21    9 / 21   10 / 21   11 / 21   12 / 21   13 / 21   14 / 21   15 / 21   16 / 21   17 / 21   18 / 21   19 / 21tbfast-pair (text) Version 7.450
+    5 / 21    6 / 21    7 / 21    8 / 21    9 / 21   10 / 21   11 / 21   12 / 21   13 / 21   14 / 21   15 / 21   16 / 21   17 / 21   18 / 21   19 / 21tbfast-pair (text) Version 7.453
 alg=L, model=Extended, 2.00, -0.10, +0.10, noshift, amax=0.0
 0 thread(s)
 
@@ -97,7 +97,7 @@ Progressive alignment ...
 Reallocating..done. *alloclen = 1045
 STEP     5 /20 STEP     6 /20 STEP     7 /20 STEP     8 /20 STEP     9 /20 STEP    10 /20 STEP    11 /20 STEP    12 /20 STEP    13 /20 STEP    14 /20 STEP    15 /20 STEP    16 /20 STEP    17 /20 STEP    18 /20 STEP    19 /20 STEP    20 /20 
 done.
-tbfast (text) Version 7.450
+tbfast (text) Version 7.453
 alg=A, model=Extended, 1.53, -0.00, -0.00, noshift, amax=0.0
 1 thread(s)
 
@@ -155,7 +155,7 @@ STEP 001-001-0  identical.   STEP 001-001-1  identical.   STEP 001-002-0  iden
 Converged.
 
 done
-dvtditr (text) Version 7.450
+dvtditr (text) Version 7.453
 alg=A, model=Extended, 1.53, -0.00, -0.00, noshift, amax=0.0
 0 thread(s)
 

@@ -1,29 +1,29 @@
 #NEXUS
 Begin data;
-dimensions ntax=21 nchar=63;
+dimensions ntax=21 nchar=71;
 format datatype=standard gap=- missing=? symbols="dfmpsu";
 matrix
 
-CCE-F1-1982	----sssfddssssfpsmmmfddm---------------------------------------
-CCE-K1-2011	psfddusfddssfddds---fdd----------------------------------------
-CCE-H1-2008	sssssssssssssssss---sss----------------------------------------
-CCE-C1-1969	--------------uuummmmmpm-puum---m-------mmm---p--m-------------
-CCE-I3-2011	--------------------mmp--pdum---mddmmppdmmd---d--u-------------
-CCE-I5-2018	----------------ummmmdpu-pmum---m-------mmd---pupm-------------
-CCE-J1-2011	------------------mmmdpm-mmdp---m-------mmd---p--mmmdp---------
-CCE-C3-1971	------------------umfusmfpmdp---mdpmmpp--md--------------------
-CCE-I4-2018	----------------pmmmmdff-pfum---m-------mmd-----------ffpu-----
-CCE-E1-1970	----------ssssspu----fff-ssss---s-------suf-----------ff-------
-CCE-F4-1989	----------------usmmffff-ppus---s-------sff-----------fffd-----
-CCE-C2-1970	----------------ummmffff-dfps---s-------sff-----------ffff-----
-CCE-G1-1989	--------pssssss----mffpf-fsss---m-------mff--------------------
-CCE-I1-2008	-------------------------fffddduf-------fdd-----------ddfffdddd
-CCE-I2-2008	--------------------ffpf-fffd---f-------fff-----------ddfffdff-
-CCE-J2-2014	-------------------fffpf-fffp---f-------fff-----------dffffdf--
-CCE-F2-1982	--------------------ffff-ffpp---p-------pff-----------ffffpdff-
-CCE-A1-1969	------------sss----mmfff-dsss---s-------mff-----------ffps-----
-CCE-F5-1989	------------puf----fffff-ffpu---p-------sff-----------ffff-----
-CCE-D1-1969	-------------uf----fupuf-ffpu------------ffppu--------ffup-----
-CCE-F3-1989	------------uss----sffdf-ffum---m-------mff-----------pfff-----
+CCE-C1-1969	------------------------uuummmmmpmp---------uummmm--mpm----------------
+CCE-I5-2018	--------------------------ummmmdpup---------mummmmdpupm----------------
+CCE-I4-2018	--------------------------pmmmmdffp---------fummmmdffpu----------------
+CCE-J1-2011	----------------------------mmmdpmm---------mdpmmmdpmmmdp--------------
+CCE-C3-1971	---------------------------------umfusmfpmdpmdpmmpp--md----------------
+CCE-I3-2011	----------------------------mmppdum---------mddmmppdmmddu--------------
+CCE-F1-1982	--------------sssfddssssfpsmmmfddm-------------------------------------
+CCE-K1-2011	----------psfddusfddssfddds---fdd--------------------------------------
+CCE-E1-1970	-sss----sspufffssssssufff----------------------------------------------
+CCE-H1-2008	-sss----sssssssssssssssss----------------------------------------------
+CCE-F2-1982	------------ffffffppppfff-----------------------------------fffpdff----
+CCE-D1-1969	----uffupufffpuffppu--ffu-----------------------------------p----------
+CCE-J2-2014	-----fffpffffpffffdf--fff-----------------------------------df---------
+CCE-I2-2008	------ffpffffdffffdd--fff-----------------------------------dff--------
+CCE-F5-1989	--------puffffffffpupsfff-----------------------------------fff--------
+CCE-F3-1989	--------usssffdfffummmffp-----------------------------------fff--------
+CCE-I1-2008	---------------fffddduffd--------------------------------dddfff----dddd
+CCE-C2-1970	--------ummmffffdfpsssfff-----------------------------------fff--------
+CCE-F4-1989	--------usmmffffppusssfff-----------------------------------ffd--------
+CCE-A1-1969	--------sssmmfffdssssmfff-----------------------------------fps--------
+CCE-G1-1989	psss----sssmffpffsssmmff-----------------------------------------------
 ;
 end;

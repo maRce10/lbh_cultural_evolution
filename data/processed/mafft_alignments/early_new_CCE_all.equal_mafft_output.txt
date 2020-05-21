@@ -47,7 +47,7 @@ maxwm <- 0.0
 maxwm <- 0.0 
 maxwm <- 0.0 
 maxwm <- 0.0 
-    1 / 9    2 / 9    3 / 9    4 / 9    5 / 9    6 / 9    7 / 9tbfast-pair (text) Version 7.450
+    1 / 9    2 / 9    3 / 9    4 / 9    5 / 9    6 / 9    7 / 9tbfast-pair (text) Version 7.453
 alg=L, model=Extended, 2.00, -0.10, +0.10, noshift, amax=0.0
 0 thread(s)
 
@@ -103,7 +103,7 @@ Progressive alignment ...
 Reallocating..done. *alloclen = 1045
 STEP     5 /8 STEP     6 /8 STEP     7 /8 STEP     8 /8 
 done.
-tbfast (text) Version 7.450
+tbfast (text) Version 7.453
 alg=A, model=Extended, 1.53, -0.00, -0.00, noshift, amax=0.0
 1 thread(s)
 
@@ -161,7 +161,7 @@ STEP 001-001-0  identical.   STEP 001-001-1  identical.   STEP 001-002-0  iden
 Converged.
 
 done
-dvtditr (text) Version 7.450
+dvtditr (text) Version 7.453
 alg=A, model=Extended, 1.53, -0.00, -0.00, noshift, amax=0.0
 0 thread(s)
 
