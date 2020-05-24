@@ -18,7 +18,6 @@ editor_options:
 
 
 ```{r revbayes loop, eval = FALSE, echo = TRUE}
-
 #selected leks
 sel_leks <- c("SUR", "CCE", "HC1", "BR1", "TR1")
 
@@ -85,26 +84,17 @@ algs <- list.files(path = "./data/processed/nexus", pattern = "\\.nex$")
 
 grd <- grd[order(grd$lek), ]
 
-# remove "old" combinations without data before 2000s
-for(i in sel_leks)
-if (!any(dat.yr$year[dat.yr$lek == i] < 2000)) 
-  grd <- grd[!(grd$use_old_fossils == "old" & grd$lek == i), ]
-  
-  
 grd$output <- apply(grd, 1, paste, collapse = "_")
 
 # remove leks with output
 current.output <- list.files(pattern = "log$|trees$", path = "./output/revbayes", recursive = TRUE)
 
+dones <- unique(sapply(strsplit(current.output, "_",fixed = TRUE, "["), function(x) paste(x[1:4], collapse = "_")))
 
-done <- sapply(current.output, function(x) paste(strsplit(x, "_",fixed = TRUE, "[[", 1)[[1]][1:4], collapse = "_"), USE.NAMES = FALSE)
+grd <- grd[!grd$output %in% dones, ]
 
 
-grd <- grd[!grd$output %in% done, ]
-
-grd <- grd[order(as.character(grd$lek)), ]
-
-out <- pblapply(1:nrow(grd), cl = 1, function(x){
+out <- pblapply(1:nrow(grd), cl = 4, function(x){
   
   yrs.lek <- yrs[yrs$lek == grd$lek[x],]
   last.year.songs <- yrs.lek$song.type.year[yrs.lek$year == max(yrs.lek$year)]
@@ -124,24 +114,25 @@ out <- pblapply(1:nrow(grd), cl = 1, function(x){
     templ[4] <- gsub("output.base.name", file.path("./output/revbayes", grd$output[x]), templ[4])
     templ[10] <- gsub("LAST.SONG.TYPES", last.year.songs, templ[10])
    
+    
     fl.nm.rb <- paste0("./source/", grd$output[x], ".Rev")
      
     writeLines(templ, con = fl.nm.rb)
 
     # cll <- paste0("~/Downloads/revbayes/projects/cmake/rb ", fl.nm.rb)
-    cll <- paste0("mpirun -np 10 ~/revbayes-master/projects/cmake/rb-mpi ", fl.nm.rb) 
+    cll <- paste0("~/Documents/Marcelo/song_alignment/boost_1_71_0/revbayes/projects/cmake/rb ", fl.nm.rb) 
     
-     system(cll)
+     system(cll,  show.output.on.console = FALSE)
 
-    # # copy ouput files to  /output/revbayes/
-    #   new.output <- list.files(pattern = "log$|trees$", recursive = TRUE)
-    # 
-    # copied.output <- list.files(pattern = "log$|trees$", path = "./output/revbayes/", recursive = TRUE)
-    # 
-    # new.output <- new.output[!basename(new.output) %in% copied.output]
-    # 
-    # if (length(new.output > 0))
-    # file.copy(from = new.output, to =file.path("./output/revbayes/", basename(output)))
+    # copy ouput files to  /output/revbayes/
+      new.output <- list.files(pattern = "log$|trees$", recursive = TRUE)
+    
+    copied.output <- list.files(pattern = "log$|trees$", path = "./output/revbayes/", recursive = TRUE)
+    
+    new.output <- new.output[!basename(new.output) %in% copied.output]
+    
+    if (length(new.output > 0))
+    file.copy(from = output, to =file.path("./output/revbayes/", basename(output)))
 
 })
 
