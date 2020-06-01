@@ -1,0 +1,12 @@
+#####################################################
+# Global clock for cultural change in song segments #
+#####################################################
+
+# The rate along each branch is drawn from an exponential prior #
+# This gives the waiting time in years to a change in a 1/20 of a song # 
+branch_rates ~ dnExp(10)
+
+# Specify three scale proposals on the mean of this rate #
+moves.append( mvScale(branch_rates, lambda=0.01, weight=5.0) )
+moves.append( mvScale(branch_rates, lambda=0.1,  weight=5.0) )
+moves.append( mvScale(branch_rates, lambda=1.0,  weight=5.0) )
