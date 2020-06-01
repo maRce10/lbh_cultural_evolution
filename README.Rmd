@@ -12,6 +12,9 @@ Creating long-billed hermit song cultural evolution trees and analyzing evolutio
 
 ```{r setup, include = FALSE}
 
+# install.packages("rmarkdown")
+library(rmarkdown)
+
 knitr::opts_chunk$set(
   collapse = TRUE,
   out.width = "100%"
