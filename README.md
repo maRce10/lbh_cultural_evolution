@@ -28,7 +28,7 @@ Analysis
 In progress
 -----------
 
--   Making trees with RevBayes
+-   Making trees with RevBayes ([diagnostics](https://rpubs.com/marcelo-araya-salas/622214))
 
 To-do list
 ----------
