@@ -1,6 +1,6 @@
 ---
 title: <center><font size="6"><b>MCMC diagnostics</b></font></center>
-subtitle: <center><font size="4"><b>Long-billed hermit song cultural evolution</b></font></center>
+subtitle: <center><font size="4"><b><a href="https://github.com/maRce10/lbh_cultural_evolution">Long-billed hermit song cultural evolution<a></b></font></center>
 author: <center><font size="4"><a href="http://marceloarayasalas.weebly.com/">Marcelo Araya-Salas</a> & Beatriz Willink</font></center>
 date: <center>`r format(Sys.Date(), "%d-%m-%Y")`</center>
 output:
@@ -198,7 +198,13 @@ write.csv(model_diags, "output/diagnostics_revbayes_output.csv", row.names = FAL
 
 ```
   
-Diagnostics: Gelman-Rubin, ESS, and autocorrelation
+## Diagnostics: Gelman-Rubin, ESS, and autocorrelation
+
+The table below can be read like this:
+`read.csv("https://raw.githubusercontent.com/maRce10/lbh_cultural_evolution/master/output/diagnostics_revbayes_output.csv")`
+
+Diagnostic plots are found [here](https://github.com/maRce10/lbh_cultural_evolution/tree/master/output/MCMC_diagnostic_plots).
+
 ```{r, eval = TRUE, echo = TRUE}
 
 model_diags <- read.csv("output/diagnostics_revbayes_output.csv", stringsAsFactors = FALSE)

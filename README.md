@@ -28,7 +28,9 @@ Analysis
 In progress
 -----------
 
--   Making trees with RevBayes ([diagnostics](https://rpubs.com/marcelo-araya-salas/622214))
+-   Making trees with RevBayes
+    -   [diagnostics matrix](https://rpubs.com/marcelo-araya-salas/623004)
+    -   [diagnostic plots](lbh_cultural_evolution/tree/master/output/MCMC_diagnostic_plots)
 
 To-do list
 ----------
