@@ -243,7 +243,7 @@ datatable(model_diags, editable = list(
 
 ```
 
-```{r plot traces, eval = FALSE, fig.height = 3.3, fig.width = 30, warning = FALSE, message = FALSE, dpi = 30}
+```{r plot traces to files, eval = FALSE, fig.height = 3.3, fig.width = 30, warning = FALSE, message = FALSE, dpi = 30}
 
 # get model run log file names
 model_runs <- list.files("output/revbayes", pattern = "run_([[:digit:]]+)\\.log$")
@@ -252,16 +252,11 @@ model_runs <- list.files("output/revbayes", pattern = "run_([[:digit:]]+)\\.log$
 base_models <- sapply(strsplit(model_runs, "_run", fixed = TRUE), "[", 1)
 
 # loop to make plots
-out <- lapply(base_models[1:4], function(x){
+out <- pblapply(base_models, function(x){
   
-  mfrow <- 
-  
-  jpeg(filename = file.path("./output/MCMC_diagnostic_plots", paste0(gsub("_([[:digit:]]+)", "", x), ".jpeg")), width = 1200, height = 1200)
   # info on base model    
   # print(gsub("_([[:digit:]]+)", "", x))
     
-  par(mfrow = c(4, 8))
-  
   # extract run names
   mods <- grep(x, model_runs, value = TRUE)
   
@@ -278,7 +273,13 @@ out <- lapply(base_models[1:4], function(x){
     }
   )
     # plot 
-    out2 <- try(plot_traces(X = out, clms = 1, cex = 2.5), silent = TRUE)
+  jpeg(filename = file.path("./output/MCMC_diagnostic_plots", paste0(gsub("_([[:digit:]]+)", "", x), "_%02d.jpg")), width = 1500, height = 1200, pointsize = 6)  
+  
+  ncol <- ncol(out[[1]])
+  
+  par(mfrow = c(10, 10))
+  
+  out2 <- try(plot_traces(X = out, clms = 1, cex = 2.5), silent = TRUE)
   
     # close device
     dev.off()
