@@ -117,7 +117,7 @@ plot_traces <- function(X, clms = 4, cex = 1, cols = adjustcolor(c("yellow","blu
   on.exit(par(opar))
   
   # trace and autocorrelation  
-  par(mfrow = c(1, clms))
+  if (clms > 1) par(mfrow = c(1, clms))
   for(y in colnames(X[[1]])){
 
     Z <- lapply(X, function(x) x[, y, drop = FALSE])
@@ -243,7 +243,7 @@ datatable(model_diags, editable = list(
 
 ```
 
-```{r plot traces, eval = TRUE, fig.height = 3.3, fig.width = 30, warning = FALSE, message = FALSE, dpi = 30}
+```{r plot traces, eval = FALSE, fig.height = 3.3, fig.width = 30, warning = FALSE, message = FALSE, dpi = 30}
 
 # get model run log file names
 model_runs <- list.files("output/revbayes", pattern = "run_([[:digit:]]+)\\.log$")
@@ -252,13 +252,20 @@ model_runs <- list.files("output/revbayes", pattern = "run_([[:digit:]]+)\\.log$
 base_models <- sapply(strsplit(model_runs, "_run", fixed = TRUE), "[", 1)
 
 # loop to make plots
-out <- lapply(base_models, function(x){
-      
-  print(gsub("_([[:digit:]]+)", "", x))
-    
-  # extract run names
-    mods <- grep(x, model_runs, value = TRUE)
+out <- lapply(base_models[1:4], function(x){
   
+  mfrow <- 
+  
+  jpeg(filename = file.path("./output/MCMC_diagnostic_plots", paste0(gsub("_([[:digit:]]+)", "", x), ".jpeg")), width = 1200, height = 1200)
+  # info on base model    
+  # print(gsub("_([[:digit:]]+)", "", x))
+    
+  par(mfrow = c(4, 8))
+  
+  # extract run names
+  mods <- grep(x, model_runs, value = TRUE)
+  
+  # loop over each pair of runs
   out <- lapply(mods, function(z){
     
     temp <- read.table(file.path("output/revbayes", z), header = TRUE)
@@ -270,9 +277,11 @@ out <- lapply(base_models, function(x){
   return(chain)  
     }
   )
-    
-    out2 <- try(plot_traces(X = out, clms = 8, cex = 2.5), silent = TRUE)
-    
+    # plot 
+    out2 <- try(plot_traces(X = out, clms = 1, cex = 2.5), silent = TRUE)
+  
+    # close device
+    dev.off()
     }
   )
 
