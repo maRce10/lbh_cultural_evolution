@@ -3,5 +3,4 @@
 .RData
 packrat/lib*/
 .httr-oauth
-./source/MCMC_Diagnostics.html
 
