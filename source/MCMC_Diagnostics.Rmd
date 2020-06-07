@@ -175,7 +175,7 @@ as.ts.mcmc2 <- function (x, ...)
 
 ```
    
-```{r, eval = FALSE}
+```{r re-calculate diagnostic stats, eval = FALSE}
 
 # get model run log file names
 model_runs <- list.files("output/revbayes", pattern = "run_([[:digit:]]+)\\.log$")
@@ -257,6 +257,8 @@ model_runs <- list.files("output/revbayes", pattern = "run_([[:digit:]]+)\\.log$
 # get base model name (removing run_#) 
 base_models <- sapply(strsplit(model_runs, "_run", fixed = TRUE), "[", 1)
 
+
+
 # loop to make plots
 out <- pblapply(base_models, function(x){
   
@@ -278,6 +280,9 @@ out <- pblapply(base_models, function(x){
   return(chain)  
     }
   )
+  
+  
+  if (!file.exists(file.path("./output/MCMC_diagnostic_plots", paste0(gsub("_([[:digit:]]+)", "", x), "_01.jpg")))){
     # plot 
   jpeg(filename = file.path("./output/MCMC_diagnostic_plots", paste0(gsub("_([[:digit:]]+)", "", x), "_%02d.jpg")), width = 1500, height = 1200, pointsize = 6)  
   
@@ -290,6 +295,7 @@ out <- pblapply(base_models, function(x){
     # close device
     dev.off()
     }
+  }
   )
 
 ```
