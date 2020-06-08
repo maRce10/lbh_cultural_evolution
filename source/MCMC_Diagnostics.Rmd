@@ -203,7 +203,6 @@ write.csv(model_diags, "output/diagnostics_revbayes_output.csv", row.names = FAL
 The table below can be read like this:
 `read.csv("https://raw.githubusercontent.com/maRce10/lbh_cultural_evolution/master/output/diagnostics_revbayes_output.csv")`
 
-Diagnostic plots are found [here](https://github.com/maRce10/lbh_cultural_evolution/tree/master/output/MCMC_diagnostic_plots).
 
 ```{r, eval = TRUE, echo = TRUE}
 
@@ -240,12 +239,25 @@ model_diags$gr_bad <- gsub("branch_rates\\.([[:digit:]]+)\\.|\\,branch_rates\\.(
 
 model_diags$gr_bad <- paste(model_diags$gr_bad, brc)
 
+
+# add link to plots
+plts <- list.files(path = "./output/MCMC_diagnostic_plots", pattern = "\\.jpg$")
+  
+jpgs <- lapply(model_diags$model, function(x)
+grep(paste(gsub("\\_([[:digit:]]+)", "", x), collapse = "|"), plts, value = TRUE))
+
+model_diags$diag_plots <- sapply(model_diags$model, function(x)
+
+paste(paste0('<a href=\"https://raw.githubusercontent.com/maRce10/lbh_cultural_evolution/master/output/MCMC_diagnostic_plots/', grep(paste(paste0(gsub("\\_([[:digit:]]+)", "", x), "_0"), collapse = "|"), plts, value = TRUE),'">', grep(paste(paste0(gsub("\\_([[:digit:]]+)", "", x), "_0"), collapse = "|"), plts, value = TRUE), '</a>'), collapse = " ")
+)
+
+
 # print dynamic table
 datatable(model_diags, editable = list(
   target = 'row'
 ), rownames = FALSE, style = "bootstrap",  filter = 'top', options = list(
   pageLength = 100, autoWidth = TRUE, dom = 'ft'
-), autoHideNavigation = TRUE)
+), autoHideNavigation = TRUE, escape = FALSE)
 
 ```
 
@@ -281,7 +293,7 @@ out <- pblapply(base_models, function(x){
     }
   )
   
-  
+  # create if it doesn't exist
   if (!file.exists(file.path("./output/MCMC_diagnostic_plots", paste0(gsub("_([[:digit:]]+)", "", x), "_01.jpg")))){
     # plot 
   jpeg(filename = file.path("./output/MCMC_diagnostic_plots", paste0(gsub("_([[:digit:]]+)", "", x), "_%02d.jpg")), width = 1500, height = 1200, pointsize = 6)  
