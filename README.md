@@ -35,8 +35,8 @@ In progress
 To-do list
 ----------
 
--   Run SUR longer (double) and higher thining and burning (double)
--   Try fixed (global) molecular clock
+-   Run revbayes posterior predictions (P3)
+-   Summarize results
 
 Status
 ------

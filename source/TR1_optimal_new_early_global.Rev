@@ -1,0 +1,12 @@
+alignment	= "./data/processed/nexus/TR1_optimal_early_new_alignment.nex"
+fossils	= "./data/processed/fossils/TR1_taxa_early_new.tsv"
+rv = floor(runif(1,100000,999999)[1])
+output_file_name = "./output/revbayes/TR1_optimal_new_early_global"
+base_str = output_file_name + "_" + rv
+state_name = output_file_name + ".state" 
+
+
+# Make clade of the extant songs #
+clade_extant = clade("TR1-D1-2009", "TR1-D2-2011", "TR1-E3-2011", "TR1-F1-2011", "TR1-D4-2012", "TR1-D3-2012", "TR1-D5-2013", "TR1-F2-2014") # vector with names of all songtypes observed in the last year (e.g. "clade("st1", "st2"))
+
+source("./source/Specimens_control.Rev")
