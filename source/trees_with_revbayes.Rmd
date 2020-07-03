@@ -36,36 +36,36 @@ use_all_fossils <- c("all", "early")
 use_old_fossils <-  c("old", "new")
 
 # create taxa tsv files for revBayes
-out <- lapply(unique(sel_leks), function(x)
-{
-  
-  X <- yrs[yrs$lek == x, ]
-  X$taxon <- X$song.type.year
-  
-  X$max <- X$min <- max(X$year) - X$year
-  
-  # all fossils including before 2008
-  all.old <- X <- X[order(X$song.type, X$year), ]
-  
-  write.table(all.old[, c("taxon", "min", "max")], file = paste0("./data/processed/fossils/", x, "_taxa_all_old.tsv"),  sep = "\t", quote = FALSE, row.names = FALSE)
-  # only first appearance of song type/fossil including before 2008   
-  early.old <- X[!duplicated(X$song.type), ]
-  
-  write.table(early.old[, c("taxon", "min", "max")], file = paste0("./data/processed/fossils/", x,  "_taxa_early_old.tsv"), sep = "\t", quote = FALSE, row.names = FALSE)
-  
-  Y <- X[X$year > 2007, ] 
-  Y <- Y[order(Y$song.type, Y$year), ]
-  
-  # all fossils excluding before 2008
-  all.new <- Y
-  
-    write.table(all.new[, c("taxon", "min", "max")], file = paste0("./data/processed/fossils/", x,  "_taxa_all_new.tsv"), sep = "\t", quote = FALSE, row.names = FALSE)
-  # only first appearance of song type/fossil including before 2008   
-  early.new <- Y[!duplicated(Y$song.type), ]
-  
-  write.table(early.new[, c("taxon", "min", "max")], file = paste0("./data/processed/fossils/", x,  "_taxa_early_new.tsv"), sep = "\t", quote = FALSE, row.names = FALSE)
-  
-} )
+# out <- lapply(unique(sel_leks), function(x)
+# {
+#   
+#   X <- yrs[yrs$lek == x, ]
+#   X$taxon <- X$song.type.year
+#   
+#   X$max <- X$min <- max(X$year) - X$year
+#   
+#   # all fossils including before 2008
+#   all.old <- X <- X[order(X$song.type, X$year), ]
+#   
+#   write.table(all.old[, c("taxon", "min", "max")], file = paste0("./data/processed/fossils/", x, "_taxa_all_old.tsv"),  sep = "\t", quote = FALSE, row.names = FALSE)
+#   # only first appearance of song type/fossil including before 2008   
+#   early.old <- X[!duplicated(X$song.type), ]
+#   
+#   write.table(early.old[, c("taxon", "min", "max")], file = paste0("./data/processed/fossils/", x,  "_taxa_early_old.tsv"), sep = "\t", quote = FALSE, row.names = FALSE)
+#   
+#   Y <- X[X$year > 2007, ] 
+#   Y <- Y[order(Y$song.type, Y$year), ]
+#   
+#   # all fossils excluding before 2008
+#   all.new <- Y
+#   
+#     write.table(all.new[, c("taxon", "min", "max")], file = paste0("./data/processed/fossils/", x,  "_taxa_all_new.tsv"), sep = "\t", quote = FALSE, row.names = FALSE)
+#   # only first appearance of song type/fossil including before 2008   
+#   early.new <- Y[!duplicated(Y$song.type), ]
+#   
+#   write.table(early.new[, c("taxon", "min", "max")], file = paste0("./data/processed/fossils/", x,  "_taxa_early_new.tsv"), sep = "\t", quote = FALSE, row.names = FALSE)
+#   
+# } )
 
 # make all possible combinations
 grd <- expand.grid(lek = sel_leks, alignment = alignment, use_old_fossils = use_old_fossils, use_all_fossils = use_all_fossils)
