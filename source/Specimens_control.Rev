@@ -29,9 +29,9 @@ moves = VectorMoves()
 
 source("./source/model_FBDP.Rev") # FBD tree prior
 
-# source("./source/model_UExp.Rev") # UExp relaxed clock
+source("./source/model_UExp.Rev") # UExp relaxed clock
 
-source("./source/model_Global.Rev") # molecular clock global
+# source("./source/model_Global.Rev") # molecular clock global
 
 source("./source/model_GTRG.Rev") # Molecular substitution model (GTR + G)
 

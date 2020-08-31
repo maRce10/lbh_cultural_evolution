@@ -1,0 +1,12 @@
+alignment	= "./data/processed/nexus/CCE_optimal_all_new_alignment.nex"
+fossils	= "./data/processed/fossils/CCE_taxa_all_new.tsv"
+rv = floor(runif(1,100000,999999)[1])
+output_file_name = "./output/revbayes/CCE_optimal_new_all_Uexp"
+base_str = output_file_name + "_" + rv
+state_name = output_file_name + ".state" 
+
+
+# Make clade of the extant songs #
+clade_extant = clade("CCE-I4-2018", "CCE-I5-2018") # vector with names of all songtypes observed in the last year (e.g. "clade("st1", "st2"))
+
+source("./source/Specimens_control.Rev")
