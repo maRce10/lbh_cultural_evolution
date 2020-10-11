@@ -1,0 +1,126 @@
+---
+title: "ML comparison"
+author: "Beatriz Willink"
+date: "8/31/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, message=FALSE}
+require(ggplot2)
+require(wesanderson)
+require(tidyr)
+require(kableExtra)
+```
+
+Read first two ML reps
+```{r}
+# Read model names
+m <- read.table(file = "~/Dropbox/UCR/Investigacion/lbh_cultural_evolution/output/revbayes/stdout/dataset.txt", header = F)
+# Read two replicates of ML estimates under the stepping stone algorithm
+ss.r1 <- read.table(file = "~/Dropbox/UCR/Investigacion/lbh_cultural_evolution/output/revbayes/stdout/SteppingStone.txt", header = F, sep = ",")
+ss.r2 <- read.table(file = "~/Dropbox/UCR/Investigacion/lbh_cultural_evolution/output/revbayes/stdout/SteppingStoneR2.txt", header = F, sep = ",")
+ss.r3 <- read.table(file = "~/Dropbox/UCR/Investigacion/lbh_cultural_evolution/output/revbayes/stdout/SteppingStoneR3.txt", header = F, sep = ",")
+
+# missing models to NA and failed estimations to "Repeat"
+n = 3 # currently two replicates
+
+# make df
+m.ml <- m
+for (i in 1:n) {
+  m.ml <- cbind(m.ml, eval(parse(text = paste0("ss.r", i))))
+}
+colnames(m.ml) <- c("Model", paste0("ss",c(1:n)))
+
+
+for(i in 1:n) {
+  levels( m.ml[, i + 1]) <- c(levels( m.ml[, i + 1]),"Repeat")
+  for (j in 1:nrow(m.ml)) {
+        if (grepl(pattern = "This typically refers",
+              x =  as.character(m.ml[j, i + 1]),
+              fixed =  TRUE)) {
+      m.ml[j, i + 1] <- "Repeat"
+    }
+    if (grepl(pattern = "Problem processing",
+              x =  m.ml[j, i + 1],
+              fixed =  TRUE)) {
+      m.ml[j, i + 1] <- "Repeat"
+    }
+    if (grepl(pattern = "Could not open",
+              x =  m.ml[j, i + 1],
+              fixed =  TRUE)) {
+      m.ml[j, i + 1] <- NA
+    }
+  }
+  m.ml[,i+1] <- droplevels(m.ml[,i+1])
+}
+
+# remove CCE that I accidentally repeated
+#m.ml <- m.ml[-(49:60),]
+```
+
+Read in repeats of failed approximations
+```{r}
+m.rep<- read.table(file = "~/Dropbox/UCR/Investigacion/lbh_cultural_evolution/output/revbayes/stdout/datasetRepeats.txt", header = F)
+
+ss.rep <- read.table(file = "~/Dropbox/UCR/Investigacion/lbh_cultural_evolution/output/revbayes/stdout/SteppingStoneRepeat.txt", header = F, sep = ",")
+
+m.ml.rep <-cbind(m.rep, ss.rep)
+colnames(m.ml.rep) <- c("Model", "ss")
+
+# match name format
+m.ml.rep$Model <- gsub(pattern = "_", replacement = ".", x = m.ml.rep$Model)
+m.ml.rep$Model <- gsub(pattern = ".global", replacement = "._global", x = m.ml.rep$Model)
+
+#Replace repeat for ML value
+m.ml$ss1 <- as.character(m.ml$ss1)
+m.ml$ss2 <- as.character(m.ml$ss2)
+
+for (i in 1:nrow(m.ml)) {
+  for (j in 1:nrow(m.ml.rep)) {
+    if (m.ml$Model[i] == m.ml.rep$Model[j] & m.ml$ss1[i] == "Repeat") {
+      m.ml$ss1[i] <-  m.ml.rep$ss[j]
+    }
+    if (m.ml$Model[i] == m.ml.rep$Model[j] & m.ml$ss2[i] == "Repeat") {
+      m.ml$ss2[i] <-  m.ml.rep$ss[j]
+    }
+  }
+}
+
+#m.ml$ss1 <- as.numeric(m.ml$ss1)
+#m.ml$ss2 <- as.numeric(m.ml$ss2)
+```
+
+Make final table
+```{r, warning=F}
+# remove "." from alignment name
+m.ml$Model <- gsub(pattern = "all.equal", replacement = "allequal", x = m.ml$Model )
+
+# split name into columns
+m.ml <- m.ml %>% separate(Model, c("Lek", "Align", "Record", "Fossils", "Clock"))
+m.ml$Clock <- replace_na(data = m.ml$Clock, replace = "Uexp")
+
+# long to wide and rearrange
+m.ml <-
+  pivot_wider(
+    data = m.ml,
+    names_from = Clock,
+    values_from =  paste0("ss", c(1:n))
+  )
+
+m.ml <-
+  m.ml[, c(
+    "Lek",
+    "Align",
+    "Record",
+    "Fossils",
+    paste0("ss", c(1:n), "_global"),
+    paste0("ss", c(1:n), "_Uexp")
+  )]
+m.ml  %>%
+  kbl() %>%
+  kable_minimal()
+```
