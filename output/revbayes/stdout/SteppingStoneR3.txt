@@ -1,0 +1,60 @@
+   -404.5956
+   -349.6004
+>    Error:	Could not open file "./source/BR1_all.equal_old_all_global.Rev"
+>    Error:	Could not open file "./source/BR1_all.equal_old_early_global.Rev"
+   -378.5975
+   -324.7814
+>    Error:	Could not open file "./source/BR1_optimal_old_all_global.Rev"
+>    Error:	Could not open file "./source/BR1_optimal_old_early_global.Rev"
+   -418.2522
+   -351.4107
+>    Error:	Could not open file "./source/BR1_prank_old_all_global.Rev"
+>    Error:	Could not open file "./source/BR1_prank_old_early_global.Rev"
+   -325.0806
+   -267.35
+   -710.0802
+   -607.679
+   -350.7266
+   -282.0546
+   -723.4383
+   -606.4944
+   -352.7735
+   -281.5874
+   -699.1434
+   Error:	Problem processing line 12 in file "./source/CCE_prank_old_early_global.Rev"
+   -155.3848
+   -134.3576
+   -623.9677
+   -575.4371
+   -159.4945
+   -133.8377
+   -632.3341
+   -562.1997
+   -184.6775
+   -151.3869
+   Error:	Problem processing line 12 in file "./source/HC1_prank_old_all_global.Rev"
+   -585.3586
+   -646.9422
+   -495.9967
+   -1017.825
+   -789.2224
+   -658.9374
+   -494.4106
+   -1020.532
+   -780.5596
+   -715.8617
+   -536.6247
+   -1113.894
+   -853.4021
+   -456.9947
+   -364.81
+>    Error:	Could not open file "./source/TR1_all.equal_old_all_global.Rev"
+>    Error:	Could not open file "./source/TR1_all.equal_old_early_global.Rev"
+   -473.1286
+   -364.1951
+>    Error:	Could not open file "./source/TR1_optimal_old_all_global.Rev"
+>    Error:	Could not open file "./source/TR1_optimal_old_early_global.Rev"
+   -517.2789
+   -389.1419
+>    Error:	Could not open file "./source/TR1_prank_old_all_global.Rev"
+>    Error:	Could not open file "./source/TR1_prank_old_early_global.Rev"
