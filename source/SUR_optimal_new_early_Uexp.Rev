@@ -1,0 +1,12 @@
+alignment	= "./data/processed/nexus/SUR_optimal_early_new_alignment.nex"
+fossils	= "./data/processed/fossils/SUR_taxa_early_new.tsv"
+rv = floor(runif(1,100000,999999)[1])
+output_file_name = "./output/revbayes/SUR_optimal_new_early_Uexp"
+base_str = output_file_name + "_" + rv
+state_name = output_file_name + ".state" 
+
+
+# Make clade of the extant songs #
+clade_extant = clade("SUR-J3-2012", "SUR-J5-2017", "SUR-K5-2018", "SUR-K6-2019", "SUR-J7-2019") # vector with names of all songtypes observed in the last year (e.g. "clade("st1", "st2"))
+
+source("./source/Specimens_control_uexp.Rev")
