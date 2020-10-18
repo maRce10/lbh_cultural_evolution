@@ -1,7 +1,7 @@
 ---
 title: <center><font size="6"><b>MCMC diagnostics</b></font></center>
 subtitle: <center><font size="4"><b><a href="https://github.com/maRce10/lbh_cultural_evolution">Long-billed hermit song cultural evolution<a></b></font></center>
-author: <center><font size="4"><a href="http://marceloarayasalas.weebly.com/">Marcelo Araya-Salas</a> & Beatriz Willink</font></center>
+author: <center><font size="4"><a href="http://marceloarayasalas.weebly.com/">Marcelo Araya-Salas PhD</a> & <a href="https://scholar.google.com/citations?user=0a8k9T8AAAAJ&hl=es&oi=ao"> Beatriz Willink PhD</a></font></center>
 date: <center>`r format(Sys.Date(), "%d-%m-%Y")`</center>
 output:
   html_document:
@@ -9,8 +9,8 @@ output:
     toc: no
     toc_depth: 3
     toc_float:
-      collapsed: no
-      smooth_scroll: no
+      collapsed: yes
+      smooth_scroll: yes
 fontsize: 12pt 
 editor_options: 
   chunk_output_type: console
@@ -25,9 +25,7 @@ rm(list = ls())
 out <- sapply(paste('package:', names(sessionInfo()$otherPkgs), sep = ""), function(x) try(detach(x, unload = FALSE, character.only = TRUE), silent = T))
 
 ## vector with package names
-x <- c( "pbapply", "parallel", "coda", "DT", "stringr"
-        #, "flextable" #, "ips","gtools"
-        )
+x <- c("pbapply", "parallel", "coda", "DT", "stringr")
 
 aa <- lapply(x, function(y) {
   
@@ -177,6 +175,8 @@ as.ts.mcmc2 <- function (x, ...)
    
 ```{r re-calculate diagnostic stats, eval = FALSE}
 
+## RUN TO UPDATE OUTPUT ###
+
 # get model run log file names
 model_runs <- list.files("output/revbayes", pattern = "run_([[:digit:]]+)\\.log$")
 
@@ -262,6 +262,10 @@ datatable(model_diags, editable = list(
 ```
 
 ```{r plot traces to files, eval = FALSE, fig.height = 3.3, fig.width = 30, warning = FALSE, message = FALSE, dpi = 30}
+
+## RUN TO UPDATE OUTPUT ###
+
+# these plots will be linked to in the table of this Rmarkdown's output
 
 # get model run log file names
 model_runs <- list.files("output/revbayes", pattern = "run_([[:digit:]]+)\\.log$")
