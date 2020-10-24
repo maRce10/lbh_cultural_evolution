@@ -1,0 +1,37 @@
+---
+title: <center><font size="6"><b>Double-checking with RWTY</b></font></center>
+subtitle: <center><font size="4"><b>Long-billed hermit song cultural evolution</b></font></center>
+author: <center><font size="4"><a href="http://marceloarayasalas.weebly.com/">Marcelo Araya-Salas, PhD</a></font></center>
+date: <center>`r format(Sys.Date(), "%d-%m-%Y")`</center>
+output:
+  html_document:
+    code_folding: hide
+    df_print: kable
+    toc: yes
+    toc_depth: 3
+    toc_float:
+      collapsed: yes
+      smooth_scroll: yes
+fontsize: 12pt 
+editor_options: 
+  chunk_output_type: console
+---
+```{r setup, include=FALSE}
+
+
+install.packages("rwty")
+rwty.processors <- 8
+
+library(rwty)
+
+
+my.beast.trees <- load.trees("PATH", format = "beast", trim = 5)
+
+
+tr <- ape::read.tree("~/Dropbox/Projects/lbh_cultural_evolution/output/revbayes/BR1_all.equal_new_all_global_523907.trees")
+
+tr1 <- ape::read.tree("~/Dropbox/Projects/lbh_cultural_evolution/output/revbayes/BR1_all.equal_new_all_global_523907_run_1.trees")
+
+tr1
+
+```
