@@ -680,6 +680,118 @@ for(i in Nex.file){
 
 ```
 
+# move latest try of the  models to a different folder
+
+```{r selecting last try models, eval = FALSE}
+
+# current models 
+current.output <- list.files(pattern = "posterior.var",
+                             path = "./output/revbayes",
+                             recursive = TRUE)
+
+done <- unique(sapply(current.output, function(x)
+  paste(strsplit(x, "_", fixed = TRUE, "[[", 1)[[1]][1:5], collapse = "_"), USE.NAMES = FALSE))
+
+
+# create expected models
+#selected leks
+sel_leks <- c("SUR", "CCE", "HC1", "BR1", "TR1")
+
+dat <-
+  read.csv("./data/raw/segments_by_song_type.csv", stringsAsFactors = FALSE)
+yrs <-
+  read.csv("./data/raw/year_range_by_song_type.csv", stringsAsFactors = FALSE)
+
+yrs$song.type.year <- paste(yrs$song.type, yrs$year, sep = "-")
+alignment	<- c("optimal", "all.equal", "prank") # all.equal = equal rates
+
+# use all fosils (e.g. SURA-2011, SURA-2012, )
+use_all_fossils <- c("all", "early")
+
+# include also fossils before 2008
+use_old_fossils <-  c("old", "new")
+
+branch_rate_model <- c("global", "Uexp")
+
+# make all possible combinations
+grd <-
+  expand.grid(
+    lek = sel_leks,
+    alignment = alignment,
+    use_old_fossils = use_old_fossils,
+    use_all_fossils = use_all_fossils,
+    branch_rate_model = branch_rate_model
+  )
+
+grd <- grd[order(grd$lek),]
+
+# remove "old" combinations without data before 2000s
+for (i in sel_leks)
+  if (!any(yrs$year[yrs$lek == i] < 2000))
+    grd <- grd[!(grd$use_old_fossils == "old" & grd$lek == i),]
+
+grd$output <- apply(grd, 1, paste, collapse = "_")
+
+# missing models
+setdiff(grd$output, mod_mat$model)
+
+
+posteriors <- list.files(pattern = "posterior.var",
+                             path = "./output/revbayes",
+                             full.names = TRUE)
+
+post_df <- data.frame(full_name = posteriors, model = sapply(basename(posteriors), function(x)
+  paste(strsplit(x, "_", fixed = TRUE, "[[", 1)[[1]][1:5], collapse = "_"), USE.NAMES = FALSE))
+
+tb <- table(post_df$model)
+
+posteriors.info <- file.info(post_df$full_name)
+
+ post_df$size <- posteriors.info$size
+
+ post_df$mtime <- posteriors.info$mtime
+
+
+out <- lapply(unique(post_df$model), FUN = function(x){
+  
+  
+  Y <- post_df[post_df$model == x, ]
+  
+  W <- Y[which.max(Y$mtime), , drop = FALSE]
+  
+  return(W)
+  
+})
+
+last_models <- do.call(rbind, out)
+
+last_models$model_id <- sapply(last_models$full_name, function(x)
+  strsplit(x, "_", fixed = TRUE, "[[", 1)[[1]][6], USE.NAMES = FALSE)
+
+
+files_to_copy <- list.files(pattern = paste(last_models$model_id, collapse = "|"),
+                             path = "./output/revbayes",
+                             recursive = TRUE)
+
+ids <- sapply(files_to_copy, function(x)
+  strsplit(x, "_", fixed = TRUE, "[[", 1)[[1]][6], USE.NAMES = FALSE)
+
+ids <- gsub(".trees|.log", "", ids)
+
+
+length(ids) / 9 == 93
+
+
+files_to_copy <- list.files(pattern = paste(last_models$model_id, collapse = "|"),
+                             path = "./output/revbayes",
+                             full.names = TRUE)
+
+copy_res <- file.copy(from = files_to_copy, to = file.path("./output/most_recent_revbayes_models", basename(files_to_copy)))
+
+all(copy_res)
+```
+
+
 ---
 
 <font size="4">R session information</font>
