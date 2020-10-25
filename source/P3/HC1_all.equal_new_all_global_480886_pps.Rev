@@ -1,0 +1,44 @@
+################################################################################
+#
+# RevBayes script: Posterior data prediction for cultural evolution under the FBD
+# 
+# This file: Runs data simulation, calculates summary statistics and p-values
+#
+# authors: B. Willink, M. Araya
+#
+# Basesd on: Bayesian model testing using posterior predictive simulation
+#
+# authors: Lyndon M. Coghill, Sebastian Hoehna and Jeremy M. Brown
+################################################################################
+## first we need to get the files for this run
+
+## name of alignement file 
+dat_name = HC1_all.equal_all_new
+
+## unique run id
+analysis_name = 480886
+
+## name of model file
+model_name = HC1_all.equal_new_all_global
+
+## read in empirical data
+inFile = "./data/processed/nexus/" + dat_name + "_alignment.nex"
+data <- readDiscreteCharacterData(inFile)
+
+## Run simulations
+source("./source/pps_Simulation.Rev")
+
+## calculate data summary statistics
+num_post_sims = listFiles(path="output/revbayes/P3_sim/" + model_name + "_" + analysis_name + "_post_sims").size()
+source("./source/pps_DataSummary.Rev")
+
+
+## calculate data P-values and effect sizes
+emp_pps_file = "./output/revbayes/P3_Results/results_" + model_name + "/empirical_data_" + analysis_name + ".csv"
+sim_pps_file = "./output/revbayes/P3_Results/results_" + model_name + "/simulated_data_" + analysis_name + ".csv"
+outfileName = "./output/revbayes/P3_Results/results_" + model_name + "/data_pvalues_effectsizes_" + analysis_name + ".csv"
+source("source/pps_PValues.Rev")
+clear()
+
+# END IT ALL
+q()
