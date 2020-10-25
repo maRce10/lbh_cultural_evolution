@@ -7,32 +7,32 @@
 # initialize the model object #
 mymodel = model(fbd_tree)
 
-monitors = VectorMonitors()
+#monitors = VectorMonitors()
 
 # Create a vector of monitors #
 # 1. for the full model #
-monitors.append( mnModel(filename= base_str + ".log", printgen=100) )
+#monitors.append( mnModel(filename= base_str + ".log", printgen=100) )
 
 # 2. the tree #
-monitors.append( mnFile(filename= base_str + ".trees", printgen=100, fbd_tree) )
+#monitors.append( mnFile(filename= base_str + ".trees", printgen=100, fbd_tree) )
 
 # 3. and a few selected parameters to be printed to the screen #
-monitors.append( mnScreen(printgen=10, age_extant, num_samp_anc, origin_time) )
+#monitors.append( mnScreen(printgen=10, age_extant, num_samp_anc, origin_time) )
 
 # monitor for P3
-monitors.append(mnStochasticVariable(filename= base_str + "_posterior.var", printgen=100))
+#monitors.append(mnStochasticVariable(filename= base_str + "_posterior.var", printgen=100))
 
 # Initialize the MCMC object #
-mymcmc = mcmcmc(mymodel, monitors, moves, nruns=2, nchains = 4, tuneHeat = TRUE, combine="sequential")
+#mymcmc = mcmcmc(mymodel, monitors, moves, nruns=2, nchains = 4, tuneHeat = TRUE, combine="sequential")
 
 # Run the MCMC
 # most models:
-mymcmc.burnin(generations=50000,tuningInterval=200)
-mymcmc.run(generations=150000, checkpointInterval=100, checkpointFile=state_name)
+#mymcmc.burnin(generations=50000,tuningInterval=200)
+#mymcmc.run(generations=150000, checkpointInterval=100, checkpointFile=state_name)
 
 # SUR and CCE models:
 # mymcmc.burnin(generations=100000,tuningInterval=400)
 # mymcmc.run(generations=300000, checkpointInterval=200, checkpointFile=state_name)
 
 # Quit RevBayes #
-q()
+#q()
