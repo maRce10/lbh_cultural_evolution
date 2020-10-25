@@ -1,0 +1,69 @@
+---
+title: "write P3 control files"
+author: "Beatriz Willink y Marcelo Araya"
+date: "10/25/2020"
+output: html_document
+---
+This script create Rev control scripts to run posterior predictive checks on all models and leks.
+```{r}
+# first ge a vector with all runs to be included
+runs <-
+  gsub(
+    pattern = "_posterior.var",
+    replacement = "\\1",
+    x = dir("./output/most_recent_revbayes_models/", pattern = "posterior.var")
+  )
+
+# extract the names of models
+model.names <- gsub(pattern = "_[0-9]{6}", replacement = "\\", x = runs)
+
+# and the analysis ID
+analysis.names <- gsub(pattern = "([a-z,_,.,A-Z,1]*)([0-9]{6})", replacement = "\\2", x = runs)
+
+# get dataset names from model names
+# the fossil sets and sampling strategy are reversed in the names of datasets
+dat.names <- gsub(pattern = "new_all", replacement = "all_new", x = model.names)
+dat.names <- gsub(pattern = "new_early", replacement = "early_new", x = dat.names)
+dat.names <- gsub(pattern = "old_all", replacement = "all_old", x = dat.names)
+dat.names <- gsub(pattern = "old_early", replacement = "early_old", x = dat.names)
+
+# the names of data sets do not include the clock models
+dat.names <- gsub(pattern = "_global", replacement = "\\", x = dat.names)
+dat.names <- gsub(pattern = "_Uexp", replacement = "\\", x = dat.names)
+```
+
+Here we modify the general pps.Rev for each analysis
+```{r}
+for (i in 1:length(runs)) {
+  pps.rev <- readLines("source/pps.Rev")
+   
+  # add dataset name
+   pps.rev <-
+    gsub(
+      pattern = "dat_name = ",
+      replacement = paste0("dat_name = ", dat.names[i]),
+      x = pps.rev
+    )
+   
+  # add model name
+  pps.rev <-
+    gsub(
+      pattern = "model_name = ",
+      replacement = paste0("model_name = ", model.names[i]),
+      x = pps.rev
+    )
+  
+  # add analysis ID
+  pps.rev <-
+    gsub(
+      pattern = "analysis_name = ",
+      replacement = paste0("analysis_name = ", analysis.names[i]),
+      x = pps.rev
+    )
+  
+  # write to file
+  write(pps.rev,
+        paste0("source/P3/", model.names[i], "_", analysis.names[i], "_pps.Rev"))
+  }
+```
+
