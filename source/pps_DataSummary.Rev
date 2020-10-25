@@ -1,0 +1,180 @@
+################################################################################
+#
+# RevBayes Example: Bayesian model testing using posterior predictive simulation
+# This file calculates the Data Summary Statistics
+#
+# authors: Sebastian Hoehna
+#
+################################################################################
+
+## file name for sumilated data statistics 
+outfileName = "./output/revbayes/P3_Results/results_" + model_name + "/simulated_data_" + analysis_name + ".csv"
+ 
+write(file=outfileName, 
+      "Number Invariant Sites",
+      "Number Invariant Sites Excluding Ambiguous",
+      "Max Invariant Block Length",
+      "Max Invariant Block Length Excluding Ambiguous",
+      "Max Pairwise Difference",
+      "Max Pairwise Difference Excluding Ambiguous",
+      "Max Variable Block Length",
+      "Max Variable Block Length Excluding Ambiguous",
+      "Min Pairwise Difference",
+      "Min Pairwise Difference Excluding Ambiguous",
+      "Number Invariable Block",
+      "Number Invariable Block Excluding Ambiguous",
+      "Segregating-Sites",
+      "Theta", 
+      "Tajima-D", 
+      "Tajima-Pi",
+      sep=",", append=FALSE) 
+
+write(file=outfileName, "\n", append=TRUE) 
+
+
+#num_post_sims = 10
+################### calculate the pps stats here #########################
+
+## Iterate through all of the posterior tree files from the simulation analyses
+for ( i in 1:num_post_sims) {
+
+    inFileName = "output_" + model_name + "_" + analysis_name + ".trees"
+    
+    sim_data <- readDiscreteCharacterData("./output/revbayes/P3_sim/" + model_name + "_" + analysis_name + "_post_sims/posterior_predictive_sim_" + i + "/phySong.nex" )
+    
+    num_inv         = sim_data.getNumInvariantSites( excludeAmbiguous=FALSE )
+    num_inv_amb     = sim_data.getNumInvariantSites( excludeAmbiguous=TRUE )
+    
+    min_inv_bl      = sim_data.maxInvariableBlockLength( excludeAmbiguous=FALSE )    
+    min_inv_bl_amb  = sim_data.maxInvariableBlockLength( excludeAmbiguous=TRUE )
+    
+    max_pd          = sim_data.maxPairwiseDifference( excludeAmbiguous=FALSE )
+    max_pd_amb      = sim_data.maxPairwiseDifference( excludeAmbiguous=TRUE )
+    
+    max_var_bl      = sim_data.maxVariableBlockLength( excludeAmbiguous=FALSE )
+    max_var_bl_amb  = sim_data.maxVariableBlockLength( excludeAmbiguous=TRUE )
+   
+    min_pd          = sim_data.minPairwiseDifference( excludeAmbiguous=FALSE )
+    min_pd_amb      = sim_data.minPairwiseDifference( excludeAmbiguous=TRUE )
+    
+    n_char          = sim_data.nchar()
+    n_taxa          = sim_data.ntaxa()    
+
+    n_inv_b         = sim_data.numInvariableBlocks( excludeAmbiguous=FALSE )    
+    n_inv_b_amb     = sim_data.numInvariableBlocks( excludeAmbiguous=TRUE )    
+
+    n_taxa_50       = sim_data.numTaxaMissingSequence( 0.5 )    
+    n_taxa_30       = sim_data.numTaxaMissingSequence( 0.3 )    
+    n_taxa_10       = sim_data.numTaxaMissingSequence( 0.1 )
+    
+    theta           = fnWattersonsTheta( sim_data )
+    seg_sites       = fnSegregatingSites( sim_data )
+    tajima_d        = fnTajimasD( sim_data )
+    tajima_pi       = fnTajimasPi( sim_data )
+
+    
+    
+    
+    write(file=outfileName, append=TRUE, sep=",",
+          num_inv,
+          num_inv_amb,
+          min_inv_bl,
+          min_inv_bl_amb,
+          max_pd,
+          max_pd_amb,
+          max_var_bl,
+          max_var_bl_amb,
+          min_pd,
+          min_pd_amb,
+          n_inv_b,
+          n_inv_b_amb,
+          seg_sites,
+          theta,
+          tajima_d,
+          tajima_pi)
+
+
+
+    write(file=outfileName, "\n", append=TRUE) 
+
+}
+
+
+
+###################
+# Summary of data #
+###################
+
+outfileName = "./output/revbayes/P3_Results/results_" + model_name + "/empirical_data_" + analysis_name + ".csv"
+
+write(file=outfileName, sep=",", append=FALSE,
+      "Number Invariant Sites",
+      "Number Invariant Sites Excluding Ambiguous",
+      "Max Invariant Block Length",
+      "Max Invariant Block Length Excluding Ambiguous",
+      "Max Pairwise Difference",
+      "Max Pairwise Difference Excluding Ambiguous",
+      "Max Variable Block Length",
+      "Max Variable Block Length Excluding Ambiguous",
+      "Min Pairwise Difference",
+      "Min Pairwise Difference Excluding Ambiguous",
+      "Number Invariable Block",
+      "Number Invariable Block Excluding Ambiguous",
+      "Segregating-Sites",
+      "Theta", 
+      "Tajima-D", 
+      "Tajima-Pi")
+write("\n", file=outfileName, append=TRUE)
+
+d = readDiscreteCharacterData(inFile)
+
+num_inv         = d.getNumInvariantSites( excludeAmbiguous=FALSE )
+num_inv_amb     = d.getNumInvariantSites( excludeAmbiguous=TRUE )
+
+min_inv_bl      = d.maxInvariableBlockLength( excludeAmbiguous=FALSE )    
+min_inv_bl_amb  = d.maxInvariableBlockLength( excludeAmbiguous=TRUE )
+
+max_pd          = d.maxPairwiseDifference( excludeAmbiguous=FALSE )
+max_pd_amb      = d.maxPairwiseDifference( excludeAmbiguous=TRUE )
+
+max_var_bl      = d.maxVariableBlockLength( excludeAmbiguous=FALSE )
+max_var_bl_amb  = d.maxVariableBlockLength( excludeAmbiguous=TRUE )
+
+min_pd          = d.minPairwiseDifference( excludeAmbiguous=FALSE )
+min_pd_amb      = d.minPairwiseDifference( excludeAmbiguous=TRUE )
+
+n_inv_b         = d.numInvariableBlocks( excludeAmbiguous=FALSE )    
+n_inv_b_amb     = d.numInvariableBlocks( excludeAmbiguous=TRUE )    
+
+n_taxa_50       = d.numTaxaMissingSequence( 0.5 )    
+n_taxa_30       = d.numTaxaMissingSequence( 0.3 )    
+n_taxa_10       = d.numTaxaMissingSequence( 0.1 )
+
+theta           = fnWattersonsTheta( d )
+seg_sites       = fnSegregatingSites( d )
+tajima_d        = fnTajimasD( d )
+tajima_pi       = fnTajimasPi( d )
+
+
+write(file=outfileName, append=TRUE, sep=",",
+      num_inv,
+      num_inv_amb,
+      min_inv_bl,
+      min_inv_bl_amb,
+      max_pd,
+      max_pd_amb,
+      max_var_bl,
+      max_var_bl_amb,
+      min_pd,
+      min_pd_amb,
+      n_inv_b,
+      n_inv_b_amb,
+      seg_sites,
+      theta,
+      tajima_d,
+      tajima_pi)
+
+
+write(file=outfileName, "\n", append=TRUE) 
+    
+

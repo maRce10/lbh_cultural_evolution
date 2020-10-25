@@ -1,0 +1,24 @@
+################################################################################
+#
+# RevBayes script: Posterior data prediction for cultural evolution under the FBD
+# 
+# This file: Runs data simulation
+#
+# authors: B. Willink, M. Araya
+#
+# Basesd on: Bayesian model testing using posterior predictive simulation
+#
+# authors: Lyndon M. Coghill, Sebastian Hoehna and Jeremy M. Brown
+################################################################################
+## specify the model
+source(model_file_name)
+
+## read the trace
+trace = readStochasticVariableTrace("output/revbayes/" + model_name + "_" + analysis_name + "_posterior.var", delimiter=TAB)
+
+
+## create posterior predictive simulation
+pps = posteriorPredictiveSimulation(mymodel, directory="output/revbayes/P3_sim/" + model_name + "_" + analysis_name + "_post_sims", trace)
+
+## run the posterior predictive simulation
+pps.run(thinning=2)
