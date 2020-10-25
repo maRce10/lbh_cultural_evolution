@@ -445,7 +445,7 @@ dat.names &lt;- gsub(pattern = &quot;_global&quot;, replacement = &quot;\\&quot;
 dat.names &lt;- gsub(pattern = &quot;_Uexp&quot;, replacement = &quot;\\&quot;, x = dat.names)</code></pre>
 <p>Here we modify the general pps.Rev for each analysis</p>
 <pre class="r"><code>for (i in 1:length(runs)) {
-  pps.rev &lt;- readLines(&quot;pps.Rev&quot;)
+  pps.rev &lt;- readLines(&quot;source/pps.Rev&quot;)
    
   # add dataset name
    pps.rev &lt;-
@@ -473,7 +473,7 @@ dat.names &lt;- gsub(pattern = &quot;_Uexp&quot;, replacement = &quot;\\&quot;, 
   
   # write to file
   write(pps.rev,
-        paste0(&quot;P3/&quot;, model.names[i], &quot;_&quot;, analysis.names[i], &quot;_pps.Rev&quot;))
+        paste0(&quot;source/P3/&quot;, model.names[i], &quot;_&quot;, analysis.names[i], &quot;_pps.Rev&quot;))
   }</code></pre>
 
 

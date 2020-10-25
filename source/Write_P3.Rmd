@@ -4,6 +4,11 @@ author: "Beatriz Willink y Marcelo Araya"
 date: "10/25/2020"
 output: html_document
 ---
+```{r, include=FALSE}
+require(knitr)
+opts_knit$set(root.dir = "..", eval = TRUE, echo = FALSE)
+```
+
 This script create Rev control scripts to run posterior predictive checks on all models and leks.
 ```{r}
 # first ge a vector with all runs to be included
@@ -35,7 +40,7 @@ dat.names <- gsub(pattern = "_Uexp", replacement = "\\", x = dat.names)
 Here we modify the general pps.Rev for each analysis
 ```{r}
 for (i in 1:length(runs)) {
-  pps.rev <- readLines("pps.Rev")
+  pps.rev <- readLines("source/pps.Rev")
    
   # add dataset name
    pps.rev <-
@@ -63,7 +68,7 @@ for (i in 1:length(runs)) {
   
   # write to file
   write(pps.rev,
-        paste0("P3/", model.names[i], "_", analysis.names[i], "_pps.Rev"))
+        paste0("source/P3/", model.names[i], "_", analysis.names[i], "_pps.Rev"))
   }
 ```
 
