@@ -35,7 +35,7 @@ dat.names <- gsub(pattern = "_Uexp", replacement = "\\", x = dat.names)
 Here we modify the general pps.Rev for each analysis
 ```{r}
 for (i in 1:length(runs)) {
-  pps.rev <- readLines("source/pps.Rev")
+  pps.rev <- readLines("pps.Rev")
    
   # add dataset name
    pps.rev <-
@@ -63,7 +63,7 @@ for (i in 1:length(runs)) {
   
   # write to file
   write(pps.rev,
-        paste0("source/P3/", model.names[i], "_", analysis.names[i], "_pps.Rev"))
+        paste0("P3/", model.names[i], "_", analysis.names[i], "_pps.Rev"))
   }
 ```
 
