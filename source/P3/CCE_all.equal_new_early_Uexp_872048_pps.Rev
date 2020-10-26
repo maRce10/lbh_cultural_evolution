@@ -13,13 +13,13 @@
 ## first we need to get the files for this run
 
 ## name of alignement file 
-dat_name = CCE_all.equal_early_new
+dat_name = "CCE_all.equal_early_new"
 
 ## unique run id
-analysis_name = 872048
+analysis_name = "872048"
 
 ## name of model file
-model_name = CCE_all.equal_new_early_Uexp
+model_name = "CCE_all.equal_new_early_Uexp"
 
 ## read in empirical data
 inFile = "./data/processed/nexus/" + dat_name + "_alignment.nex"

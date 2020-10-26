@@ -13,13 +13,13 @@
 ## first we need to get the files for this run
 
 ## name of alignement file 
-dat_name = SUR_prank_all_old
+dat_name = "SUR_prank_all_old"
 
 ## unique run id
-analysis_name = 316161
+analysis_name = "316161"
 
 ## name of model file
-model_name = SUR_prank_old_all_global
+model_name = "SUR_prank_old_all_global"
 
 ## read in empirical data
 inFile = "./data/processed/nexus/" + dat_name + "_alignment.nex"

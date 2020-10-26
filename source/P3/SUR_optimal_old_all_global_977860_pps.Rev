@@ -13,13 +13,13 @@
 ## first we need to get the files for this run
 
 ## name of alignement file 
-dat_name = SUR_optimal_all_old
+dat_name = "SUR_optimal_all_old"
 
 ## unique run id
-analysis_name = 977860
+analysis_name = "977860"
 
 ## name of model file
-model_name = SUR_optimal_old_all_global
+model_name = "SUR_optimal_old_all_global"
 
 ## read in empirical data
 inFile = "./data/processed/nexus/" + dat_name + "_alignment.nex"
