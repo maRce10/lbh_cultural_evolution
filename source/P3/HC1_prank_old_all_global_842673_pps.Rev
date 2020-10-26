@@ -13,13 +13,13 @@
 ## first we need to get the files for this run
 
 ## name of alignement file 
-dat_name = HC1_prank_all_old
+dat_name = "HC1_prank_all_old"
 
 ## unique run id
-analysis_name = 842673
+analysis_name = "842673"
 
 ## name of model file
-model_name = HC1_prank_old_all_global
+model_name = "HC1_prank_old_all_global"
 
 ## read in empirical data
 inFile = "./data/processed/nexus/" + dat_name + "_alignment.nex"

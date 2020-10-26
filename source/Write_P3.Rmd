@@ -46,7 +46,7 @@ for (i in 1:length(runs)) {
    pps.rev <-
     gsub(
       pattern = "dat_name = ",
-      replacement = paste0("dat_name = ", dat.names[i]),
+      replacement = paste0("dat_name = ", "\"", dat.names[i], "\""),
       x = pps.rev
     )
    
@@ -54,7 +54,7 @@ for (i in 1:length(runs)) {
   pps.rev <-
     gsub(
       pattern = "model_name = ",
-      replacement = paste0("model_name = ", model.names[i]),
+      replacement = paste0("model_name = ", "\"", model.names[i], "\""),
       x = pps.rev
     )
   
@@ -62,7 +62,7 @@ for (i in 1:length(runs)) {
   pps.rev <-
     gsub(
       pattern = "analysis_name = ",
-      replacement = paste0("analysis_name = ", analysis.names[i]),
+      replacement = paste0("analysis_name = ", "\"", analysis.names[i], "\""),
       x = pps.rev
     )
   

@@ -13,13 +13,13 @@
 ## first we need to get the files for this run
 
 ## name of alignement file 
-dat_name = BR1_optimal_all_new
+dat_name = "BR1_optimal_all_new"
 
 ## unique run id
-analysis_name = 460362
+analysis_name = "460362"
 
 ## name of model file
-model_name = BR1_optimal_new_all_Uexp
+model_name = "BR1_optimal_new_all_Uexp"
 
 ## read in empirical data
 inFile = "./data/processed/nexus/" + dat_name + "_alignment.nex"

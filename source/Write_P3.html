@@ -451,7 +451,7 @@ dat.names &lt;- gsub(pattern = &quot;_Uexp&quot;, replacement = &quot;\\&quot;, 
    pps.rev &lt;-
     gsub(
       pattern = &quot;dat_name = &quot;,
-      replacement = paste0(&quot;dat_name = &quot;, dat.names[i]),
+      replacement = paste0(&quot;dat_name = &quot;, &quot;\&quot;&quot;, dat.names[i], &quot;\&quot;&quot;),
       x = pps.rev
     )
    
@@ -459,7 +459,7 @@ dat.names &lt;- gsub(pattern = &quot;_Uexp&quot;, replacement = &quot;\\&quot;, 
   pps.rev &lt;-
     gsub(
       pattern = &quot;model_name = &quot;,
-      replacement = paste0(&quot;model_name = &quot;, model.names[i]),
+      replacement = paste0(&quot;model_name = &quot;, &quot;\&quot;&quot;, model.names[i], &quot;\&quot;&quot;),
       x = pps.rev
     )
   
@@ -467,7 +467,7 @@ dat.names &lt;- gsub(pattern = &quot;_Uexp&quot;, replacement = &quot;\\&quot;, 
   pps.rev &lt;-
     gsub(
       pattern = &quot;analysis_name = &quot;,
-      replacement = paste0(&quot;analysis_name = &quot;, analysis.names[i]),
+      replacement = paste0(&quot;analysis_name = &quot;, &quot;\&quot;&quot;, analysis.names[i], &quot;\&quot;&quot;),
       x = pps.rev
     )
   
