@@ -42,7 +42,7 @@ Code used for creating long-billed hermit song cultural evolution trees and anal
 ## Analysis
 
 * [Optimizing cost for MAFFT alignments](https://rpubs.com/marcelo-araya-salas/601010)
-* [Aligning song sequences with mafft and prank](https://rpubs.com/marcelo-araya-salas/601065)
+* [Aligning song sequences with mafft and prank](https://rpubs.com/marcelo-araya-salas/681895)
 * Revbayes models done
 
 ## In progress

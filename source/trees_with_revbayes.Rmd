@@ -130,16 +130,9 @@ done <- unique(sapply(current.output, function(x)
 
 grd <- grd[!grd$output %in% done, , drop = FALSE]
 
-# grd <- grd[sample(1:nrow(grd)),]
-
-
-# grd <- grd[!grd$lek %in% c("SUR", "CCE"),]
-
-# grd <- grd[grd$branch_rate_model == "global",]
 
 for (x in 1:nrow(grd)) {
-  # out <- pbapply::pblapply(1:nrow(grd), cl = 1, function(x){
-  
+
   print(grd[x,])
   
   yrs.lek <- yrs[yrs$lek == grd$lek[x], ]
@@ -204,7 +197,6 @@ for (x in 1:nrow(grd)) {
   # resave template
   writeLines(templ, con = fl.nm.rb)
   
-  # cll <- paste0("~/Downloads/revbayes/projects/cmake/rb ", fl.nm.rb)
   cll <-
     paste0("mpirun -np 10 ~/revbayes-master/projects/cmake/rb-mpi ",
            fl.nm.rb)
@@ -219,7 +211,6 @@ for (x in 1:nrow(grd)) {
   
   Sys.sleep(10)
 }
-# )
 
 ```
 
@@ -451,6 +442,50 @@ out <- pbapply::pblapply(1:nrow(grd), cl = 1, function(x){
     # if (length(new.output > 0))
     # file.copy(from = new.output, to =file.path("./output/revbayes/", basename(output)))
 })
+
+```
+
+```{r}
+
+# list posterior.var files
+posteriors <- list.files(pattern = "posterior.var",
+path = "./output/revbayes",
+full.names = TRUE)
+
+# get data frame with name of files and models
+post_df <- data.frame(full_name = posteriors, model = sapply(basename(posteriors), function(x)
+paste(strsplit(x, "_", fixed = TRUE, "[[", 1)[[1]][1:5], collapse = "_"), USE.NAMES = FALSE))
+
+# get date of last modification
+posteriors.info <- file.info(post_df$full_name)
+
+# add date time to data frame 
+post_df$mtime <- posteriors.info$mtime
+
+# keep only the most recent one for each model
+out <- lapply(unique(post_df$model), FUN = function(x){
+Y <- post_df[post_df$model == x, ]
+W <- Y[which.max(Y$mtime), , drop = FALSE]
+return(W)
+})
+
+# put back into data frame format
+last_models <- do.call(rbind, out)
+
+# get number ID for each model
+last_models$model_id <- sapply(last_models$full_name, function(x)
+strsplit(x, "_", fixed = TRUE, "[[", 1)[[1]][6], USE.NAMES = FALSE)
+
+# get full names of files to copy
+files_to_copy <- list.files(pattern = paste(last_models$model_id, collapse = "|"),
+path = "./output/revbayes", full.names = TRUE, recursive = TRUE)
+
+# copy files
+copy_res <- file.copy(from = files_to_copy, to = file.path("./output/most_recent_revbayes_models", basename(files_to_copy)), overwrite = FALSE)
+
+# check number of files copied
+sum(copy_res)
+
 
 ```
 
