@@ -10,3 +10,4 @@ inFile = "./data/processed/nexus/" + dat_name + "_alignment.nex"
 data <- readDiscreteCharacterData(inFile)
 q()
 "
+q()
