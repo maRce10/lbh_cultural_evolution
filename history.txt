@@ -11,3 +11,4 @@ data <- readDiscreteCharacterData(inFile)
 q()
 "
 q()
+source("source/P3/BR1_all.equal_new_all_global_523907_pps.Rev");
