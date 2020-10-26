@@ -1,0 +1,17 @@
+Statistic,Lower 1-tailed,Upper 1-tailed,Two-tailed,Midpoint,Effect Size
+Number Invariant Sites,0.8250583,0.5331556,1.066311,0.6459513,0
+Number Invariant Sites Excluding Ambiguous,0.8330556,1,1.666111,0.4165278,0
+Max Invariant Block Length,0.9673442,0.5331556,1.066311,0.7170943,0
+Max Invariant Block Length Excluding Ambiguous,0.9906698,1,1.98134,0.4953349,0
+Max Pairwise Difference,1,0.1472842,0.2945685,0.9263579,0.9204049
+Max Pairwise Difference Excluding Ambiguous,0.589137,0.7754082,1.178274,0.4068644,0
+Max Variable Block Length,0.4095302,0.613129,0.8190603,0.3982006,0.7401105
+Max Variable Block Length Excluding Ambiguous,1,0.8330556,1.666111,0.5834722,0
+Min Pairwise Difference,0.895035,1,1.79007,0.4475175,0
+Min Pairwise Difference Excluding Ambiguous,0.2192602,1,0.4385205,0.1096301,1.036823
+Number Invariable Block,0.8420526,0.5331556,1.066311,0.6544485,0
+Number Invariable Block Excluding Ambiguous,0.8397201,1,1.67944,0.41986,0
+Segregating-Sites,0.5331556,0.8250583,1.066311,0.3540487,0
+Theta,0.5331556,0.8250583,1.066311,0.3540487,0
+Tajima-D,0.8970343,0.1029657,0.2059314,0.8970343,1.135373
+Tajima-Pi,0.8833722,0.116961,0.233922,0.8832056,1.069611
