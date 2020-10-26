@@ -25,6 +25,9 @@ model_name = "CCE_optimal_old_early_global"
 inFile = "./data/processed/nexus/" + dat_name + "_alignment.nex"
 data <- readDiscreteCharacterData(inFile)
 
+# read in model file
+model_file_name = "source/" + model_name + ".Rev"
+ 
 ## Run simulations
 source("./source/pps_Simulation.Rev")
 
