@@ -2,7 +2,7 @@
 
 #Run g1 model with beta prior and broad root prior for 3 days max in a node with 8 cores
 #SBATCH --partition=nu-long
-#SBATCH --job-name=ML.Approx.R1-long
+#SBATCH --job-name=ML.Approx.R3-long
 
 #send an email when it's done
 #SBATCH --mail-user=beatriz.willink@ucr.ac.cr --mail-type=END,FAIL
@@ -36,17 +36,17 @@ do
     do
       for n in ${times[@]};
       do
- 	for o in ${clocks[@]};
+	for o in ${clocks[@]};
         do
           echo starting dataset
           lekinfo="${j}"."${k}"."${m}"."${n}"
           echo $lekinfo
-          echo $lekinfo >> ../output/revbayes/stdout/dataset.txt
-          rb_command="source(\"./"$j"_"$k"_"$m"_"$n".Rev\");"
+          echo $lekinfo >> ./output/revbayes/stdout/datasetR3.txt
+          rb_command="source(\"./source/"$j"_"$k"_"$m"_"$n".Rev\");"
           ML_out="./output/revbayes/ML/"$j"_"$k"_"$m"_"$n".txt"
           echo $rb_command | mpiexec -np 32 rb-mpi | tee $ML_out
-          cat $ML_out | tail -1 >> ../output/revbayes/stdout/PathSampler.txt
-          cat $ML_out | tail -2 | head -1 >> ../output/revbayes/stdout/SteppingStone.txt
+          cat $ML_out | tail -1 >> ./output/revbayes/stdout/PathSamplerR3.txt
+          cat $ML_out | tail -2 | head -1 >> ./output/revbayes/stdout/SteppingStoneR3.txt
           echo ML approximated \for $lekinfo
         done
       done
