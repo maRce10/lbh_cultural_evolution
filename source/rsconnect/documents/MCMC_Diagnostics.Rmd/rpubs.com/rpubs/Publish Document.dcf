@@ -6,5 +6,5 @@ server: rpubs.com
 hostUrl: rpubs.com
 appId: https://api.rpubs.com/api/v1/document/681895/21606068ec35410e961f29b4bbd58e2f
 bundleId: https://api.rpubs.com/api/v1/document/681895/21606068ec35410e961f29b4bbd58e2f
-url: http://rpubs.com/publish/claim/681895/6fd5ac3734704ad1b84aeb17e5b1b3e8
-when: 1603734935.81038
+url: http://rpubs.com/marcelo-araya-salas/681895
+when: 1604065141.05421

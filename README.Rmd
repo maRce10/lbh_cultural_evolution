@@ -42,25 +42,38 @@ Code used for creating long-billed hermit song cultural evolution trees and anal
 ## Analysis
 
 * [Optimizing cost for MAFFT alignments](https://rpubs.com/marcelo-araya-salas/601010)
-* [Aligning song sequences with mafft and prank](https://rpubs.com/marcelo-araya-salas/681895)
+* [Aligning song sequences with mafft and prank](https://rpubs.com/marcelo-araya-salas/601065)
 * Revbayes models done
-
+* Making trees with RevBayes 
+    - [diagnostics matrix](hhttps://rpubs.com/marcelo-araya-salas/681895)
+    -  [diagnostic plots](lbh_cultural_evolution/tree/master/output/MCMC_diagnostic_plots)
+    
+    
 ## In progress
 
-* Making trees with RevBayes 
-    - [diagnostics matrix](https://rpubs.com/marcelo-araya-salas/623004)
-    -  [diagnostic plots](lbh_cultural_evolution/tree/master/output/MCMC_diagnostic_plots)
+
 *  ML analysis
 
 ## To-do list
 
 * Run revbayes posterior predictions (P3)
 * Summarize results revBayes trees
+* Add info about number of iterations to MCMC diagnostics HTML
+
 
 ## Status
 Project is: _in progress_
 
 ## Contact
 Created by [Marcelo Araya-Salas](https://marceloarayasalas.weebly.com/)
+
+
+<!-- #### discusion -->
+
+<!-- # title: Cultural evolution hummingbirds  -->
+
+<!-- do alignments matter? compare convergence across aligent methods (prank, all equal, optimal) -->
+
+<!-- hacer machote para el aticulo -->
 
 

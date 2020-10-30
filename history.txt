@@ -1,63 +1,100 @@
-q()
-## name of alignement file 
-dat_name = BR1_all.equal_all_new
-## unique run id
-analysis_name = 523907
-## name of model file
-model_name = BR1_all.equal_new_all_global
-## read in empirical data
-inFile = "./data/processed/nexus/" + dat_name + "_alignment.nex"
-data <- readDiscreteCharacterData(inFile)
-q()
-"
-q()
-source("source/P3/BR1_all.equal_new_all_global_523907_pps.Rev");
-source("source/P3/BR1_all.equal_new_early_global_261496_pps.Rev");
-source("source/P3/BR1_all.equal_new_all_global_523907_pps.Rev");
-source("source/P3/BR1_all.equal_new_early_global_261496_pps.Rev");
-source("source/P3/BR1_optimal_new_all_global_455656_pps.Rev");
-source("source/P3/BR1_optimal_new_early_global_954808_pps.Rev");
-source("source/P3/BR1_prank_new_all_global_642717_pps.Rev");
-source("source/P3/BR1_prank_new_early_global_843936_pps.Rev");
-source("source/P3/CCE_all.equal_new_all_global_542418_pps.Rev");
-source("source/P3/CCE_all.equal_new_early_global_787891_pps.Rev");
-source("source/P3/CCE_all.equal_old_all_global_170195_pps.Rev");
-source("source/P3/CCE_all.equal_old_early_global_756181_pps.Rev");
-source("source/P3/CCE_optimal_new_all_global_552615_pps.Rev");
-source("source/P3/CCE_optimal_new_early_global_456590_pps.Rev");
-source("source/P3/CCE_optimal_old_all_global_226246_pps.Rev");
-source("source/P3/CCE_optimal_old_early_global_577229_pps.Rev");
-source("source/P3/CCE_prank_new_all_global_373505_pps.Rev");
-source("source/P3/CCE_prank_new_early_global_401770_pps.Rev");
-source("source/P3/CCE_prank_old_all_global_968798_pps.Rev");
-source("source/P3/CCE_prank_old_early_global_638593_pps.Rev");
-source("source/P3/HC1_all.equal_new_all_global_480886_pps.Rev");
-source("source/P3/HC1_all.equal_new_early_global_244734_pps.Rev");
-source("source/P3/HC1_all.equal_old_all_global_793409_pps.Rev");
-source("source/P3/HC1_all.equal_old_early_global_267086_pps.Rev");
-source("source/P3/HC1_optimal_new_all_global_962187_pps.Rev");
-source("source/P3/HC1_optimal_new_early_global_914623_pps.Rev");
-source("source/P3/HC1_optimal_old_all_global_994599_pps.Rev");
-source("source/P3/HC1_optimal_old_early_global_410712_pps.Rev");
-source("source/P3/HC1_prank_new_all_global_317778_pps.Rev");
-source("source/P3/HC1_prank_new_early_global_417133_pps.Rev");
-source("source/P3/HC1_prank_old_all_global_842673_pps.Rev");
-source("source/P3/HC1_prank_old_early_global_439437_pps.Rev");
-source("source/P3/SUR_all.equal_new_all_global_373688_pps.Rev");
-source("source/P3/SUR_all.equal_new_early_global_791160_pps.Rev");
-source("source/P3/SUR_all.equal_old_all_global_455937_pps.Rev");
-source("source/P3/SUR_all.equal_old_early_global_161096_pps.Rev");
-source("source/P3/SUR_optimal_new_all_global_557832_pps.Rev");
-source("source/P3/SUR_optimal_new_early_global_715759_pps.Rev");
-source("source/P3/SUR_optimal_old_all_global_977860_pps.Rev");
-source("source/P3/SUR_optimal_old_early_global_702350_pps.Rev");
-source("source/P3/SUR_prank_new_all_global_946598_pps.Rev");
-source("source/P3/SUR_prank_new_early_global_833100_pps.Rev");
-source("source/P3/SUR_prank_old_all_global_316161_pps.Rev");
-source("source/P3/SUR_prank_old_early_global_219792_pps.Rev");
-source("source/P3/TR1_all.equal_new_all_global_822099_pps.Rev");
-source("source/P3/TR1_all.equal_new_early_global_718217_pps.Rev");
-source("source/P3/TR1_optimal_new_all_global_582585_pps.Rev");
-source("source/P3/TR1_optimal_new_early_global_867227_pps.Rev");
-source("source/P3/TR1_prank_new_all_global_431736_pps.Rev");
-source("source/P3/TR1_prank_new_early_global_788624_pps.Rev");
+
+grd <- grd[order(grd$lek),]
+
+# remove "old" combinations without data before 2000s
+for (i in sel_leks)
+  if (!any(yrs$year[yrs$lek == i] < 2000))
+    grd <- grd[!(grd$use_old_fossils == "old" & grd$lek == i),]
+
+grd$output <- apply(grd, 1, paste, collapse = "_")
+
+# remove leks with output
+current.output <- list.files(pattern = "posterior.var",
+             path = "./output/revbayes",
+             recursive = TRUE)
+
+done <- unique(sapply(current.output, function(x)
+    paste(strsplit(x, "_", fixed = TRUE, "[[", 1)[[1]][1:5], collapse = "_"), USE.NAMES = FALSE))
+
+grd <- grd[grd$output %in% c("CCE_all.equal_new_all_global", "CCE_all.equal_old_early_global", "CCE_optimal_new_all_global", "CCE_optimal_old_early_global", "CCE_prank_new_all_global", "CCE_prank_old_all_global"), ]
+
+# grd <- grd[!grd$output %in% done, , drop = FALSE]
+
+for (x in 1:nrow(grd)) {
+
+  print(grd[x,])
+  
+  yrs.lek <- yrs[yrs$lek == grd$lek[x], ]
+  
+  if (grd$use_all_fossils[x] == "all")
+    last.year.songs <-
+    yrs.lek$song.type.year[yrs.lek$year == max(yrs.lek$year)] else {
+    last.year.songs <- vector()
+    for (i in yrs.lek$song.type[yrs.lek$year == max(yrs.lek$year)]) {
+      Y <- yrs.lek[yrs.lek$song.type == i,]
+      last.year.songs <-
+        c(last.year.songs, Y$song.type.year[which.min(Y$year)])
+    }
+  }
+  
+  last.year.songs <- paste0(paste0('"', last.year.songs), '"')
+  
+  last.year.songs <-
+    paste0("clade(", paste0(last.year.songs, collapse = ", "), ")")
+  
+  nx <-
+    paste0(
+      "./data/processed/nexus/",
+      grd$lek[x],
+      "_",
+      grd$alignment[x],
+      "_",
+      grd$use_all_fossils[x],
+      "_",
+      grd$use_old_fossils[x],
+      "_alignment.nex"
+    )
+  
+  tsv <-
+    paste0(
+      "./data/processed/fossils/",
+      grd$lek[x],
+      "_taxa_",
+      grd$use_all_fossils[x],
+      "_",
+      grd$use_old_fossils[x],
+      ".tsv"
+    )
+  
+  templ <- readLines("./source/template.Rev")
+  templ[1] <- gsub("aligment.name", nx, templ[1])
+  templ[2] <- gsub("tsv.file", tsv, templ[2])
+  templ[4] <-
+    gsub("output.base.name",
+         file.path("./output/revbayes", grd$output[x]),
+         templ[4])
+  templ[10] <- gsub("LAST.SONG.TYPES", last.year.songs, templ[10])
+  templ[12] <-
+    if (grd$branch_rate_model[x] == "global")
+      'source("./source/Specimens_control_global.Rev")' else
+    'source("./source/Specimens_control_uexp.Rev")'
+  
+  fl.nm.rb <- paste0("./source/", grd$output[x], ".Rev")
+  
+  # resave template
+  writeLines(templ, con = fl.nm.rb)
+  
+  cll <-
+    paste0("mpirun -np 10 ~/revbayes-master/projects/cmake/rb-mpi ",
+           fl.nm.rb)
+  
+  system(cll)
+  
+  print(grd[x,])
+  
+  print("##################### done ############")
+  
+  print(paste(nrow(grd) - x, "rows left"))
+  
+  Sys.sleep(10)
+}

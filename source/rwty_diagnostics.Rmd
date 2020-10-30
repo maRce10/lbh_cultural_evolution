@@ -1,0 +1,168 @@
+---
+title: <center><font size="6"><b>RWTY diagnostics</b></font></center>
+subtitle: <center><font size="4"><b><a href="https://github.com/maRce10/lbh_cultural_evolution">Long-billed hermit song cultural evolution<a></b></font></center>
+author: <center><font size="4"><a href="http://marceloarayasalas.weebly.com/">Marcelo Araya-Salas PhD</a> & <a href="https://scholar.google.com/citations?user=0a8k9T8AAAAJ&hl=es&oi=ao"> Beatriz Willink PhD</a></font></center>
+date: <center>`r format(Sys.Date(), "%d-%m-%Y")`</center>
+output:
+  html_document:
+    code_folding: hide
+    toc: no
+    toc_depth: 3
+    toc_float:
+      collapsed: yes
+      smooth_scroll: yes
+fontsize: 12pt 
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r clean session, eval = TRUE, echo = TRUE, message = FALSE, warning = FALSE}
+
+## vector with package names
+x <- c("pbapply",  "DT", "rwty")
+
+aa <- lapply(x, function(y) {
+  
+  # check if installed, if not then install 
+  if (!y %in% installed.packages()[,"Package"]) 
+    install.packages(y) 
+
+  # load package
+  try(require(y, character.only = T), silent = T)
+})
+
+```
+
+```{r functions and parameters, eval = TRUE}
+
+knitr::opts_knit$set(root.dir = normalizePath(".."))
+
+knitr::opts_chunk$set(dpi = 58, fig.width = 12, echo = TRUE) 
+
+options(knitr.kable.NA = '')
+
+```
+
+
+```{r}
+
+
+
+
+data(fungus)
+check.chains(fungus)
+
+path <- "~/Downloads/test/"
+
+library(rwty)
+
+tree.files <- list.files("~/Dropbox/Projects/lbh_cultural_evolution/output/most_recent_revbayes_models/", pattern = "")
+
+rb.trees <- load.trees("~/Downloads/test/CCE_all.equal_old_early_Uexp_730923.trees", format = "revbayes")
+
+
+rb.trees$trees
+head(rb.trees$ptable)
+tail(rb.trees$ptable)
+
+
+fungus
+data("salamanders")
+salamanders
+
+makeplot.treespace(rb.trees, burnin =50)
+makeplot.topology(rb.trees, burnin =50)
+makeplot.top(rb.trees, burnin =50)
+
+
+
+rb.trees <- load.multi("~/Downloads/test/", format = "revbayes")
+sala <- salamanders[[1]]
+lbh <- rb.trees[[1]]
+
+makeplot.treespace(sala)
+makeplot.treespace(lbh, )
+
+unique(Ntip(sala$trees))
+
+hist(Ntip(lbh$trees))
+
+plot(lbh$trees[[1]])
+
+
+rb.us.rwty <- analyze.rwty(rb.us)
+
+makeplot.param(lbh)
+
+
+head(rb.trees$CCE_all.equal_old_early_Uexp_730923_run_1.trees$ptable)
+
+
+rb.trees.rwty <- analyze.rwty(chains = rb.trees, facet = FALSE, filename = "~/Downloads/test/test.pdf")
+
+
+check.chains(rb.trees)
+
+rb.trees <- load.multi("~/Dropbox/Projects/lbh_cultural_evolution/output/most_recent_revbayes_models/", format = "revbayes")
+
+rb.trees.rwty <- analyze.rwty(rb.trees)
+
+
+
+
+
+analyze.rwty
+
+# to see which plots you have
+names(salamanders.rwty)
+
+salamanders.rwty$pi.A..trace
+
+```
+
+
+```{r}
+# read revbayes output 
+rb.trees <- load.multi("~/Dropbox/Projects/lbh_cultural_evolution/output/most_recent_revbayes_models/", format = "revbayes")
+
+saveRDS(rb.trees, "./output/revbayes_output_in_single_R_object.RDS")
+
+```
+
+
+```{r}
+
+rb.trees <- readRDS("./output/revbayes_output_in_single_R_object.RDS")
+
+
+rb.trees
+
+
+
+length(rb.trees) /96
+
+#selected leks
+sel_leks <- c("SUR", "CCE", "HC1", "BR1", "TR1")
+
+dat <-
+  read.csv("./data/raw/segments_by_song_type.csv", stringsAsFactors = FALSE)
+yrs <-
+  read.csv("./data/raw/year_range_by_song_type.csv", stringsAsFactors = FALSE)
+
+yrs$song.type.year <- paste(yrs$song.type, yrs$year, sep = "-")
+alignment	<- c("optimal", "all.equal", "prank") # all.equal = equal rates
+
+
+```
+
+
+
+
+
+<font size="4">R session information</font>
+
+```{r session info, echo=F}
+
+sessionInfo()
+
+```
