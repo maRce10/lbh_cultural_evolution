@@ -139,8 +139,7 @@ for (x in 1:nrow(grd)) {
   
   if (grd$use_all_fossils[x] == "all")
     last.year.songs <-
-    yrs.lek$song.type.year[yrs.lek$year == max(yrs.lek$year)]
-  else {
+    yrs.lek$song.type.year[yrs.lek$year == max(yrs.lek$year)] else {
     last.year.songs <- vector()
     for (i in yrs.lek$song.type[yrs.lek$year == max(yrs.lek$year)]) {
       Y <- yrs.lek[yrs.lek$song.type == i,]
@@ -188,8 +187,7 @@ for (x in 1:nrow(grd)) {
   templ[10] <- gsub("LAST.SONG.TYPES", last.year.songs, templ[10])
   templ[12] <-
     if (grd$branch_rate_model[x] == "global")
-      'source("./source/Specimens_control_global.Rev")'
-  else
+      'source("./source/Specimens_control_global.Rev")' else
     'source("./source/Specimens_control_uexp.Rev")'
   
   fl.nm.rb <- paste0("./source/", grd$output[x], ".Rev")
@@ -481,7 +479,7 @@ files_to_copy <- list.files(pattern = paste(last_models$model_id, collapse = "|"
 path = "./output/revbayes", full.names = TRUE, recursive = TRUE)
 
 # copy files
-copy_res <- file.copy(from = files_to_copy, to = file.path("./output/most_recent_revbayes_models", basename(files_to_copy)), overwrite = FALSE)
+copy_res <- file.copy(from = files_to_copy, to = file.path("./output/most_recent_revbayes_models", basename(files_to_copy)), overwrite = TRUE)
 
 # check number of files copied
 sum(copy_res)

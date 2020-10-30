@@ -19,7 +19,7 @@ editor_options:
 ```{r clean session, eval = TRUE, echo = TRUE, message = FALSE, warning = FALSE}
 
 ## vector with package names
-x <- c("pbapply", "parallel", "coda", "DT", "stringr")
+x <- c("pbapply", "parallel", "coda", "DT", "stringr", "rwty")
 
 aa <- lapply(x, function(y) {
   
@@ -190,6 +190,12 @@ model_diags <- do.call(rbind, runs)
 # save
 write.csv(model_diags, "output/diagnostics_revbayes_output.csv", row.names = FALSE)
 
+rb.trees <- load.multi("~/Dropbox/Projects/lbh_cultural_evolution/output/most_recent_revbayes_models/", format = "revbayes")
+
+saveRDS(rb.trees, "./output/revbayes_output_in_single_R_object.RDS")
+
+
+
 ```
   
 ## Diagnostics: Gelman-Rubin, ESS, and autocorrelation
@@ -234,6 +240,19 @@ model_diags$gr_bad <- gsub("branch_rates\\.([[:digit:]]+)\\.|\\,branch_rates\\.(
 model_diags$gr_bad <- paste(model_diags$gr_bad, brc)
 
 
+rb.trees <- readRDS("./output/revbayes_output_in_single_R_object.RDS")
+
+
+names(rb.trees) <- gsub("\\.trees", "", names(rb.trees))
+
+model_diags$iterations <- sapply(model_diags$model, function(x) max(rb.trees[[x]]$ptable$Iteration))
+
+
+# Number of models by iterations and lek
+knitr::kable(as.matrix(table(model_diags$iterations, model_diags$lek)), caption = "Number of models by iterations and lek")
+
+# model_diags$model[model_diags$lek == "CCE" & model_diags$iterations == 3001]
+
 # add link to plots
 plts <- list.files(path = "./output/MCMC_diagnostic_plots", pattern = "\\.jpg$")
   
@@ -244,7 +263,6 @@ model_diags$diag_plots <- sapply(model_diags$model, function(x)
 
 paste(paste0('<a href=\"https://raw.githubusercontent.com/maRce10/lbh_cultural_evolution/master/output/MCMC_diagnostic_plots/', grep(paste(paste0(gsub("\\_([[:digit:]]+)", "", x), "_0"), collapse = "|"), plts, value = TRUE),'">', grep(paste(paste0(gsub("\\_([[:digit:]]+)", "", x), "_0"), collapse = "|"), plts, value = TRUE), '</a>'), collapse = " ")
 )
-
 
 # print dynamic table
 datatable(model_diags, editable = list(

@@ -9,4 +9,4 @@ state_name = output_file_name + ".state"
 # Make clade of the extant songs #
 clade_extant = clade("CCE-I4-2018", "CCE-I5-2018") # vector with names of all songtypes observed in the last year (e.g. "clade("st1", "st2"))
 
-source("./source/Specimens_control.Rev")
+source("./source/Specimens_control_global.Rev")
