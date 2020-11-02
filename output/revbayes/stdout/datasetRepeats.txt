@@ -1,8 +1,11 @@
-CCE_optimal_old_all
-CCE_prank_old_all
+CCE_optimal_old_all_Uexp
+CCE_prank_old_all_Uexp
 CCE_optimal_old_all_global
 CCE_prank_new_all_global
 CCE_prank_new_early_global
 CCE_prank_old_all_global
 SUR_prank_old_early_global
+CCE_prank_old_early_global
+HC1_prank_old_all_global
+
 
