@@ -1,0 +1,67 @@
+---
+title: cultural evolution song hummingbirds phylogenetic reconstruction 
+author:
+ - Marcelo Araya-Salas (marcelo.araya@ucr.ac.cr)^1,2^ * 
+ - Beatriz Willink (beatriz.willink@ucr.ac.cr)^3^
+ - Alejandro Rico-Guevara (colibri@uw.edu)^4^
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: yes
+    toc_depth: 3
+    toc_float:
+      collapsed: no
+      smooth_scroll: no
+bibliography: lbh_cult_evo.bib
+citation-style: sysbio.csl
+link-citations: true
+---
+
+```{r}
+
+bibs <- list.files(pattern = ".bib$") 
+
+```
+
+
+^1^ Centro de Investigación en Neurociencias, Universidad de Costa Rica
+
+^2^ Lab of Ornithology, Cornell University
+
+^3^ Escuela de Biología, Universidad de Costa Rica
+
+^4^ Department of Biology, University of Washington
+
+\*To whom correspondence should be addressed
+
+
+
+## Abstract
+
+
+## Introduction
+
+
+## Methods
+
+    - Data collection (MAS)
+
+La hablada aca, la hablada aca, la hablada aca, la hablada aca, la hablada aca, la hablada aca, la hablada aca, la hablada aca ....    
+    
+    
+    - Song structure coding (MAS)
+
+La hablada aca, la hablada aca, la hablada aca, la hablada aca, la hablada aca, la hablada aca, la hablada aca, la hablada aca ....    
+
+
+    - Phylogenetic reconstruction (BW)
+
+La hablada aca, la hablada aca, la hablada aca, la hablada aca, la hablada aca, la hablada aca, la hablada aca, la hablada aca ....    
+
+## Results
+
+## Discusion
+
+
+
+## References
