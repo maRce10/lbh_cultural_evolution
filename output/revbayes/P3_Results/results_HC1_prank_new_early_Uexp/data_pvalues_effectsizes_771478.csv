@@ -1,17 +1,17 @@
 Statistic,Lower 1-tailed,Upper 1-tailed,Two-tailed,Midpoint,Effect Size
-Number Invariant Sites,0,1,0,0,14.32026
-Number Invariant Sites Excluding Ambiguous,0,1,0,0,30.06235
-Max Invariant Block Length,0,1,0,0,7.627853
-Max Invariant Block Length Excluding Ambiguous,0,1,0,0,5.452525
-Max Pairwise Difference,1,0,0,1,26.81785
-Max Pairwise Difference Excluding Ambiguous,1,0,0,1,13.44438
-Max Variable Block Length,1,0,0,1,56.4036
-Max Variable Block Length Excluding Ambiguous,1,0,0,1,16.15699
-Min Pairwise Difference,1,0,0,1,inf
-Min Pairwise Difference Excluding Ambiguous,1,0,0,1,193.7137
-Number Invariable Block,0,1,0,0,8.095082
-Number Invariable Block Excluding Ambiguous,0.9946702,0.05996003,0.1199201,0.9673551,3.240726
-Segregating-Sites,1,0,0,1,14.32026
-Theta,1,0,0,1,14.32026
-Tajima-D,1,0,0,1,16.5507
-Tajima-Pi,1,0,0,1,36.90481
+Number Invariant Sites,0.07794803,1,0.1558961,0.03897402,1.7167
+Number Invariant Sites Excluding Ambiguous,0.140573,0.952032,0.2811459,0.09427049,1.246823
+Max Invariant Block Length,0.07794803,1,0.1558961,0.03897402,1.421446
+Max Invariant Block Length Excluding Ambiguous,0.5742838,1,1.148568,0.2871419,0
+Max Pairwise Difference,0.9926716,0.02731512,0.05463025,0.9826782,1.857459
+Max Pairwise Difference Excluding Ambiguous,0.8667555,0.2771486,0.5542971,0.7948035,0.9957501
+Max Variable Block Length,1,0.07794803,0.1558961,0.961026,2.318312
+Max Variable Block Length Excluding Ambiguous,0.7448368,0.4603598,0.9207195,0.6422385,0.3694534
+Min Pairwise Difference,0.8687542,0.2924717,0.5849434,0.7881412,1.195598
+Min Pairwise Difference Excluding Ambiguous,0.6095936,0.5356429,1.071286,0.5369753,0
+Number Invariable Block,0.07794803,1,0.1558961,0.03897402,1.477285
+Number Invariable Block Excluding Ambiguous,0.260493,0.9233844,0.520986,0.1685543,0.6849484
+Segregating-Sites,1,0.07794803,0.1558961,0.961026,1.7167
+Theta,1,0.07794803,0.1558961,0.961026,1.7167
+Tajima-D,0.6135909,0.3877415,0.775483,0.6129247,0.282952
+Tajima-Pi,0.8267821,0.1812125,0.362425,0.8227848,0.920808
