@@ -1,17 +1,17 @@
 Statistic,Lower 1-tailed,Upper 1-tailed,Two-tailed,Midpoint,Effect Size
-Number Invariant Sites,0.6884372,1,1.376874,0.3442186,0
-Number Invariant Sites Excluding Ambiguous,0.01899367,0.9973342,0.03798734,0.01082972,2.06193
-Max Invariant Block Length,0.6884372,1,1.376874,0.3442186,0
-Max Invariant Block Length Excluding Ambiguous,0.5474842,1,1.094968,0.2737421,0
-Max Pairwise Difference,1,0.0003332223,0.0006664445,0.9998334,3.917638
-Max Pairwise Difference Excluding Ambiguous,1,0.6234588,1.246918,0.6882706,0
-Max Variable Block Length,1,0.6884372,1.376874,0.6557814,0
-Max Variable Block Length Excluding Ambiguous,1,0.1032989,0.2065978,0.9483505,1.470392
+Number Invariant Sites,0.7014329,1,1.402866,0.3507164,0
+Number Invariant Sites Excluding Ambiguous,0.01966011,0.9966678,0.03932023,0.01149617,1.987651
+Max Invariant Block Length,0.7014329,1,1.402866,0.3507164,0
+Max Invariant Block Length Excluding Ambiguous,0.5398201,1,1.07964,0.26991,0
+Max Pairwise Difference,1,0.0003332223,0.0006664445,0.9998334,3.931347
+Max Pairwise Difference Excluding Ambiguous,1,0.6257914,1.251583,0.6871043,0
+Max Variable Block Length,1,0.7014329,1.402866,0.6492836,0
+Max Variable Block Length Excluding Ambiguous,1,0.1156281,0.2312562,0.9421859,1.281399
 Min Pairwise Difference,1,1,2,0.5,nan
 Min Pairwise Difference Excluding Ambiguous,1,1,2,0.5,nan
-Number Invariable Block,0.6884372,1,1.376874,0.3442186,0
-Number Invariable Block Excluding Ambiguous,0.03798734,0.9960013,0.07597468,0.020993,1.731058
-Segregating-Sites,1,0.6884372,1.376874,0.6557814,0
-Theta,1,0.6884372,1.376874,0.6557814,0
-Tajima-D,0.9120293,0.08797068,0.1759414,0.9120293,1.366042
-Tajima-Pi,0.9253582,0.07464179,0.1492836,0.9253582,1.441918
+Number Invariable Block,0.7014329,1,1.402866,0.3507164,0
+Number Invariable Block Excluding Ambiguous,0.03665445,0.9943352,0.0733089,0.02115961,1.726859
+Segregating-Sites,1,0.7014329,1.402866,0.6492836,0
+Theta,1,0.7014329,1.402866,0.6492836,0
+Tajima-D,0.9036988,0.09630123,0.1926025,0.9036988,1.358546
+Tajima-Pi,0.9170277,0.08297234,0.1659447,0.9170277,1.441334

@@ -1,17 +1,17 @@
 Statistic,Lower 1-tailed,Upper 1-tailed,Two-tailed,Midpoint,Effect Size
-Number Invariant Sites,0.8827058,1,1.765412,0.4413529,0
-Number Invariant Sites Excluding Ambiguous,0.7514162,0.3295568,0.6591136,0.7109297,0.5612428
-Max Invariant Block Length,0.8827058,1,1.765412,0.4413529,0
-Max Invariant Block Length Excluding Ambiguous,0.9630123,0.09296901,0.185938,0.9350217,1.540577
-Max Pairwise Difference,1,0.003665445,0.00733089,0.9981673,2.641387
-Max Pairwise Difference Excluding Ambiguous,1,0.9150283,1.830057,0.5424858,0
-Max Variable Block Length,1,0.8827058,1.765412,0.5586471,0
-Max Variable Block Length Excluding Ambiguous,0.9710097,0.03565478,0.07130956,0.9676774,2.278783
+Number Invariant Sites,0.8843719,1,1.768744,0.4421859,0
+Number Invariant Sites Excluding Ambiguous,0.7484172,0.3428857,0.6857714,0.7027657,0.5640912
+Max Invariant Block Length,0.8843719,1,1.768744,0.4421859,0
+Max Invariant Block Length Excluding Ambiguous,0.967011,0.08397201,0.167944,0.9415195,2.504333
+Max Pairwise Difference,1,0.004331889,0.008663779,0.9978341,2.682937
+Max Pairwise Difference Excluding Ambiguous,1,0.925025,1.85005,0.5374875,0
+Max Variable Block Length,1,0.8843719,1.768744,0.5578141,0
+Max Variable Block Length Excluding Ambiguous,0.9583472,0.04665112,0.09330223,0.9558481,2.184196
 Min Pairwise Difference,1,1,2,0.5,nan
-Min Pairwise Difference Excluding Ambiguous,0.8513829,1,1.702766,0.4256914,0
-Number Invariable Block,0.8827058,1,1.765412,0.4413529,0
-Number Invariable Block Excluding Ambiguous,0.06631123,0.9743419,0.1326225,0.04598467,1.71165
-Segregating-Sites,1,0.8827058,1.765412,0.5586471,0
-Theta,1,0.8827058,1.765412,0.5586471,0
-Tajima-D,0.7707431,0.2292569,0.4585138,0.7707431,0.7144544
-Tajima-Pi,0.7770743,0.2229257,0.4458514,0.7770743,0.7415476
+Min Pairwise Difference Excluding Ambiguous,0.8507164,1,1.701433,0.4253582,0
+Number Invariable Block,0.8843719,1,1.768744,0.4421859,0
+Number Invariable Block Excluding Ambiguous,0.05898034,0.9773409,0.1179607,0.04081973,1.714612
+Segregating-Sites,1,0.8843719,1.768744,0.5578141,0
+Theta,1,0.8843719,1.768744,0.5578141,0
+Tajima-D,0.787071,0.2135955,0.4271909,0.7867378,0.7728822
+Tajima-Pi,0.793069,0.2075975,0.4151949,0.7927358,0.7881088

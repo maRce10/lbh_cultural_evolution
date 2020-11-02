@@ -1,17 +1,17 @@
 Statistic,Lower 1-tailed,Upper 1-tailed,Two-tailed,Midpoint,Effect Size
-Number Invariant Sites,0.8723759,1,1.744752,0.4361879,0
-Number Invariant Sites Excluding Ambiguous,0.832056,0.23992,0.4798401,0.796068,0.7682979
-Max Invariant Block Length,0.8723759,1,1.744752,0.4361879,0
-Max Invariant Block Length Excluding Ambiguous,0.9376874,0.1232922,0.2465845,0.9071976,1.282824
-Max Pairwise Difference,1,0.02065978,0.04131956,0.9896701,1.942517
-Max Pairwise Difference Excluding Ambiguous,1,0.9323559,1.864712,0.5338221,0
-Max Variable Block Length,1,0.8723759,1.744752,0.5638121,0
-Max Variable Block Length Excluding Ambiguous,0.8713762,0.1429523,0.2859047,0.8642119,1.31934
+Number Invariant Sites,0.8753749,1,1.75075,0.4376874,0
+Number Invariant Sites Excluding Ambiguous,0.8333889,0.2435855,0.4871709,0.7949017,0.7944424
+Max Invariant Block Length,0.8753749,1,1.75075,0.4376874,0
+Max Invariant Block Length Excluding Ambiguous,0.9440187,0.1286238,0.2572476,0.9076974,1.329902
+Max Pairwise Difference,1,0.01932689,0.03865378,0.9903366,1.929427
+Max Pairwise Difference Excluding Ambiguous,1,0.9196934,1.839387,0.5401533,0
+Max Variable Block Length,1,0.8753749,1.75075,0.5623126,0
+Max Variable Block Length Excluding Ambiguous,0.8823725,0.1326225,0.2652449,0.874875,1.356402
 Min Pairwise Difference,1,1,2,0.5,nan
 Min Pairwise Difference Excluding Ambiguous,0.9380207,1,1.876041,0.4690103,0
-Number Invariable Block,0.8723759,1,1.744752,0.4361879,0
-Number Invariable Block Excluding Ambiguous,0.1816061,0.9163612,0.3632123,0.1326225,0.835751
-Segregating-Sites,1,0.8723759,1.744752,0.5638121,0
-Theta,1,0.8723759,1.744752,0.5638121,0
-Tajima-D,0.6027991,0.3978674,0.7957348,0.6024658,0.2492047
-Tajima-Pi,0.6081306,0.3925358,0.7850716,0.6077974,0.2697841
+Number Invariable Block,0.8753749,1,1.75075,0.4376874,0
+Number Invariable Block Excluding Ambiguous,0.1622792,0.9293569,0.3245585,0.1164612,1.288907
+Segregating-Sites,1,0.8753749,1.75075,0.5623126,0
+Theta,1,0.8753749,1.75075,0.5623126,0
+Tajima-D,0.6057981,0.3948684,0.7897368,0.6054648,0.253446
+Tajima-Pi,0.6141286,0.3865378,0.7730756,0.6137954,0.269443

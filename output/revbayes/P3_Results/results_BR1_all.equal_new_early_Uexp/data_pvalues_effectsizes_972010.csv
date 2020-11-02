@@ -1,17 +1,17 @@
 Statistic,Lower 1-tailed,Upper 1-tailed,Two-tailed,Midpoint,Effect Size
-Number Invariant Sites,0.1712192,0.9087275,0.3424384,0.1312458,0.9369789
-Number Invariant Sites Excluding Ambiguous,0,1,0,0,7.216544
-Max Invariant Block Length,0.7868088,0.7228514,1.445703,0.5319787,0
-Max Invariant Block Length Excluding Ambiguous,0.152565,1,0.3051299,0.07628248,0.7822932
-Max Pairwise Difference,1,0,0,1,8.497797
-Max Pairwise Difference Excluding Ambiguous,0.775483,0.356429,0.7128581,0.709527,0.6760831
-Max Variable Block Length,0.9806795,0.02265157,0.04530313,0.979014,2.988363
-Max Variable Block Length Excluding Ambiguous,1,0,0,1,20.90467
+Number Invariant Sites,0.7135243,0.4343771,0.8687542,0.6395736,0.4496538
+Number Invariant Sites Excluding Ambiguous,0.5762825,0.5842771,1.152565,0.4960027,0
+Max Invariant Block Length,0.904064,0.4410393,0.8820786,0.7315123,1.299733
+Max Invariant Block Length Excluding Ambiguous,0.8600933,1,1.720187,0.4300466,0
+Max Pairwise Difference,0.9173884,0.2285143,0.4570286,0.844437,1.153777
+Max Pairwise Difference Excluding Ambiguous,0.7268488,0.4257162,0.8514324,0.6505663,0.3705513
+Max Variable Block Length,0.6122585,0.4323784,0.8647568,0.58994,0.2472646
+Max Variable Block Length Excluding Ambiguous,0.9080613,0.1312458,0.2624917,0.8884077,1.420307
 Min Pairwise Difference,1,1,2,0.5,nan
-Min Pairwise Difference Excluding Ambiguous,0.9946702,0.07528314,0.1505663,0.9596935,3.433396
-Number Invariable Block,0.140573,0.9433711,0.2811459,0.09860093,1.322236
-Number Invariable Block Excluding Ambiguous,0.05596269,0.9873418,0.1119254,0.03431046,1.727137
-Segregating-Sites,0.9087275,0.1712192,0.3424384,0.8687542,0.9369789
-Theta,0.9087275,0.1712192,0.3424384,0.8687542,0.9369788
-Tajima-D,1,0,0,1,10.25751
-Tajima-Pi,1,0,0,1,11.29006
+Min Pairwise Difference Excluding Ambiguous,0.3477682,0.8487675,0.6955363,0.2495003,0.497485
+Number Invariable Block,0.709527,0.5143238,1.028648,0.5976016,0
+Number Invariable Block Excluding Ambiguous,0.1139241,0.9793471,0.2278481,0.06728847,1.214258
+Segregating-Sites,0.4343771,0.7135243,0.8687542,0.3604264,0.4496538
+Theta,0.4343771,0.7135243,0.8687542,0.3604264,0.4496516
+Tajima-D,0.6595603,0.3411059,0.6822119,0.6592272,0.4143852
+Tajima-Pi,0.6029314,0.4003997,0.8007995,0.6012658,0.2698303
