@@ -12,14 +12,83 @@ output:
     toc_float:
       collapsed: no
       smooth_scroll: no
-bibliography: lbh_cult_evo.bib
+bibliography: combined_bibs.bib
 citation-style: sysbio.csl
 link-citations: true
+editor_options: 
+  chunk_output_type: console
 ---
 
-```{r}
 
-bibs <- list.files(pattern = ".bib$") 
+```{r, fixing citation .bib files, eval = TRUE, echo = FALSE}
+
+# how to cite in Rmarkdown
+# https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html
+
+# update the copy of my when compiling Rmarkdown #############
+# my_library_bib <- "path/and/file/name/including/extension"
+
+# personal_libraries <- c(author1 = "path/and/name/of/.bib/file/from/author1", author3 = "path/and/name/of/.bib/file/from/author2", author3 = "path/and/name/of/.bib/file/from/author3")
+
+personal_libraries <- c(author_1 = "/home/m/Documentos/library.bib", author_2 = "direccion/bib/bety")
+
+
+# update bibtex library
+for (i in 1:length(personal_libraries))
+if (file.exists(personal_libraries[i]))
+ file.copy(from = personal_libraries[i], to = file.path(getwd(), paste0(names(personal_libraries)[i], ".bib")), overwrite = TRUE)
+
+#############################################################
+
+# combine .bib files in compiled.bib
+bibs <- list.files(pattern = ".bib$")
+
+bibs <- bibs[bibs != "combined_bibs.bib"]
+
+if (length(bibs) > 0){
+  combined_bibs_l <- lapply(bibs, readLines)
+  names(combined_bibs_l) <- gsub("\\.bib$", "", bibs)
+}
+# # add author name to references NOT WORKING
+# last.field <- "pages"
+# 
+# combined_bibs_l <- lapply(names(combined_bibs_l), function(x){
+# 
+#   combined_bibs_l[[x]][grepl(pattern = paste0("^", last.field, " = "), combined_bibs_l[[x]])] <- gsub("\\}\\,$", paste0("_", toupper(x), "},"),
+#            combined_bibs_l[[x]][grepl(pattern = paste0("^", last.field, " = "), combined_bibs_l[[x]])]                                                                        )
+# 
+#   return(combined_bibs_l[[x]])
+# })
+# 
+# 
+# last.field <- "volume"
+# names(combined_bibs_l) <- gsub("\\.bib$", "", bibs)
+# 
+# combined_bibs_l <- lapply(names(combined_bibs_l), function(x){
+# 
+#   combined_bibs_l[[x]][grepl(pattern = paste0("^", last.field, " = "), combined_bibs_l[[x]])] <- gsub("\\}\\,$", paste0("X", toupper(x), "},"),
+#            combined_bibs_l[[x]][grepl(pattern = paste0("^", last.field, " = "), combined_bibs_l[[x]])]                                                                        )
+# 
+#   return(combined_bibs_l[[x]])
+# })
+
+
+combined_bibs <- unlist(combined_bibs_l)
+
+writeLines(text = combined_bibs, "combined_bibs.bib")
+
+keys <- grep("@article{", combined_bibs, fixed = TRUE, value = TRUE)
+keys <- gsub("@article{", "", keys, fixed = TRUE)
+keys <- gsub(",", "", keys, fixed = TRUE)
+
+tab_keys <- table(keys)
+
+if (anyDuplicated(keys)){
+  print(paste0(sum(tab_keys > 1), " duplicate(s) references found in combined_bibs.bib"))
+# print(paste0("This are the keys of those references: ", paste(names(tab_keys[tab_keys > 1]), collapse = "|")))
+}
+
+
 
 ```
 
@@ -34,7 +103,7 @@ bibs <- list.files(pattern = ".bib$")
 
 \*To whom correspondence should be addressed
 
-
+---
 
 ## Abstract
 
