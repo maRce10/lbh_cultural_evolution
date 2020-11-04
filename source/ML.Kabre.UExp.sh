@@ -25,6 +25,8 @@ fossils=("new" "old")
 #list of fossil times
 times=("all" "early")
 
+#list of molecular clocks
+clocks=("_Uexp")
 
 for j in ${leks[@]};
 do
@@ -34,16 +36,19 @@ do
     do
       for n in ${times[@]};
       do
-        echo starting dataset
-        lekinfo="${j}"."${k}"."${m}"."${n}"
-        echo $lekinfo
-        echo $lekinfo >> ../output/revbayes/stdout/dataset.txt
-        rb_command="source(\"./"$j"_"$k"_"$m"_"$n".Rev\");"
-        ML_out="./output/revbayes/ML/"$j"_"$k"_"$m"_"$n".txt"
-        echo $rb_command | mpiexec -np 32 rb-mpi | tee $ML_out
-        cat $ML_out | tail -1 >> ../output/revbayes/stdout/PathSampler.txt
-        cat $ML_out | tail -2 | head -1 >> ../output/revbayes/stdout/SteppingStone.txt
-        echo ML approximated \for $lekinfo
+ 	for o in ${clocks[@]};
+        do
+          echo starting dataset
+          lekinfo="${j}"."${k}"."${m}"."${n}"
+          echo $lekinfo
+          echo $lekinfo >> ../output/revbayes/stdout/dataset.txt
+          rb_command="source(\"./"$j"_"$k"_"$m"_"$n".Rev\");"
+          ML_out="./output/revbayes/ML/"$j"_"$k"_"$m"_"$n".txt"
+          echo $rb_command | mpiexec -np 32 rb-mpi | tee $ML_out
+          cat $ML_out | tail -1 >> ../output/revbayes/stdout/PathSampler.txt
+          cat $ML_out | tail -2 | head -1 >> ../output/revbayes/stdout/SteppingStone.txt
+          echo ML approximated \for $lekinfo
+        done
       done
     done
   done
