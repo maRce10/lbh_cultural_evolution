@@ -7,5 +7,7 @@ CCE_prank_old_all_global
 SUR_prank_old_early_global
 CCE_prank_old_early_global
 HC1_prank_old_all_global
-
+CCE_all.equal_old_all_Uexp
+SUR_optimal_new_all_Uexp
+HC1_prank_old_early_Uexp
 
