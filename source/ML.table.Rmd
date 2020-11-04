@@ -19,11 +19,11 @@ require(kableExtra)
 Read first two ML reps
 ```{r}
 # Read model names
-m <- read.table(file = "~/Dropbox/UCR/Investigacion/lbh_cultural_evolution/output/revbayes/stdout/dataset.txt", header = F)
+m <- read.table(file = "../output/revbayes/stdout/dataset.txt", header = F)
 # Read two replicates of ML estimates under the stepping stone algorithm
-ss.r1 <- read.table(file = "~/Dropbox/UCR/Investigacion/lbh_cultural_evolution/output/revbayes/stdout/SteppingStone.txt", header = F, sep = ",")
-ss.r2 <- read.table(file = "~/Dropbox/UCR/Investigacion/lbh_cultural_evolution/output/revbayes/stdout/SteppingStoneR2.txt", header = F, sep = ",")
-ss.r3 <- read.table(file = "~/Dropbox/UCR/Investigacion/lbh_cultural_evolution/output/revbayes/stdout/SteppingStoneR3.txt", header = F, sep = ",")
+ss.r1 <- read.table(file ="../output/revbayes/stdout/SteppingStone.txt", header = F, sep = ",")
+ss.r2 <- read.table(file = "../output/revbayes/stdout/SteppingStoneR2.txt", header = F, sep = ",")
+ss.r3 <- read.table(file = "../output/revbayes/stdout/SteppingStoneR3.txt", header = F, sep = ",")
 
 # missing models to NA and failed estimations to "Repeat"
 n = 3 # currently two replicates
@@ -64,9 +64,9 @@ for(i in 1:n) {
 
 Read in repeats of failed approximations
 ```{r}
-m.rep<- read.table(file = "~/Dropbox/UCR/Investigacion/lbh_cultural_evolution/output/revbayes/stdout/datasetRepeats.txt", header = F)
+m.rep<- read.table(file = "../output/revbayes/stdout/datasetRepeats.txt", header = F)
 
-ss.rep <- read.table(file = "~/Dropbox/UCR/Investigacion/lbh_cultural_evolution/output/revbayes/stdout/SteppingStoneRepeat.txt", header = F, sep = ",")
+ss.rep <- read.table(file = "../output/revbayes/stdout/SteppingStoneRepeat.txt", header = F, sep = ",")
 
 m.ml.rep <-cbind(m.rep, ss.rep)
 colnames(m.ml.rep) <- c("Model", "ss")
@@ -74,10 +74,12 @@ colnames(m.ml.rep) <- c("Model", "ss")
 # match name format
 m.ml.rep$Model <- gsub(pattern = "_", replacement = ".", x = m.ml.rep$Model)
 m.ml.rep$Model <- gsub(pattern = ".global", replacement = "._global", x = m.ml.rep$Model)
+m.ml.rep$Model <- gsub(pattern = ".Uexp", replacement = "._Uexp", x = m.ml.rep$Model)
 
 #Replace repeat for ML value
 m.ml$ss1 <- as.character(m.ml$ss1)
 m.ml$ss2 <- as.character(m.ml$ss2)
+m.ml$ss3 <- as.character(m.ml$ss3)
 
 for (i in 1:nrow(m.ml)) {
   for (j in 1:nrow(m.ml.rep)) {
@@ -86,6 +88,9 @@ for (i in 1:nrow(m.ml)) {
     }
     if (m.ml$Model[i] == m.ml.rep$Model[j] & m.ml$ss2[i] == "Repeat") {
       m.ml$ss2[i] <-  m.ml.rep$ss[j]
+    }
+    if (m.ml$Model[i] == m.ml.rep$Model[j] & m.ml$ss3[i] == "Repeat") {
+      m.ml$ss3[i] <-  m.ml.rep$ss[j]
     }
   }
 }
@@ -101,7 +106,6 @@ m.ml$Model <- gsub(pattern = "all.equal", replacement = "allequal", x = m.ml$Mod
 
 # split name into columns
 m.ml <- m.ml %>% separate(Model, c("Lek", "Align", "Record", "Fossils", "Clock"))
-m.ml$Clock <- replace_na(data = m.ml$Clock, replace = "Uexp")
 
 # long to wide and rearrange
 m.ml <-
@@ -124,3 +128,49 @@ m.ml  %>%
   kbl() %>%
   kable_minimal()
 ```
+
+```{r}
+# while missing data make numeric
+m.ml$ss1_diff <- as.numeric(m.ml$ss1_Uexp) - as.numeric(m.ml$ss1_global)
+m.ml$ss2_diff <- as.numeric(m.ml$ss2_Uexp) - as.numeric(m.ml$ss2_global)
+m.ml$ss3_diff <- as.numeric(m.ml$ss3_Uexp) - as.numeric(m.ml$ss3_global)
+
+# make long data frame
+ml.long <- m.ml[,c(1:4,11:13)]
+ml.long <-
+  pivot_longer(data = ml.long,
+               cols = paste0("ss", c(1:n), "_diff"),
+               names_to = "run")
+
+ml.long$Lek <-  factor(ml.long$Lek, levels=c('BR1','TR1','CCE','HC1', 'SUR'))
+
+# new facet label names for fossil record
+Record.labs <- c("Recent records only", "Including oldest records")
+names(Record.labs) <- c("new", "old")
+
+# plot
+ML.plot <-
+  ggplot(data = ml.long, aes(
+    x = Fossils,
+    y = value,
+    colour = Align,
+    shape = Record
+  )) +
+  geom_jitter(size = 3,
+              alpha = 0.7,
+              width = 0.2) +
+  facet_grid(Record ~ Lek,
+             scales = "fixed",
+             labeller = labeller(Record = Record.labs)) +
+  theme_light(base_size = 12) +
+  labs(y = "Differencce in marginal likelihood \nbetween clock models (relaxed - fixed)", colour = "Alignment", x = "Historical records per song") +
+  scale_shape_discrete(guide = FALSE) +
+  scale_colour_manual(
+    values = wes_palette("IsleofDogs1"),
+    labels = c("MAFFT-agnostic", "MAFFT-optimal", "PRANK")
+  ) +
+  scale_x_discrete(labels = c("all", "earliest"))
+
+ML.plot
+```
+

@@ -19,7 +19,6 @@ editor_options:
   chunk_output_type: console
 ---
 
-
 ```{r, fixing citation .bib files, eval = TRUE, echo = FALSE}
 
 # how to cite in Rmarkdown
@@ -104,12 +103,28 @@ if (anyDuplicated(keys)){
 
 \*To whom correspondence should be addressed
 
+**Keywords:** bla, bla, bla, bla, bla
 ---
+
+<!-- Ideas pal titulo: -->
+<!-- Understanding cultural evolution in hummingbird leks through the fossilized birth-death process -->
+
+<!-- An application of the fossilized birth-death process to elucidate cultural evolution in hummingbird leks -->
+
+<!-- The fossilized birth-death process illuminates cultural evolution in hummingbird leks -->
 
 ## Abstract
 
 
 ## Introduction
+
+<!-- What is culture? Why it evolves?  -->
+<!-- How is cultural evolution analogous to organic evolution -->
+<!-- Some cultural traits are sequences – we’ve been studying sequence evolution for ever in phylogenetics -->
+<!-- Application of phylogenetic models to cultural evolution – what do diversification rates mean -->
+<!-- FBD improves diversification and divergence time estimates -->
+<!-- Applications of the FBD to fast evolving sequences sampled over time i.e. virus  -->
+<!-- FBD applied to fast evolving cultural sequences and aims of this study -->
 
 
 ## Methods
@@ -124,9 +139,31 @@ La hablada aca, la hablada aca, la hablada aca, la hablada aca, la hablada aca, 
 La hablada aca, la hablada aca, la hablada aca, la hablada aca, la hablada aca, la hablada aca, la hablada aca, la hablada aca ....    
 
 
-    - Phylogenetic reconstruction (BW)
+### Sequence alignment (BW)
 
-La hablada aca, la hablada aca, la hablada aca, la hablada aca, la hablada aca, la hablada aca, la hablada aca, la hablada aca ....    
+Alignment of behavioural sequences is complicated by the challenge of establishing homology between segments of a song or visual display **(cite Caetano Am Nat)**. Here, we implemented and compared three alignment strategies based on two methods originally developed for multiple sequence alignment (MSA) of molecular data. In alignments of nucleotide and protein sequences gaps represent insertion or deletion mutations, so that gapped sites lack homology across the dataset. Commonly used MSA methods differ in their treatment of insertion and deletion events in ways that can impact homology inferences in cultural as well as in molecular characters **(REF)**. MAFFT **(Katoh et al 2002)** uses a progressive alignment algorithm with a default gap-opening penalty (1.53) and no gap extension penalty by default, in versions > 6.626. The L-INS-i method follows the progressive alignment by iterative refinement, based on consistency and weighted sum-of-pairs scores. In MAFFT versions > 7.371 user-defined alphabets and scoring matrices can be implemented in addition of nucleotide and amino acid alternatives. MAFFT is therefore a flexible program to align behavioural sequences in which changes analogous to multi-site insertions and deletions have occurred, and which are composed by a variable number of character states and character-state categories. In our first alignment strategy, which we hereafter refer to as ‘MAFFT-agnostic’, we used the MAFFT L-INS-i method with default gap penalties and a customized scoring matrix in which all transitions between alternative character states were equally likely.
+
+Our second alignment strategy also used the MAFFT L-INS-i method and default gap penalties, but we made the assumption that hummingbirds that create new songs are more likely to replace a trill by a different type of trill and a tone by a different type of tone than to change from vibratory to pure sounds or vice versa. **Biological justification for this maybe…** 
+
+We implemented this assumption by enforcing a higher cost of mismatches between sound categories than within either trills or pure tones. To determine this difference in mismatch scores, we made two further assumptions, namely that cultural evolution is independent between leks and also between individuals within leks **(see Limitations section)**. Because insertions and deletions of song segments occur independently, alignments should increase in length as sequences are more distantly related ***(some Löytynoja reference here, maybe Springer book)**. We would thus expect longer alignments in data sets composed of sequences from different leks than in data sets composed of sequences from the same lek, as these sequences have a more recent common ancestor. 
+
+**We optimized the scoring matrix, which determines the costs of different types of substitutions, by... ** We hereafter refer to this alignment strategy as ‘MAFFT-optimal’.
+
+For our third alignment strategy, we used the phylogenetically informed alignment program PRANK **(Löytynoja and Goldman 2005, 2008)**. PRANK also uses a progressive algorithm but handles the placement of insertions and deletions differently, by using outgroup information in the subsequent alignment step. PRANK thus uses the sequence phylogeny to differentiate insertions from deletions, and thereby avoids site overmatching by penalizing insertions in a single stage of the alignment **(REF)**. Unlike MAFFT, PRANK is an evolutionary aware program in that insertions, deletions and substitutions are modelled explicitly on a phylogenetic tree. However, PRANK does not currently support customized alphabets and substitution-rate matrices. To use PRANK we assumed that pure tones can be treated as ambiguous between upward and downward tones, and medium-speed trills can similarly be treated and ambiguous between fast and slow trills. We therefore use IUPAC ambiguity code for DNA nucleotides to rename song segments, with tones as purines and trills as pyrimidines. As per PRANK’s defaults we used a TN93 nucleotide substitution model with empirical base frequencies and transition/transversion rate ratio (κ) = 2. Therefore, as in the ‘MAFFT-optimal’ alignment, in the ‘PRANK-TN93’ alignment we explicitly assumed a higher transition rate within vibratory and pure sound categories than between them. For this alignment we used the default gap-opening rate and extension probabilities (0.025 and 0.75 respectively) and we omitted the -F option that fixes inferred insertions but increases sensitivity to guide-tree accuracy.
+  
+
+### Phylogenetic analysis (BW)
+
+All phylogenetic analyses were conducted in RevBayes v. 1.0.12 and **v. 1.10?**, a computation environment that uses probabilistic graphical models for Bayesian inferences in phylogenetics and evolution (REF). Our phylogenetic model was a fossilised birth-death process (FBDP) which describes the joint prior distribution of the tree topology, divergence times and lineage sampling times before the present. In the FBDP, extant taxa and lineages sampled before the present are part of the same macroevolutionary process. For many applications of the FBDP, extinct or ancestral taxa can only be sampled through fossils. However, in the case of fast-evolving songs that are culturally transmitted among individuals, historical records of songs are equivalent to fossil data. Historical records contain the character sequence of songs that existed in the past and may be ancestral to extant songs or may have gone extinct. As in the FBDP with fossil data, the probability that a historical song is an ancestor of extant songs depends on the rates of lineage turnover and the rate of recovery of historical records (hereafter recovery rate). The recovery rate is the rate at which ancestral songs are sampled from the lineage diversification process and it is a random variable drawn from a prior distribution, such as the birth and death rates of a traditional birth-death model **(REF)**. **Fossil, or in this case historical data, inform divergence time estimates through a mechanistic diversification model that correctly represents statistical uncertainty (REF).**
+
+Our dataset on historical records of songs in hummingbird leks has three advantages in comparison to most fossil datasets used in phylogenetic analyses. First, there is no stratigraphic uncertainty. We can be certain that historical songs occurred in the year when they were recorded. Second, there are no partial fossils. Songs recorded in the past are just as complete as the most recent ones, creating no additional ambiguity in character states of historical songs. Third, the historical record is relatively rich. In all leks, there are several **(n - N)** consecutively sampled years, including the last year of sampling, which are here treated as extant taxa. Because leks are small and hummingbirds are actively displaying their calls, we can assume all songs in a lek were recorded if the* lek was sampled in a given year.
+
+In two **(three?) of the leks, historical records go back to 1969 (or several decades in case the exact date varies between leks), but there are long gaps with no lineage sampling from XXXX to XXXX and from XXXX to XXXX.** While historical songs are still abundant in these datasets, their temporal distribution is unlike that expected for fossils, although it is not uncommon that fossil records are temporally aggregated in discrete strata of exposed rocks **(REF)**. The FBDP is robust to some forms of bias in fossil sampling, including non-continuous recovery **(Heath et al. 2014)**. However, for these leks we conducted all analyses both with the complete dataset, including long gaps without lineage sampling, and with the more recent and continuously sampled dataset. We present both sets of results for comparison. Due to this relatively rich historical record, there are several instances of identical songs sampled at multiple time points. This is uncommon for fossil data, as it would entail the discovery of fossils with the same character state combination in multiple horizons **(REF?)**. Here, we focus on the results of analyses in which all historical occurrences are part of the alignment, including identical songs sampled in consecutive years. However, we also conducted all analyses accounting only once for each unique song, at its earliest occurrence.
+
+Phylogenetic analyses were conducted with all three alignments (MAFT-agnostic, MAFT-optimal and PRANK-TN93) for each lek. We used a exponential prior with rate parameter = 10 for the speciation, extinction and historical sampling rates, and a broad uniform prior on the root age of all leks bounded between 1000 and 0 years. This means that the common ancestor of all songs sampled could have existed any time between the years 1019 and 2019, with equal prior probability. Song sequences were assumed to evolve under a generalised time-reversible (GTR) model with exchangeability rates and stationary frequencies drawn from a flat Dirichlet prior. Site-rate heterogeneity was modelled with a discretised gamma distribution with four rate categories and  with equal shape and scale parameters, in turn drawn from an exponential prior with rate = 10. We tested both global and relaxed clocks for song evolution. Branch rates under the global clock were drawn from an exponential prior with rate = 10. Branch rates under the relaxed clock were uncorrelated and drawn from an exponential prior, with mean in turn from an exponential hyperprior with rate = 10. We compared clock models using marginal likelihood approximation via the stepping stone algorithm **(REF)**. Clock-model comparisons were conducted for each lek (BR1, CCE, HC1, SUR, TR1), alignment (MAFFT-agnostic, MAFFT-optimal, PRANK-TN93), historical dataset (oldest records included, recent records only) and use of historical records per song (using all, using earliest). For diversification dynamics, tree comparisons and tests of model reliability (se below), we present results under the preferred clock model here and for the alternative model in the Supporting Material. 
+ 
+We conducted two independent runs for each analyses, with 150 000 generations and an additional 15 000 of burn-in and parameter tuning every 200. To improve mixing we used the Metropolis-Coupled MCMC sampler with three heated chains and default swapping parameters. To avoid autocorrelation in the posterior we saved samples every 100th generation. We assessed MCMC performance using the package ‘coda’ (Plummer 2006) in R v. 3.6.3 (R Core Team 2020). We checked for convergence between independent runs visually and using the Gelma-Rubin potential scale-reduction factor (psrf). We assumed convergence if  psrf < 1.05 for all variables, as well as the multivariate estimate. We also ensured that autocorrelation between draws was below 0.1 and effective sample size above 200 for all model variables. EXCEPTIONS? We summarise MCMC diagnostics in the Supporting Material ().     
+### Model reliability (BW)
 
 ## Results
 

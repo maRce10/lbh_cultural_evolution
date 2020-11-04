@@ -1,17 +1,17 @@
 Statistic,Lower 1-tailed,Upper 1-tailed,Two-tailed,Midpoint,Effect Size
-Number Invariant Sites,0.3524317,1,0.7048634,0.1762159,1.027807
-Number Invariant Sites Excluding Ambiguous,0.1565623,1,0.3131246,0.07828115,1.697946
-Max Invariant Block Length,0.3524317,1,0.7048634,0.1762159,1.631221
-Max Invariant Block Length Excluding Ambiguous,0.5163225,1,1.032645,0.2581612,0
-Max Pairwise Difference,1,0.03464357,0.06928714,0.9826782,2.432695
-Max Pairwise Difference Excluding Ambiguous,0.9780147,0.1252498,0.2504997,0.9263824,1.360486
-Max Variable Block Length,1,0.3524317,0.7048634,0.8237841,0.4426633
-Max Variable Block Length Excluding Ambiguous,1,0.6695536,1.339107,0.6652232,0
-Min Pairwise Difference,0.7401732,0.526982,1.053964,0.6065956,0
-Min Pairwise Difference Excluding Ambiguous,0.2258494,0.9140573,0.4516989,0.1558961,1.282485
-Number Invariable Block,0.3524317,1,0.7048634,0.1762159,1.165178
-Number Invariable Block Excluding Ambiguous,0.4377082,1,0.8754164,0.2188541,1.288402
-Segregating-Sites,1,0.3524317,0.7048634,0.8237841,1.027807
-Theta,1,0.3524317,0.7048634,0.8237841,1.027809
-Tajima-D,0.7668221,0.2338441,0.4676882,0.766489,0.6708443
-Tajima-Pi,0.9107262,0.09193871,0.1838774,0.9093937,1.114021
+Number Invariant Sites,0.3510993,1,0.7021985,0.1755496,1.001987
+Number Invariant Sites Excluding Ambiguous,0.164557,1,0.3291139,0.08227848,0.8212579
+Max Invariant Block Length,0.3510993,1,0.7021985,0.1755496,1.612271
+Max Invariant Block Length Excluding Ambiguous,0.5296469,1,1.059294,0.2648235,0
+Max Pairwise Difference,1,0.0326449,0.06528981,0.9836775,2.44207
+Max Pairwise Difference Excluding Ambiguous,0.9740173,0.1345769,0.2691539,0.9197202,1.333461
+Max Variable Block Length,1,0.3510993,0.7021985,0.8244504,0.4344999
+Max Variable Block Length Excluding Ambiguous,1,0.6755496,1.351099,0.6622252,0
+Min Pairwise Difference,0.751499,0.5476349,1.09527,0.601932,0
+Min Pairwise Difference Excluding Ambiguous,0.2105263,0.9240506,0.4210526,0.1432378,1.313163
+Number Invariable Block,0.3510993,1,0.7021985,0.1755496,1.147879
+Number Invariable Block Excluding Ambiguous,0.4290473,0.9986676,0.8580946,0.2151899,1.259791
+Segregating-Sites,1,0.3510993,0.7021985,0.8244504,1.001987
+Theta,1,0.3510993,0.7021985,0.8244504,1.001989
+Tajima-D,0.7628248,0.2371752,0.4743504,0.7628248,0.6818817
+Tajima-Pi,0.9080613,0.09327115,0.1865423,0.9073951,1.17402
