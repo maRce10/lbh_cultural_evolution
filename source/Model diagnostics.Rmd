@@ -330,8 +330,9 @@ out <- pblapply(base_models, function(x){
    
 ## P3 diagnostics
 
-```{r, fig.width= 14, fig.height= 6, warning=FALSE}
+### Effect sizes 
 
+```{r, fig.width= 14, fig.height= 6, warning=FALSE}
 p3_output_files <- list.files(path = "./output/revbayes/P3_Results", recursive = TRUE, pattern = "effectsizes", full.names = TRUE)
 
 
@@ -394,6 +395,39 @@ ggplot(data = p3_results[p3_results$Statistic == x, ], aes(
 names(ggs) <- unique(p3_results$Statistic)
 
 ggs
+```
+
+### P values
+
+```{r, fig.width= 14, fig.height= 6, warning=FALSE}
+
+ggs2 <- lapply(unique(p3_results$Statistic), function(x){
+ggplot(data = p3_results[p3_results$Statistic == x, ], aes(
+    x = Fossils,
+    y = Two.tailed,
+    colour = Align,
+    shape = Record
+  )) +
+  geom_jitter(size = 3,
+              alpha = 0.7,
+              width = 0.12) +
+  facet_grid(Record ~ Lek,
+             scales = "fixed",
+             labeller = labeller(Record = Record.labs)) +
+  theme_light(base_size = 16) +
+  labs(y = "pvalue", colour = "Alignment", x = "Historical records per song") +
+  scale_shape_discrete(guide = FALSE) +
+  scale_colour_manual(
+    values = viridis(4, alpha = 0.6),
+    labels = c("MAFFT-agnostic", "MAFFT-optimal", "PRANK")
+  ) +
+  scale_x_discrete(labels = c("all", "earliest"))
+})
+
+names(ggs2) <- unique(p3_results$Statistic)
+
+ggs2
+
 ```
    
 ## ML
