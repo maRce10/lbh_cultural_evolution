@@ -220,8 +220,11 @@ model_diags$period <- sapply(strsplit(model_diags$model, "_", fixed = TRUE), "["
 # and which fossils were used
 model_diags$fossils <- sapply(strsplit(model_diags$model, "_", fixed = TRUE), "[", 4)
 
+model_diags$align <- sapply(strsplit(model_diags$model, "_", fixed = TRUE), "[", 5)
+
+
 # order columns
-model_diags <- model_diags[, c(c("model", "lek", "subs", "period", "fossils", "autocorr_bad", "gr_bad")   , names(which(sapply(model_diags, is.numeric))), "updated")]
+model_diags <- model_diags[, c(c("model", "lek", "subs", "period", "fossils", "align", "autocorr_bad", "gr_bad")   , names(which(sapply(model_diags, is.numeric))), "updated")]
 
 # round
 model_diags[, sapply(model_diags, is.numeric)] <- round(model_diags[, sapply(model_diags, is.numeric)], 4)
@@ -274,6 +277,111 @@ datatable(model_diags, editable = list(
 ), autoHideNavigation = TRUE, escape = FALSE)
 
 ```
+
+### Gelman-Rubin 
+
+```{r mcmc diagnostic ggplots, fig.width= 14, fig.height= 6, warning=FALSE}
+
+Record.labs <- c("Recent records only", "Including oldest records")
+names(Record.labs) <- c("new", "old")
+
+# order levels
+model_diags$align <- factor(model_diags$align, levels = c("all.equal", "optimal", "prank"))
+
+model_diags$lek <- factor(model_diags$lek, levels = c("BR1", "TR1", "CCE", "HC1", "SUR"))
+
+
+# parameters to plot
+params <- c("gr_post", "gr_age_extant", "gr_origin_time", "gr_diversification", "gr_max", "gr_mpsrf")
+
+
+# create graphs
+ggs <- lapply(params, function(x){
+
+  dat <- model_diags[!is.na(model_diags[,x]), ]
+  
+  dat$signif <- ifelse(dat[,x] <= 1.1, "good", "bad")
+
+  dat$signif <- factor(dat$signif, levels = c("good", "bad"))
+
+  # dat$alpha <- ifelse(dat[,x] > 1.1, 1, 0.5)
+
+  
+  ggplot(data = dat, aes(
+    x = fossils,
+    y = get(x),
+    colour = subs,
+    fill = subs,
+    shape = signif,
+    alpha = signif,
+  )) +
+  geom_jitter(size = 3,
+              # alpha = 0.7,
+              width = 0.12) +
+  facet_grid(period ~ lek,
+             scales = "fixed",
+             labeller = labeller(period = Record.labs)) +
+  theme_light(base_size = 16) +
+  labs(y = x, shape = "GR",  colour = "Alignment", x = "Historical records per song") +
+   scale_shape_manual(values = c(20, 21), labels = c("< 1.1", "> 1.1")) + 
+    scale_alpha_manual(values = c(0.5, 1), guide = FALSE) +
+    scale_colour_manual(
+    values = viridis(3),
+    labels = c("MAFFT-agnostic", "MAFFT-optimal", "PRANK")
+  ) +
+    scale_fill_manual(
+    values = viridis(3),
+    guide = FALSE) +
+  scale_x_discrete(labels = c("all", "earliest")) + 
+    geom_hline(yintercept = 1.1, lty = 2, col = "gray42")
+})
+
+names(ggs) <- unique(params)
+
+ggs
+
+
+
+# 
+# ggs2 <- lapply(unique(p3_results$Statistic), function(x){
+# ggplot(data = p3_results[p3_results$Statistic == x, ], aes(
+#     x = Fossils,
+#     y = Two.tailed,
+#     colour = Align,
+#     fill = Align,
+#     shape = signif,
+#     alpha = signif,
+#   )) +
+#   geom_jitter(size = 5,
+#               # alpha = 0.7,
+#               width = 0.12) +
+#   facet_grid(Record ~ Lek,
+#              scales = "fixed",
+#              labeller = labeller(Record = Record.labs)) +
+#   theme_light(base_size = 16) +
+#   labs(y = "pvalue", colour = "Alignment", x = "Historical records per song", shape = "P value") +
+#   # scale_shape_discrete(guide = FALSE) +
+#   scale_shape_manual(values = c(20, 21)) + 
+#     scale_alpha_manual(values = c(0.44, 1), guide = FALSE) +
+#     scale_colour_manual(
+#     values = viridis(4),
+#     labels = c("MAFFT-agnostic", "MAFFT-optimal", "PRANK")
+#   ) +
+#     scale_fill_manual(
+#     values = viridis(4), guide = FALSE,
+#     labels = c("MAFFT-agnostic", "MAFFT-optimal", "PRANK")
+#   ) +
+#   scale_x_discrete(labels = c("all", "earliest")) + 
+#     geom_hline(yintercept = 0.05, lty = 2, col = "gray42")
+# })
+# 
+# names(ggs2) <- unique(p3_results$Statistic)
+# 
+# ggs2
+
+
+```
+
 
 ```{r plot traces to files, eval = FALSE, fig.height = 3.3, fig.width = 30, warning = FALSE, message = FALSE, dpi = 30}
 
