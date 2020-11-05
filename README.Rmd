@@ -45,7 +45,7 @@ Code used for creating long-billed hermit song cultural evolution trees and anal
 * [Aligning song sequences with mafft and prank](https://rpubs.com/marcelo-araya-salas/601065)
 * Revbayes models done
 * Making trees with RevBayes 
-    - [diagnostics matrix](hhttps://rpubs.com/marcelo-araya-salas/681895)
+    - [MCMC, ML and P3 diagnostics](hhttps://rpubs.com/marcelo-araya-salas/681895)
     -  [diagnostic plots](lbh_cultural_evolution/tree/master/output/MCMC_diagnostic_plots)
     
     
