@@ -374,7 +374,6 @@ ggplot(data = p3_results[p3_results$Statistic == x, ], aes(
     x = Fossils,
     y = Effect.Size,
     colour = Align,
-    shape = Record
   )) +
   geom_jitter(size = 3,
               alpha = 0.7,
@@ -401,27 +400,42 @@ ggs
 
 ```{r, fig.width= 14, fig.height= 6, warning=FALSE}
 
+p3_results$signif <- ifelse(p3_results$Two.tailed < 0.05, " < 0.05", " >= 0.05")
+
+p3_results$signif <- factor(p3_results$signif, levels = c(" >= 0.05", " < 0.05"))
+
+p3_results$alpha <- ifelse(p3_results$Two.tailed < 0.05, 1, 0.95)
+
 ggs2 <- lapply(unique(p3_results$Statistic), function(x){
 ggplot(data = p3_results[p3_results$Statistic == x, ], aes(
     x = Fossils,
     y = Two.tailed,
     colour = Align,
-    shape = Record
+    fill = Align,
+    shape = signif,
+    alpha = signif,
   )) +
-  geom_jitter(size = 3,
-              alpha = 0.7,
+  geom_jitter(size = 5,
+              # alpha = 0.7,
               width = 0.12) +
   facet_grid(Record ~ Lek,
              scales = "fixed",
              labeller = labeller(Record = Record.labs)) +
   theme_light(base_size = 16) +
-  labs(y = "pvalue", colour = "Alignment", x = "Historical records per song") +
-  scale_shape_discrete(guide = FALSE) +
-  scale_colour_manual(
-    values = viridis(4, alpha = 0.6),
+  labs(y = "pvalue", colour = "Alignment", x = "Historical records per song", shape = "P value") +
+  # scale_shape_discrete(guide = FALSE) +
+  scale_shape_manual(values = c(20, 21)) + 
+    scale_alpha_manual(values = c(0.44, 1), guide = FALSE) +
+    scale_colour_manual(
+    values = viridis(4),
     labels = c("MAFFT-agnostic", "MAFFT-optimal", "PRANK")
   ) +
-  scale_x_discrete(labels = c("all", "earliest"))
+    scale_fill_manual(
+    values = viridis(4), guide = FALSE,
+    labels = c("MAFFT-agnostic", "MAFFT-optimal", "PRANK")
+  ) +
+  scale_x_discrete(labels = c("all", "earliest")) + 
+    geom_hline(yintercept = 0.05, lty = 2, col = "gray42")
 })
 
 names(ggs2) <- unique(p3_results$Statistic)
