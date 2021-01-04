@@ -1,12 +1,11 @@
 ---
-title: "Cultural evolution in long-billed hermits"
+  title: "Cultural evolution in long-billed hermits"
 author: <center><font size="4"><a href="http://marceloarayasalas.weebly.com/">Marcelo Araya-Salas PhD</a> & <a href="https://scholar.google.com/citations?user=0a8k9T8AAAAJ&hl=es&oi=ao"> Beatriz Willink PhD</a></font></center>
-output: github_document
+  output: github_document
 date: <center>`r format(Sys.Date(), "%d-%m-%Y")`</center>
-editor_options: 
+  editor_options:
   chunk_output_type: console
 ---
-
 
 <!-- Description  -->
 Creating long-billed hermit song cultural evolution trees and analyzing evolutionary patterns
@@ -31,9 +30,9 @@ knitr::opts_chunk$set(
 
 ## Table of contents
 * [General info](#general-info)
-* [Analyses](#Analyses)
-* [To do list](#to-do-list)
-* [Contact](#contact)
+  * [Analyses](#Analyses)
+    * [To do list](#to-do-list)
+      * [Contact](#contact)
 
 ## General info
 
@@ -44,14 +43,13 @@ Code used for creating long-billed hermit song cultural evolution trees and anal
 * [Optimizing cost for MAFFT alignments](https://rpubs.com/marcelo-araya-salas/601010)
 * [Aligning song sequences with mafft and prank](https://rpubs.com/marcelo-araya-salas/601065)
 * Revbayes models done
-* Making trees with RevBayes 
-<<<<<<< HEAD
-* Run revbayes posterior predictions (P3)    
+* Making trees with RevBayes
+* Run revbayes posterior predictions (P3)
 * Summarize results revBayes trees
-    - [MCMC, ML and P3 diagnostics](https://rpubs.com/marcelo-araya-salas/686275)
-    - [diagnostic plots](lbh_cultural_evolution/tree/master/output/MCMC_diagnostic_plots)
-    - [tree topology diagnostics](https://rpubs.com/marcelo-araya-salas/709692)
-    
+- [MCMC, ML and P3 diagnostics](https://rpubs.com/marcelo-araya-salas/686275)
+- [diagnostic plots](lbh_cultural_evolution/tree/master/output/MCMC_diagnostic_plots)
+- [tree topology diagnostics](https://rpubs.com/marcelo-araya-salas/709692)
+
 ## In progress
 
 *  Tree topology diagnostics
@@ -59,23 +57,7 @@ Code used for creating long-billed hermit song cultural evolution trees and anal
 ## To-do list
 
 * Run RevBayes with no fossils
-=======
-    - [MCMC, ML and P3 diagnostics](hhttps://rpubs.com/marcelo-araya-salas/681895)
-    -  [diagnostic plots](lbh_cultural_evolution/tree/master/output/MCMC_diagnostic_plots)
-    
-    
-## In progress
 
-
-*  ML analysis
-
-## To-do list
-
-* Run revbayes posterior predictions (P3)
-* Summarize results revBayes trees
-* Add info about number of iterations to MCMC diagnostics HTML
-
->>>>>>> f991318ff219e067032c3efec2125d00ece2d5eb
 
 ## Status
 Project is: _in progress_
@@ -86,10 +68,10 @@ Created by [Marcelo Araya-Salas](https://marceloarayasalas.weebly.com/)
 
 <!-- #### discusion -->
 
-<!-- # title: Cultural evolution hummingbirds  -->
+  <!-- # title: Cultural evolution hummingbirds  -->
 
-<!-- do alignments matter? compare convergence across aligent methods (prank, all equal, optimal) -->
+  <!-- do alignments matter? compare convergence across aligent methods (prank, all equal, optimal) -->
 
-<!-- hacer machote para el aticulo -->
+  <!-- hacer machote para el aticulo -->
 
 

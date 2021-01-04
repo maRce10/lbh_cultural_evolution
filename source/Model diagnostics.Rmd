@@ -201,6 +201,7 @@ saveRDS(rb.trees, "./output/revbayes_output_in_single_R_object.RDS")
 ## MCMC diagnostics: Gelman-Rubin, ESS, and autocorrelation
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ```{r}
 
 model_diags <- read.csv("output/diagnostics_revbayes_output.csv", stringsAsFactors = FALSE)
@@ -256,6 +257,8 @@ kableExtra::kable_styling(kbl)
 ```
 
 
+=======
+>>>>>>> f991318ff219e067032c3efec2125d00ece2d5eb
 =======
 >>>>>>> f991318ff219e067032c3efec2125d00ece2d5eb
 The table below can be read like this:
@@ -613,6 +616,10 @@ ggs2
 ## ML
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> f991318ff219e067032c3efec2125d00ece2d5eb
 =======
 
 >>>>>>> f991318ff219e067032c3efec2125d00ece2d5eb

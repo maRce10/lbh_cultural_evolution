@@ -4,7 +4,10 @@
 packrat/lib*/
 .httr-oauth
 output/revbayes_output_in_single_R_object.RDS
+<<<<<<< HEAD
 output/rwty/rwty_tree_distance_plots_all_fossils_shared.RDS
 output/rwty/rwty_tree_distance_plots_all_fossils.RDS
 output/rwty/rwty_tree_distance_plots_early_fossils.RDS
 
+=======
+>>>>>>> f991318ff219e067032c3efec2125d00ece2d5eb
