@@ -10,7 +10,11 @@ Beatriz Willink PhD</a></font>
 </center>
 <center>
 
+<<<<<<< HEAD
+04-01-2021
+=======
 17-10-2020
+>>>>>>> f991318ff219e067032c3efec2125d00ece2d5eb
 
 </center>
 
@@ -19,7 +23,11 @@ Beatriz Willink PhD</a></font>
 Creating long-billed hermit song cultural evolution trees and analyzing
 evolutionary patterns
 
+<<<<<<< HEAD
+*Updated on 2021-01-04 10:09:10*
+=======
 *Updated on 2020-10-17 18:20:28*
+>>>>>>> f991318ff219e067032c3efec2125d00ece2d5eb
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -44,6 +52,25 @@ and analyzing evolutionary patterns.
   - [Aligning song sequences with mafft and
     prank](https://rpubs.com/marcelo-araya-salas/601065)
   - Revbayes models done
+<<<<<<< HEAD
+  - Making trees with RevBayes
+  - Run revbayes posterior predictions (P3)  
+  - Summarize results revBayes trees
+      - [MCMC, ML and P3
+        diagnostics](https://rpubs.com/marcelo-araya-salas/686275)
+      - [diagnostic
+        plots](lbh_cultural_evolution/tree/master/output/MCMC_diagnostic_plots)
+      - [tree topology
+        diagnostics](https://rpubs.com/marcelo-araya-salas/709692)
+
+## In progress
+
+  - Tree topology diagnostics
+
+## To-do list
+
+  - Run RevBayes with no fossils
+=======
 
 ## In progress
 
@@ -58,6 +85,7 @@ and analyzing evolutionary patterns.
 
   - Run revbayes posterior predictions (P3)
   - Summarize results revBayes trees
+>>>>>>> f991318ff219e067032c3efec2125d00ece2d5eb
 
 ## Status
 
@@ -66,3 +94,14 @@ Project is: *in progress*
 ## Contact
 
 Created by [Marcelo Araya-Salas](https://marceloarayasalas.weebly.com/)
+<<<<<<< HEAD
+
+<!-- #### discusion -->
+
+<!-- # title: Cultural evolution hummingbirds  -->
+
+<!-- do alignments matter? compare convergence across aligent methods (prank, all equal, optimal) -->
+
+<!-- hacer machote para el aticulo -->
+=======
+>>>>>>> f991318ff219e067032c3efec2125d00ece2d5eb

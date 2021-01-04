@@ -200,6 +200,64 @@ saveRDS(rb.trees, "./output/revbayes_output_in_single_R_object.RDS")
   
 ## MCMC diagnostics: Gelman-Rubin, ESS, and autocorrelation
 
+<<<<<<< HEAD
+```{r}
+
+model_diags <- read.csv("output/diagnostics_revbayes_output.csv", stringsAsFactors = FALSE)
+
+# get lek name
+model_diags$lek <- sapply(strsplit(model_diags$model, "_", fixed = TRUE), "[", 1)
+
+# substitution model
+model_diags$subs <- sapply(strsplit(model_diags$model, "_", fixed = TRUE), "[", 2)
+
+# period
+model_diags$period <- sapply(strsplit(model_diags$model, "_", fixed = TRUE), "[", 3)
+
+# and which fossils were used
+model_diags$fossils <- sapply(strsplit(model_diags$model, "_", fixed = TRUE), "[", 4)
+
+model_diags$align <- sapply(strsplit(model_diags$model, "_", fixed = TRUE), "[", 5)
+
+
+# order columns
+model_diags <- model_diags[, c(c("model", "lek", "subs", "period", "fossils", "align", "autocorr_bad", "gr_bad")   , names(which(sapply(model_diags, is.numeric))), "updated")]
+
+# round
+model_diags[, sapply(model_diags, is.numeric)] <- round(model_diags[, sapply(model_diags, is.numeric)], 4)
+
+#count "bad" branch rates per row
+brc <- paste0("branch_rates_count:",(str_count(pattern = "branch_rates", model_diags$autocorr_bad)))
+
+model_diags$autocorr_bad <- gsub("branch_rates\\.([[:digit:]]+)\\.|\\,branch_rates\\.([[:digit:]]+)\\.","", model_diags$autocorr_bad)
+
+model_diags$autocorr_bad <- paste(model_diags$autocorr_bad, brc)
+
+brc2 <- paste0("branch_rates_count:",(str_count(pattern = "branch_rates", model_diags$gr_bad)))
+
+model_diags$gr_bad <- gsub("branch_rates\\.([[:digit:]]+)\\.|\\,branch_rates\\.([[:digit:]]+)\\.","", model_diags$gr_bad)
+
+model_diags$gr_bad <- paste(model_diags$gr_bad, brc)
+
+
+rb.trees <- readRDS("./output/revbayes_output_in_single_R_object.RDS")
+
+
+names(rb.trees) <- gsub("\\.trees", "", names(rb.trees))
+
+model_diags$iterations <- sapply(model_diags$model, function(x) max(rb.trees[[x]]$ptable$Iteration))
+
+
+# Number of models by iterations and lek
+kbl <- knitr::kable(as.matrix(table(model_diags$iterations, model_diags$lek)), caption = "Number of models by iterations and lek")
+
+kableExtra::kable_styling(kbl)
+
+```
+
+
+=======
+>>>>>>> f991318ff219e067032c3efec2125d00ece2d5eb
 The table below can be read like this:
 `read.csv("https://raw.githubusercontent.com/maRce10/lbh_cultural_evolution/master/output/diagnostics_revbayes_output.csv")`
 
@@ -554,7 +612,10 @@ ggs2
    
 ## ML
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> f991318ff219e067032c3efec2125d00ece2d5eb
 ```{r, Read first two ML reps}
 # Read model names
 m <- read.table(file = "./output/revbayes/stdout/dataset.txt", header = F)
