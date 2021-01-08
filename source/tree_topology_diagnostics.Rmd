@@ -19,7 +19,7 @@ editor_options:
 ```{r clean session, eval = TRUE, echo = TRUE, message = FALSE, warning = FALSE}
 
 ## vector with package names
-x <- c("pbapply", "viridis", "knitr", "kableExtra", "ggplot2")
+x <- c("pbapply", "viridis", "knitr", "kableExtra", "ggplot2", "ape")
 
 aa <- lapply(x, function(y) {
   
@@ -102,7 +102,7 @@ sel_leks <- c("SUR", "CCE", "HC1", "BR1", "TR1")
 
 tree_names <- grep("early", names(rb.trees), invert = TRUE, value = TRUE)
 
-ggs <- pblapply(sel_leks, cl = 1, function(i) {
+pnts_lks <- pblapply(sel_leks, cl = 1, function(i) {
   
   lek_trees <- grep(i, tree_names, value = TRUE)
   # lek_files <- rb.trees[lek_files]
@@ -111,28 +111,30 @@ ggs <- pblapply(sel_leks, cl = 1, function(i) {
   
   names(multi_list) <- sapply(basename(lek_trees), function(x) paste(strsplit(x, "_", fixed = TRUE)[[1]][1:5], collapse = "_"))
 
-  pnts <- try(custom_treespace(multi_list, n.points = 100, method = "last_year"), silent = TRUE)
+  pnts <- try(custom_treespace(multi_list, n.points = 100, method = "RF"), silent = TRUE)
 
-  if (!is(pnts, "try-error"))
-  gg <- ggplot(data = pnts, aes(x = x, y = y, fill = generation)) + 
-    geom_path(alpha = 0.25, aes(colour = generation), size = 0.75, show.legend = FALSE) + 
-    scale_colour_gradient(low = "red", high = "yellow") +
-    geom_point(shape = 21, size = 4, colour = "white", alpha = 0.6) + 
-      theme(panel.background = element_blank(), axis.line = element_line(color = "grey"), 
-      panel.spacing = unit(0.1, "lines"), axis.title.x = element_text(vjust = -0.5), axis.title.y = element_text(vjust = 1.5)) + 
-    facet_wrap(~chain,nrow = round(sqrt(length(unique(pnts$chain))))) + 
-      scale_fill_gradientn(colours = viridis(256)) +
-     labs(x = "MDS_v1", y = "MDS_v2") else
-    # ggtitle(label = sprintf("Tree space for %d trees", nrow(pnts) / length(unique(pnts$chain)))) else
-      gg <- NULL
+  if (is(pnts, "try-error")) pnts <- NULL
+    
+  #   
+  # gg <- ggplot(data = pnts, aes(x = x, y = y, fill = generation)) + 
+  #   geom_path(alpha = 0.25, aes(colour = generation), size = 0.75, show.legend = FALSE) + 
+  #   scale_colour_gradient(low = "red", high = "yellow") +
+  #   geom_point(shape = 21, size = 4, colour = "white", alpha = 0.6) + 
+  #     theme(panel.background = element_blank(), axis.line = element_line(color = "grey"), 
+  #     panel.spacing = unit(0.1, "lines"), axis.title.x = element_text(vjust = -0.5), axis.title.y = element_text(vjust = 1.5)) + 
+  #   facet_wrap(~chain,nrow = round(sqrt(length(unique(pnts$chain))))) + 
+  #     scale_fill_gradientn(colours = viridis(256)) +
+  #    labs(x = "MDS_v1", y = "MDS_v2") else
+  #   # ggtitle(label = sprintf("Tree space for %d trees", nrow(pnts) / length(unique(pnts$chain)))) else
+  #     gg <- NULL
 
-return(gg)
+return(pnts)
   
 })
 
-names(ggs) <- sel_leks
+names(pnts_lks) <- sel_leks
 
-saveRDS(ggs,file = "./output/rwty/rwty_tree_distance_plots_all_fossils.RDS")
+saveRDS(pnts_lks, file = "./output/rwty/tree_distance_all_fossils_pairwise_shared.RDS")
 
 ```
 
@@ -200,9 +202,9 @@ readRDS("./output/rwty/rwty_tree_distance_plots_all_fossils_shared.RDS")
 sel_leks <- c("SUR", "CCE", "HC1", "BR1", "TR1")
 # sel_leks <- c("SUR", "TR1")
 
-tree_names <- grep("early", names(rb.trees), value = TRUE)
-
-ggs <- pblapply(sel_leks, cl = 1, function(i) {
+# tree_names <- grep("early", names(rb.trees), value = TRUE)
+tree_names <- names(rb.trees)
+pnts_lks <- pblapply(sel_leks, cl = 1, function(i) {
   
   lek_trees <- grep(i, tree_names, value = TRUE)
   # lek_files <- rb.trees[lek_files]
@@ -211,27 +213,29 @@ ggs <- pblapply(sel_leks, cl = 1, function(i) {
   
   names(multi_list) <- sapply(basename(lek_trees), function(x) paste(strsplit(x, "_", fixed = TRUE)[[1]][1:5], collapse = "_"))
 
-  pnts <- try(custom_treespace(multi_list, n.points = 100, method = "shared"), silent = TRUE)
+  pnts <- try(custom_treespace(multi_list, n.points = 100, method = "RF"), silent = TRUE)
 
-  gg <- if (!is(pnts, "try-error")) ggplot(data = pnts, aes(x = x, y = y, fill = generation)) + 
-    geom_path(alpha = 0.25, aes(colour = generation), size = 0.75, show.legend = FALSE) + 
-    scale_colour_gradient(low = "red", high = "yellow") +
-    geom_point(shape = 21, size = 4, colour = "white") + 
-      theme(panel.background = element_blank(), axis.line = element_line(color = "grey"), 
-      panel.spacing = unit(0.1, "lines") axis.title.x = element_text(vjust = -0.5), axis.title.y = element_text(vjust = 1.5)) + 
-    facet_wrap(~chain, nrow = round(sqrt(length(unique(pnts$chain))))) + 
-      scale_fill_gradientn(colours = viridis(256)) +
-   labs(x = "MDS_v1", y = "MDS_v2") else
-    # ggtitle(label = sprintf("Tree space for %d trees", nrow(pnts) / length(unique(pnts$chain)))) else
-      NULL
-
-return(gg)
+  if (!is(pnts, "try-error"))
+  return(pnts) else return(NULL)
+#   gg <- if (!is(pnts, "try-error")) ggplot(data = pnts, aes(x = x, y = y, fill = generation)) + 
+#     geom_path(alpha = 0.25, aes(colour = generation), size = 0.75, show.legend = FALSE) + 
+#     scale_colour_gradient(low = "red", high = "yellow") +
+#     geom_point(shape = 21, size = 4, colour = "white") + 
+#       theme(panel.background = element_blank(), axis.line = element_line(color = "grey"), 
+#       panel.spacing = unit(0.1, "lines"), axis.title.x = element_text(vjust = -0.5), axis.title.y = element_text(vjust = 1.5)) + 
+#     facet_wrap(~chain, nrow = round(sqrt(length(unique(pnts$chain))))) + 
+#       scale_fill_gradientn(colours = viridis(256)) +
+#    labs(x = "MDS_v1", y = "MDS_v2") else
+#     # ggtitle(label = sprintf("Tree space for %d trees", nrow(pnts) / length(unique(pnts$chain)))) else
+#       NULL
+# 
+# return(gg)
   
 })
 
-names(ggs) <- sel_leks
+names(pnts_lks) <- sel_leks
 
-saveRDS(ggs,file = "./output/rwty/rwty_tree_distance_plots_early_fossils.RDS")
+saveRDS(pnts_lks, file = "./output/rwty/tree_distance_fossils_pairwise_shared.RDS")
 
 ```
 
