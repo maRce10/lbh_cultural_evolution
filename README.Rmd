@@ -52,7 +52,7 @@ Code used for creating long-billed hermit song cultural evolution trees and anal
 
 ## In progress
 
-*  Tree topology diagnostics
+*  Tree topology diagnostics 
 
 ## To-do list
 

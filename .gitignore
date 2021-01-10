@@ -5,11 +5,3 @@ packrat/lib*/
 .httr-oauth
 output/topology/
 output/revbayes_output_in_single_R_object.RDS
-output/topology/tree_distance_fossils_pairwise_shared.RDS
-output/topology/tree_distance_all_fossils_pairwise_shared.RDS
-output/topology/rwty_tree_distance_plots_early_fossils_pairwise_shared.RDS
-output/topology/rwty_tree_distance_plots_early_fossils.RDS
-output/topology/rwty_tree_distance_plots_all_fossils_shared.RDS
-output/topology/rwty_tree_distance_plots_all_fossils_pairwise_shared.RDS
-output/topology/rwty_tree_distance_plots_all_fossils.RDS
-
