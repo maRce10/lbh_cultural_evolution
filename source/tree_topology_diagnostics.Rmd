@@ -94,7 +94,7 @@ kableExtra::kable_styling(kbl)
 ## All fossils using pairwise shared tips
 
 * 100 trees for each model evenly spaced along the chain
-* Some trees were removed if NAs when produced when comparing topologies (i.e. non-comparable topologies)
+* Some trees were removed if NAs were produced when comparing topologies (i.e. non-comparable topologies)
 
 ```{r make tree distances all fossils, eval = FALSE}
 
@@ -248,7 +248,6 @@ ggs
 
 
 ## Early fossils using only pairwise shared tips
-
 ```{r make tree distances early fossils, eval = FALSE}
 
 #selected leks
@@ -329,7 +328,7 @@ ggs
 
 ```
 
-#### New data set
+#### Old data set
 ```{r plot tree distances ggplots old early fossils, eval = TRUE, warning=FALSE}
 
 ggs <- lapply(pnts_lks, function(X) {
@@ -353,6 +352,7 @@ ggs
 
 
 ```
+
 ### Clumping molecular clocks
 
 #### Old data set
