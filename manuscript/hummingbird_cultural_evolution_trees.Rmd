@@ -118,14 +118,34 @@ if (anyDuplicated(keys)){
 
 ## Introduction
 
-<!-- What is culture? Why it evolves?  -->
-<!-- How is cultural evolution analogous to organic evolution -->
-<!-- Some cultural traits are sequences – we’ve been studying sequence evolution for ever in phylogenetics -->
-<!-- Application of phylogenetic models to cultural evolution – what do diversification rates mean -->
-<!-- FBD improves diversification and divergence time estimates -->
-<!-- Applications of the FBD to fast evolving sequences sampled over time i.e. virus  -->
-<!-- FBD applied to fast evolving cultural sequences and aims of this study -->
+<!-- Big question: Is cultural evolution really analogous to organic evolution?  -->
+The idea that socially transmitted behaviours change and diversify over time in a manner analogous to organic evolution and phylogenetic diversification can be traced back to Darwin, who noted that “the formation of different languages and of distinct species, and the proofs that both have been developed through a gradual process, are curiously parallel” (Darwin 1871). The term culture can be used broadly to refer to socially transmitted information that influences behavioural patterns, such as human language, beliefs and norms (REF). Many other forms of culture exist among diverse animals, like skills, songs and courtship displays? that are learnt socially (REF). After the Modern Synthesis, the formal modelling of cultural change as evolution, whether in humans or non-human animals, became possible, by drawing analogies between cultural and population genetic processes (REF). For instance, cultural innovation could be compared to genetic mutation, biased content transmission to natural selection and random fluctuations in the frequency of traditions to genetic drift (REF). However, unlike genetic evolution, in which the most fundamental units of transmission (nucleotides) are essentially universal, cultural evolution implies disparate units of transmission across taxa and in different social contexts (e.g. artifacts vs. language). To address the long-standing question of whether cultural change over time is truly akin to evolution, we require means to systematically assess the power of evolutionary methods, across the great variety of cultural forms that have emerged in the history of animals (Mesoudi 2017 PNAS).
 
+<!-- We can study the cultural evolution of behavioural sequences with phylogenetic tools, maybe. -->
+Some cultural traits in animals can be described as behavioural sequences. For example, name two examples here one is bird songs. A strong theoretical framework in which to study the evolution of character sequences has been developed for decades within the field of molecular phylogenetics (REF), although some unresolved difficulties remain (cite paper on the non-independence of consecutive positions). These models of sequence evolution are routinely combined with the birth-death process (cite Nei) and derived models to understand the temporal dynamics of lineage diversification and turnover, using Bayesian inference and MCMC sampling (some general REF). Most phylogenetic models assume that once diverged, lineages evolve independently of one another (REF and exception). As in organisms with extensive horizontal gene transfer, this assumption may be often violated in cultural evolution, as learning from same-cohort individuals should increase the potential for reticulate evolution. However, we lack empirical knowledge on the relative frequency of network and bifurcating patterns in cultural diversification and the robustness of classic phylogenetic models to horizontal transmission of culture (e.g. Collard et al. 2006).
+<!-- Sequence alignment is another huge challenge for cultural phylogenetics. -->
+Cultural evolution poses further challenges to the application of phylogenetic models. Most implementations of phylogenetic models on molecular data start with a sequence alignment. Alignments represent assumptions of homology between characters in matched positions along a sequence, but are typically treated as observations for phylogenetic inference (REF). Therefore, numerous methods of sequence alignment have been developed aiming to capture the main features of molecular evolution, and in some cases explicitly modelling mutation events (REFs). The accurate reconstruction of homology in sequence alignments is a pervasive challenge in molecular phylogenetics (REFs) that is only exacerbated when borrowing phylogenetic tools for the study of behavioural sequences (Caetano and Bealieu 2019 Am Nat). We clearly have a better understanding of the basic rules that govern the rates of different nucleotide substitutions than we do for changes in dance moves in a courtship display or sound types in a mating call. A crucial question for the nascent field of cultural phylogenetics (sensu Mesoudi 2017 PNAS) is therefore whether alignment algorithms developed for molecular data can be suitably modified to represent the processes behind cultural change and diversification.
+
+<!-- Fast-paced cultural change provides opportunities for cultural phylogenetics. -->
+Culture changes very fast, so it’s more feasible to obtain sequences from ancestral lineages as well as extant ones. 
+Recently developed phylogenetic methods (viral phylogenetic methods, total evidence, FBDP) highlight the advantages of sampling ancestral lineages.
+Briefly explain how FBDP improves divergence time estimation and better understand diversification process.
+
+<!-- Untapped potential of FBDP in cultural phylogenetics. -->
+Historical records in cultural evolution are analogous to the fossil record in organic evolution.
+Gap: However, very few efforts (only one?) to apply the FBDP to cultural evolution, none outside humans.
+Increasing use of quantitative methods in animal behaviour and bioacustics has created opportunities to do this systematically.
+
+<!-- Long-billed hermits are great study organisms for cultural phylogenetics.  -->
+Long-billed hermit songs consist of variable pure tones and vibratory sounds.
+Different males combine these elements differently.
+Juveniles learn and sometimes modify pre-existing combinations. Then keep the same song throughout adult life.
+Very little migration between leks, so leks can be considered independent evolutionary replicates, where we can “replay the tape of evolution”
+
+<!-- Specific questions that we address in this study. -->
+We  used posterior predictive simulation to ask if we can reliably model cultural evolution in long-billed hermit with the FBDP.
+We ask how alignment assumptions impact model reliability and conclusions drawn from model inferences.
+We ask how the use and completeness of historical records (analogous to fossil records) affect model reliability and  fit of alternative clock models.
 
 ## Methods
 
