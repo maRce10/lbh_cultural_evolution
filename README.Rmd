@@ -1,9 +1,9 @@
 ---
-  title: "Cultural evolution in long-billed hermits"
+title: "Cultural evolution in long-billed hermits"
 author: <center><font size="4"><a href="http://marceloarayasalas.weebly.com/">Marcelo Araya-Salas PhD</a> & <a href="https://scholar.google.com/citations?user=0a8k9T8AAAAJ&hl=es&oi=ao"> Beatriz Willink PhD</a></font></center>
-  output: github_document
+output: github_document
 date: <center>`r format(Sys.Date(), "%d-%m-%Y")`</center>
-  editor_options:
+editor_options:
   chunk_output_type: console
 ---
 
