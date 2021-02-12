@@ -194,8 +194,6 @@ rb.trees <- load.multi("~/Dropbox/Projects/lbh_cultural_evolution/output/most_re
 
 saveRDS(rb.trees, "./output/revbayes_output_in_single_R_object.RDS")
 
-
-
 ```
   
 ## MCMC diagnostics: Gelman-Rubin, ESS, and autocorrelation

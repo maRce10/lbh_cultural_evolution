@@ -1,0 +1,13 @@
+#NEXUS
+Begin data;
+dimensions ntax=5 nchar=38;
+format datatype=standard gap=- missing=? symbols="dfmpsu";
+matrix
+
+SUR-J3-2019	pfffffffffpfffffffff------------------
+SUR-J5-2019	p------------------psssssssspfssssssss
+SUR-J7-2019	p------------------pssssssssppssssssss
+SUR-K5-2019	pudfffffffpdpfffffff------------------
+SUR-K6-2019	ufffffffffusffffffff------------------
+;
+end;

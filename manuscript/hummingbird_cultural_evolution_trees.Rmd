@@ -92,7 +92,6 @@ if (anyDuplicated(keys)){
 
 ```
 
-
 ^1^ Centro de Investigación en Neurociencias, Universidad de Costa Rica
 
 ^2^ Lab of Ornithology, Cornell University
@@ -143,7 +142,7 @@ Juveniles learn and sometimes modify pre-existing combinations. Then keep the sa
 Very little migration between leks, so leks can be considered independent evolutionary replicates, where we can “replay the tape of evolution”
 
 <!-- Specific questions that we address in this study. -->
-We  used posterior predictive simulation to ask if we can reliably model cultural evolution in long-billed hermit with the FBDP.
+We used posterior predictive simulation to ask if we can reliably model cultural evolution in long-billed hermit with the FBDP.
 We ask how alignment assumptions impact model reliability and conclusions drawn from model inferences.
 We ask how the use and completeness of historical records (analogous to fossil records) affect model reliability and  fit of alternative clock models.
 

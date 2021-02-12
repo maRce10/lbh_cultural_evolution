@@ -1,0 +1,16 @@
+#NEXUS
+Begin data;
+dimensions ntax=8 nchar=22;
+format datatype=standard gap=- missing=? symbols="dfmpsu";
+matrix
+
+TR1-D5-2014	-ususpmpmpmpmdsdsusds-
+TR1-D2-2014	mmmmmmmmmmmmmmmmmmm-m-
+TR1-D4-2014	dsmmsspmmmdmmdmmmdm-m-
+TR1-F2-2014	ssffsffsffssffsffsf-f-
+TR1-E3-2014	-uufpufdufdpufpufdu-fd
+TR1-F1-2014	-uufddudffdudfdfuuf-ff
+TR1-D1-2014	ssssssmssssssssssss-s-
+TR1-D3-2014	dpsssdssssddsssdsss-s-
+;
+end;

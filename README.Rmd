@@ -46,7 +46,7 @@ Code used for creating long-billed hermit song cultural evolution trees and anal
 * Making trees with RevBayes
 * Run revbayes posterior predictions (P3)
 * Summarize results revBayes trees
-- [MCMC, ML and P3 diagnostics](https://rpubs.com/marcelo-araya-salas/686275)
+- [MCMC, ML and P3 diagnostics](https://rpubs.com/marcelo-araya-salas/722260)
 - [diagnostic plots](lbh_cultural_evolution/tree/master/output/MCMC_diagnostic_plots)
 - [tree topology diagnostics](https://rpubs.com/marcelo-araya-salas/709692)
 
@@ -57,7 +57,7 @@ Code used for creating long-billed hermit song cultural evolution trees and anal
 ## To-do list
 
 * Run RevBayes with no fossils
-
+* Check aligment convergence
 
 ## Status
 Project is: _in progress_

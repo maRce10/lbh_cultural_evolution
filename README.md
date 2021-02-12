@@ -10,7 +10,7 @@ Beatriz Willink PhD</a></font>
 </center>
 <center>
 
-04-02-2021
+06-02-2021
 
 </center>
 
@@ -19,7 +19,7 @@ Beatriz Willink PhD</a></font>
 Creating long-billed hermit song cultural evolution trees and analyzing
 evolutionary patterns
 
-*Updated on 2021-02-04 12:36:29*
+*Updated on 2021-02-06 11:39:31*
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -48,7 +48,7 @@ and analyzing evolutionary patterns.
   - Run revbayes posterior predictions (P3)
   - Summarize results revBayes trees
   - [MCMC, ML and P3
-    diagnostics](https://rpubs.com/marcelo-araya-salas/686275)
+    diagnostics](https://rpubs.com/marcelo-araya-salas/722260)
   - [diagnostic
     plots](lbh_cultural_evolution/tree/master/output/MCMC_diagnostic_plots)
   - [tree topology
@@ -61,6 +61,7 @@ and analyzing evolutionary patterns.
 ## To-do list
 
   - Run RevBayes with no fossils
+  - Check aligment convergence
 
 ## Status
 

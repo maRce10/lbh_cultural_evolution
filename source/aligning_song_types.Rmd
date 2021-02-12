@@ -16,24 +16,20 @@ editor_options:
   chunk_output_type: console
 ---
 
-#### Clean session and load packages
-```{r clean session and load packages, eval = TRUE, message=FALSE, warning = FALSE}
-
-#clean session
-rm(list = ls())
-
-# unload all non-based packages
-out <- sapply(paste('package:', names(sessionInfo()$otherPkgs), sep = ""), function(x) try(detach(x, unload = FALSE, character.only = TRUE), silent = T))
+#### Load packages
+```{r Load packages, eval = TRUE, message=FALSE, warning = FALSE}
 
 ## vector with package names
-x <- c( "pbapply", "parallel", "ggplot2", "ape", "seqinr", "ips","gtools", "seqmagick", "ggmsa", "cowplot", "tidyr"
+x <- c( "pbapply", "parallel", "ggplot2", "ape","BiocManager","Biostrings", "seqinr", "ips","gtools", "seqmagick", "ggmsa", "cowplot", "tidyr"
         )
 
 aa <- lapply(x, function(y) {
   
   # check if installed, if not then install 
   if (!y %in% installed.packages()[,"Package"]) 
-    install.packages(y) 
+    if (y != "Biostrings")
+    install.packages(y)  else
+      BiocManager::install("Biostrings")
 
   # load package
   try(require(y, character.only = T), silent = T)
@@ -154,8 +150,7 @@ yrs <- read.csv("./data/raw/year_range_by_song_type.csv", stringsAsFactors = FAL
 length(dat$song.type) == length(unique(dat$song.type)) #OK
 
 # seq as a single column
-dat$seqs <- sapply(1:nrow(dat), function(i)  paste(dat[i,3:22], collapse = "")
-)
+dat$seqs <- sapply(1:nrow(dat), function(i)  paste(dat[i,3:22], collapse = ""))
 
 # one for each songtype year
 dat.yr <- yrs
@@ -168,16 +163,16 @@ dat.yr <- dat.yr[dat.yr$lek %in% sel_leks, ]
 dat.yr <- merge(dat.yr, dat[, c("song.type", "seqs")], by = "song.type")
 
 
-# only 1 year per song type and using before 2008
+# only 1 year per song type and using before 2000
 dat.all.old <- dat.yr[order(dat.yr$song.type, dat.yr$year), ]
 
-# only 1 year per song type and using before 2008
+# only 1 year per song type and using before 2000
 dat.early.old <- dat.all.old[!duplicated(dat.all.old$song.type), ]
 
-# only 1 year per song type and exlcuding before 2008
+# only 1 year per song type and excluding before 2000
 dat.all.new <- dat.all.old[dat.all.old$year > 2000, ]
 
-# only 1 year per song type and using before 2008
+# only 1 year per song type and using before 2000
 dat.early.new <- dat.early.old[dat.early.old$year > 2000, ]
 
 # rest of song type years (without earliest)
@@ -185,24 +180,33 @@ dat.rest.old <- dat.all.old[!dat.all.old$song.type.year %in% dat.early.old$song.
 
 dat.rest.new <- dat.all.new[!dat.all.new$song.type.year %in% dat.early.new$song.type.year,]
 
+dat.no.fossils <- dat.all.old[dat.all.old$song.type.year %in% unlist(sapply(unique(dat.all.old$lek), function(x) {
+  X <- dat.all.old[dat.all.old$lek == x, ]
+  X$song.type.year[X$year == max(X$year)]
+  })),
+  ]
+
 
 # by lek all song types
 for(i in sel_leks){
-
-    
-# all old
-if (any(dat.yr$year[dat.yr$lek == i] < 2000))
+  
+  # all old
+  if (any(dat.yr$year[dat.yr$lek == i] < 2000))
   write.fasta(sequences = as.list(dat.rest.old$seqs[dat.rest.old$lek == i]), names = dat.rest.old$song.type.year[dat.rest.old$lek == i], file.out = paste0("./data/processed/song_sequences/song_seqs_rest_old_", i, ".fa"), open = "w", nbchar = 60, as.string = FALSE)
-
-# early old
-if (any(dat.yr$year[dat.yr$lek == i] < 2000))
+  
+  # early old
+  if (any(dat.yr$year[dat.yr$lek == i] < 2000))
   write.fasta(sequences = as.list(dat.early.old$seqs[dat.early.old$lek == i]), names = dat.early.old$song.type.year[dat.early.old$lek == i], file.out = paste0("./data/processed/song_sequences/song_seqs_early_old_", i, ".fa"), open = "w", nbchar = 60, as.string = FALSE)
-
-# all new
-write.fasta(sequences = as.list(dat.rest.new$seqs[dat.rest.new$lek == i]), names = dat.rest.new$song.type.year[dat.rest.new$lek == i], file.out = paste0("./data/processed/song_sequences/song_seqs_rest_new_", i, ".fa"), open = "w", nbchar = 60, as.string = FALSE)
-
-# early new
-write.fasta(sequences = as.list(dat.early.new$seqs[dat.early.new$lek == i]), names = dat.early.new$song.type.year[dat.early.new$lek == i], file.out = paste0("./data/processed/song_sequences/song_seqs_early_new_", i, ".fa"), open = "w", nbchar = 60, as.string = FALSE)
+  
+  # all new
+  write.fasta(sequences = as.list(dat.rest.new$seqs[dat.rest.new$lek == i]), names = dat.rest.new$song.type.year[dat.rest.new$lek == i], file.out = paste0("./data/processed/song_sequences/song_seqs_rest_new_", i, ".fa"), open = "w", nbchar = 60, as.string = FALSE)
+  
+  # early new
+  write.fasta(sequences = as.list(dat.early.new$seqs[dat.early.new$lek == i]), names = dat.early.new$song.type.year[dat.early.new$lek == i], file.out = paste0("./data/processed/song_sequences/song_seqs_early_new_", i, ".fa"), open = "w", nbchar = 60, as.string = FALSE)
+  
+  # no-fossils (only if more than 3 song types are found)
+  if (sum(dat.no.fossils$lek == i) > 3)
+  write.fasta(sequences = as.list(dat.no.fossils$seqs[dat.no.fossils$lek == i]), names = dat.no.fossils$song.type.year[dat.no.fossils$lek == i], file.out = paste0("./data/processed/song_sequences/song_seqs_no.fossils_", i, ".fa"), open = "w", nbchar = 60, as.string = FALSE)
   }
 
 ```
@@ -302,7 +306,7 @@ pboptions(type = "timer")
 # alignments real songs
 
 # add using or not song types before 2008
-use.old.fossils <- c("old", "new")
+use.old.fossils <- c("old", "new", "no.fossils")
 
 # type of costs 
 type <- c("optimal", "all.equal")
@@ -314,9 +318,9 @@ unq.sgmts <- c("d", "f", "m", "p", "s", "u")
 asc.val <- c("0x73", "0x75", "0x70", "0x6D", "0x66", "0x64")
 
 
-cost <- matrix(c(0.5, 1.25, 2, 0.5, 1.25, 2, # optimal
-               rep(c(1, 1, 1.5), 2)), # equal costs
-               nrow = 4, byrow = TRUE)
+cost <- matrix(c(0.5, 1.25, 2, 0.5, 1.25, 2, 0.5, 1.25, 2,  # optimal
+               rep(c(1, 1, 1.5), 3)), # equal costs
+               nrow = 6, byrow = TRUE)
 
 cost.mat <- data.frame(cost, stringsAsFactors = FALSE)
 
@@ -382,13 +386,25 @@ out <- pblapply(1:length(cost.grds), cl = parallel::detectCores() - 1, function(
   
   writeLines(w, con = paste0("./data/processed/mafft_alignments/",Y$cost.type[1],"_cost_matrix.txt"))
   
-  
   out <- lapply(sel_leks, function(i){
     
-    # don't do those with no data before 2008
-    if (min(yrs$year[yrs$lek == i]) > 2000 & Y$use.old.fossils[1] == "old")
-      return(NULL) else
-      {      
+    if (Y$use.old.fossils[1] == "no.fossils" & i %in% c("BR1", "SUR", "TR1"))
+    {
+      cll <- paste0("mafft --localpair --maxiterate 50000 --textmatrix ./data/processed/mafft_alignments/",Y$cost.type[1] ,"_cost_matrix.txt ./data/processed/song_sequences/song_seqs_", Y$use.old.fossils[1], "_", i,".fa > ./data/processed/mafft_alignments/", i, "_", Y$cost.type[1], "_", Y$use.old.fossils[1],  "_alignment.fa 2> ./data/processed/mafft_alignments/", Y$use.old.fossils[1], "_", i, "_", Y$cost.type[1], "_mafft_output.txt")
+    
+      system(cll)
+      
+       alg <- readLines(paste0("./data/processed/mafft_alignments/",i,"_", Y$cost.type[1], "_",  Y$use.old.fossils[1], "_alignment.fa"))[2]
+    gaps <- nchar(alg) - 20
+    
+    convg <- ifelse(any(grepl("Converged", readLines(paste0("./data/processed/mafft_alignments/", Y$use.old.fossils[1], "_", i ,"_", Y$cost.type[1],"_mafft_output.txt")))), "Y", "N")
+    
+    df2 <- data.frame(lek = i, gaps, convg, cost.type = Y$cost.type[1], use.old.fossils = Y$use.old.fossils[1])
+      
+    } 
+    
+    if (min(yrs$year[yrs$lek == i]) < 2000 & Y$use.old.fossils[1] %in% c("old", "new") | min(yrs$year[yrs$lek == i]) > 2000 & Y$use.old.fossils[1] ==  "new")
+       {      
           cll <- paste0("mafft --localpair --maxiterate 50000 --textmatrix ./data/processed/mafft_alignments/",Y$cost.type[1] ,"_cost_matrix.txt ./data/processed/song_sequences/song_seqs_early_", Y$use.old.fossils[1], "_", i,".fa > ./data/processed/mafft_alignments/", i, "_", Y$cost.type[1], "_early_",  Y$use.old.fossils[1],  "_alignment.fa 2> ./data/processed/mafft_alignments/early_", Y$use.old.fossils[1], "_", i,"_", Y$cost.type[1], "_mafft_output.txt")
   
       system(cll)
@@ -399,9 +415,12 @@ out <- pblapply(1:length(cost.grds), cl = parallel::detectCores() - 1, function(
     convg <- ifelse(any(grepl("Converged", readLines(paste0("./data/processed/mafft_alignments/early_", Y$use.old.fossils[1], "_", i ,"_", Y$cost.type[1],"_mafft_output.txt")))), "Y", "N")
     
     df2 <- data.frame(lek = i, gaps, convg, cost.type = Y$cost.type[1], use.old.fossils = Y$use.old.fossils[1])
-    
-    return(df2)
     } 
+    
+    if (min(yrs$year[yrs$lek == i]) > 2000 & Y$use.old.fossils[1] == "old" | Y$use.old.fossils[1] == "no.fossils" & i %in% c("CCE", "HC1"))
+         df2 <- NULL 
+    
+  return(df2)
   })
   
   out <- out[!sapply(out, is.null)]
@@ -424,7 +443,7 @@ write.csv(res, "./output/aligment_gaps_and_convergence_results.csv")
 
 alg <- list.files(path = "./data/processed/mafft_alignments", pattern = "alignment.fa$", full.names = TRUE)
 
-alg <- grep("early", alg, value = TRUE)
+# alg <- grep("early", alg, value = TRUE)
 
 alg <- grep("prank", alg, value = TRUE, invert = TRUE)
 
@@ -446,7 +465,6 @@ out <- lapply(sel_leks, function(x){
   
     cll <- paste0("mafft --anysymbol --keeplength --add ", grep(paste0(use_old_fossils, "_", x), rest.seqs, value = TRUE)," --reorder ", file.path("./data/processed/mafft_alignments", paste(x, cost_mat, "early", use_old_fossils ,"alignment.fa", sep = "_")), " > ",     file.path("./data/processed/mafft_alignments", paste(x, cost_mat, "all", use_old_fossils ,"alignment.fa", sep = "_")))
 
-  
     system(cll)
     }
   })
@@ -507,6 +525,11 @@ dat.rest.old <- dat.all.old[!dat.all.old$song.type.year %in% dat.early.old$song.
 
 dat.rest.new <- dat.all.new[!dat.all.new$song.type.year %in% dat.early.new$song.type.year,]
 
+dat.no.fossils <- dat.all.old[dat.all.old$song.type.year %in% unlist(sapply(unique(dat.all.old$lek), function(x) {
+  X <- dat.all.old[dat.all.old$lek == x, ]
+  X$song.type.year[X$year == max(X$year)]
+  })),
+  ]
 
 # by lek all song types
 for(i in sel_leks){
@@ -524,6 +547,10 @@ write.fasta(sequences = as.list(dat.rest.new$seqs[dat.rest.new$lek == i]), names
 
 # early new
 write.fasta(sequences = as.list(dat.early.new$seqs[dat.early.new$lek == i]), names = dat.early.new$song.type.year[dat.early.new$lek == i], file.out = paste0("./data/processed/song_sequences/song_seqs_early_new_", i, "_prank.fa"), open = "w", nbchar = 60, as.string = FALSE)
+
+# no-fossils (only if more than 3 song types are found)
+  if (sum(dat.no.fossils$lek == i) > 3)
+  write.fasta(sequences = as.list(dat.no.fossils$seqs[dat.no.fossils$lek == i]), names = dat.no.fossils$song.type.year[dat.no.fossils$lek == i], file.out = paste0("./data/processed/song_sequences/song_seqs_no.fossils_", i, "_prank.fa"), open = "w", nbchar = 60, as.string = FALSE)
   }
 
 ```
@@ -539,6 +566,9 @@ prank_seqs_early <- grep("early", prank_seqs, value = TRUE)
 # get rest
 prank_seqs_rest <- grep("rest", prank_seqs, value = TRUE) 
 
+# get no fossils
+prank_seqs_no_fossils <- grep("no.fossils", prank_seqs, value = TRUE) 
+
 out <- pblapply(prank_seqs_early, function(x) {
 
   lek <- sapply(strsplit(x, "_", fixed = TRUE), "[[", 5)
@@ -550,6 +580,16 @@ out <- pblapply(prank_seqs_early, function(x) {
   system(cll)
   })
 
+
+out <- pblapply(prank_seqs_no_fossils, function(x) {
+
+  lek <- sapply(strsplit(x, "_", fixed = TRUE), "[[", 4)
+  fossils <- sapply(strsplit(x, "_", fixed = TRUE), "[[", 3)
+  
+  cll <- paste0("prank -d=./data/processed/song_sequences/", x, " -o=./data/processed/mafft_alignments/", lek, "_prank_", fossils,"_alignment.fa -iterate=100 -kappa=2")
+
+  system(cll)
+  })
 
 
 # remove best.fas suffix
@@ -631,6 +671,8 @@ algn_plots
 ### Convert fasta alignment to nexus
 # read all alignments
 all.algs <- list.files(pattern = ".fa$", path = "./data/processed/mafft_alignments/")
+
+all.algs <- grep("fossils", all.algs, value = TRUE)
 
 # loop over alignments
 for (j in all.algs){
@@ -789,6 +831,17 @@ files_to_copy <- list.files(pattern = paste(last_models$model_id, collapse = "|"
 copy_res <- file.copy(from = files_to_copy, to = file.path("./output/most_recent_revbayes_models", basename(files_to_copy)))
 
 all(copy_res)
+
+```
+
+
+#### No-fossil alignments
+
+```{r}
+
+
+
+
 ```
 
 

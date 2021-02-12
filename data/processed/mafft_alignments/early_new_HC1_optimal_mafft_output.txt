@@ -41,7 +41,7 @@ Score(f=0x66,d=0x64)=0.500000
 Score(d=0x64,d=0x64)=2.000000
 All-to-all alignment.
     0 / 6    1 / 6    2 / 6    3 / 6    4 / 6tbfast-pair (text) Version 7.453
-alg=L, model=Extended, 2.00, -0.10, +0.10, noshift, amax=0.0
+alg=L, model=Extended, 2.00, -0.00, +0.10, noshift, amax=0.0
 0 thread(s)
 
 outputhat23=16
@@ -150,8 +150,8 @@ Score(d=0x64,d=0x64)=2.000000
 
     0 / 6
 Segment   1/  1    1-  39
-STEP 001-001-0  rejected.STEP 001-001-1  identical.   STEP 001-002-0  identical.   STEP 001-002-1  rejected.STEP 001-003-0  rejected.STEP 001-003-1  accepted.STEP 001-004-0  identical.   STEP 001-004-1  accepted.STEP 001-005-1  accepted.STEP 002-005-1  identical.   STEP 002-004-0  identical.   STEP 002-004-1  identical.   STEP 002-003-0  rejected.STEP 002-003-1  identical.   STEP 002-002-0  identical.   STEP 002-002-1  rejected.STEP 002-001-0  identical.   STEP 002-001-1  identical.   STEP 003-001-0  identical.   STEP 003-001-1  identical.   STEP 003-002-0  identical.   
-Converged.
+STEP 001-001-0  identical.   STEP 001-001-1  identical.   STEP 001-002-0  identical.   STEP 001-002-1  identical.   STEP 001-003-0  identical.   STEP 001-003-1  accepted.STEP 001-004-0  accepted.STEP 001-004-1  identical.   STEP 001-005-1  accepted.STEP 002-005-1  identical.   STEP 002-004-0  rejected.STEP 002-004-1  identical.   STEP 002-003-0  identical.   STEP 002-003-1  identical.   STEP 002-002-0  identical.   STEP 002-002-1  rejected.STEP 002-001-0  identical.   STEP 002-001-1  identical.   STEP 003-001-0  identical.   
+Oscillating.
 
 done
 dvtditr (text) Version 7.453
