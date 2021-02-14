@@ -59,4 +59,4 @@ moves.append( mvRootTimeSlideUniform(bd_tree, origin_time, weight=5.0) )
 ### Create deterministic nodes to monitor various tree statistics ###
 
 # Monitor the age of the extant songs #
-age_extant := tmrca(bd_tree, clade_extant)
+# age_extant := tmrca(bd_tree, clade_extant)

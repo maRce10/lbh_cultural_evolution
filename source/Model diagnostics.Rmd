@@ -42,7 +42,7 @@ knitr::opts_knit$set(root.dir = normalizePath(".."))
 # options(knitr.kable.NA = '')
 
 # function to extract diagnostic stats
-diag_stats <- function(x, thin = 1) {
+diag_stats <- function(x, thin = 1, age.extant = TRUE) {
   
   mods <- grep(x, model_runs, value = TRUE)
   
@@ -76,7 +76,7 @@ diag_stats <- function(x, thin = 1) {
           # catch error
           if (!is(gr, "try-error")){
           gr_post <- gr$psrf["Posterior", 1]
-          gr_age_extant <- gr$psrf["age_extant", 1]
+          gr_age_extant <- if(age.extant) gr$psrf["age_extant", 1] else NA
           gr_origin_time <- gr$psrf["origin_time",1]
           gr_diversification <- gr$psrf["diversification",1]
           gr_max <- max(gr$psrf[-1,1])
@@ -179,7 +179,7 @@ base_models <- sapply(strsplit(model_runs, "_run", fixed = TRUE), "[", 1)
 
 # extract diagnostic stats for each model 
 # wrapped in try() to catch errors
-runs <- pblapply(unique(base_models), cl = parallel::detectCores() - 1, function(x) try(diag_stats(x, thin = if (substr(x, 0, 3) %in% c("CCE", "SUR")) 2 else 1), silent = TRUE))
+runs <- pblapply(unique(base_models), cl = parallel::detectCores() - 1, function(x) try(diag_stats(x, thin = if (substr(x, 0, 3) %in% c("CCE", "SUR")) 2 else 1, age.extant = if (grepl("no.fossils", x)) FALSE else TRUE), silent = TRUE))
 
 # remove errors
 runs <- runs[sapply(runs, is.data.frame)]
@@ -337,8 +337,8 @@ datatable(model_diags, editable = list(
 
 ```{r mcmc diagnostic ggplots, fig.width= 14, fig.height= 6, warning=FALSE}
 
-Record.labs <- c("Recent records only", "Including oldest records")
-names(Record.labs) <- c("new", "old")
+Record.labs <- c("Recent records only", "Including oldest records", "Only extant")
+names(Record.labs) <- c("new", "old", "no.fossils")
 
 # order levels
 model_diags$align <- factor(model_diags$align, levels = c("all.equal", "optimal", "prank"))
@@ -355,10 +355,14 @@ ggs <- lapply(params, function(x){
 
   dat <- model_diags[!is.na(model_diags[,x]), ]
   
+  if (x == "gr_age_extant") dat <- dat[grep("no.fossils", dat$model, invert = TRUE), ]
+  
   dat$signif <- ifelse(dat[,x] <= 1.1, "good", "bad")
 
   dat$signif <- factor(dat$signif, levels = c("good", "bad"))
 
+  dat$fossils[dat$fossils == "full.process"] <- "all"
+  
   # dat$alpha <- ifelse(dat[,x] > 1.1, 1, 0.5)
 
   
