@@ -35,6 +35,9 @@ dat.names <- gsub(pattern = "old_early", replacement = "early_old", x = dat.name
 # the names of data sets do not include the clock models
 dat.names <- gsub(pattern = "_global", replacement = "\\", x = dat.names)
 dat.names <- gsub(pattern = "_Uexp", replacement = "\\", x = dat.names)
+
+# the names of data sets do not include "full.process"
+dat.names <- gsub(pattern = "_full.process", replacement = "\\", x = dat.names)
 ```
 
 Here we modify the general pps.Rev for each analysis
@@ -66,6 +69,14 @@ for (i in 1:length(runs)) {
       x = pps.rev
     )
   
+  # change source directory for no fossils
+  if(grepl(pattern = "no.fossils", x = runs[i]) == TRUE) {
+    pps.rev <-
+      gsub(pattern = "model_file_name = \"source/\"",
+           replacement = "model_file_name = \"source/no_fossils/\"",
+           x = pps.rev)
+  }
+
   # write to file
   write(pps.rev,
         paste0("source/P3/", model.names[i], "_", analysis.names[i], "_pps.Rev"))
