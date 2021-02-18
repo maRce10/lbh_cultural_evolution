@@ -337,14 +337,18 @@ datatable(model_diags, editable = list(
 
 ```{r mcmc diagnostic ggplots, fig.width= 14, fig.height= 6, warning=FALSE}
 
-Record.labs <- c("Recent records only", "Including oldest records", "Only extant")
-names(Record.labs) <- c("new", "old", "no.fossils")
+Record.labs <- c("Recent records only", "Including oldest records")
+names(Record.labs) <- c("new", "old")
+
+model_diags$period[model_diags$period == "no.fossils"] <- "new"
 
 # order levels
 model_diags$align <- factor(model_diags$align, levels = c("all.equal", "optimal", "prank"))
 
 model_diags$lek <- factor(model_diags$lek, levels = c("BR1", "TR1", "CCE", "HC1", "SUR"))
 
+model_diags$fossils[model_diags$fossils == "full.process"] <- "no.fossils"
+  
 
 # parameters to plot
 params <- c("gr_post", "gr_age_extant", "gr_origin_time", "gr_diversification", "gr_max", "gr_mpsrf")
@@ -361,8 +365,7 @@ ggs <- lapply(params, function(x){
 
   dat$signif <- factor(dat$signif, levels = c("good", "bad"))
 
-  dat$fossils[dat$fossils == "full.process"] <- "all"
-  
+
   # dat$alpha <- ifelse(dat[,x] > 1.1, 1, 0.5)
 
   
@@ -391,52 +394,14 @@ ggs <- lapply(params, function(x){
     scale_fill_manual(
     values = viridis(3),
     guide = FALSE) +
-  scale_x_discrete(labels = c("all", "earliest")) + 
-    geom_hline(yintercept = 1.1, lty = 2, col = "gray42")
+  scale_x_discrete(labels = c("All", "Earliest", "No fossils")) + 
+    geom_hline(yintercept = 1.1, lty = 2, col = "gray42")  + 
+    theme(axis.text.x = element_text(angle = 35,  hjust = 1))
 })
 
 names(ggs) <- unique(params)
 
 ggs
-
-
-
-# 
-# ggs2 <- lapply(unique(p3_results$Statistic), function(x){
-# ggplot(data = p3_results[p3_results$Statistic == x, ], aes(
-#     x = Fossils,
-#     y = Two.tailed,
-#     colour = Align,
-#     fill = Align,
-#     shape = signif,
-#     alpha = signif,
-#   )) +
-#   geom_jitter(size = 5,
-#               # alpha = 0.7,
-#               width = 0.12) +
-#   facet_grid(Record ~ Lek,
-#              scales = "fixed",
-#              labeller = labeller(Record = Record.labs)) +
-#   theme_light(base_size = 16) +
-#   labs(y = "pvalue", colour = "Alignment", x = "Historical records per song", shape = "P value") +
-#   # scale_shape_discrete(guide = FALSE) +
-#   scale_shape_manual(values = c(20, 21)) + 
-#     scale_alpha_manual(values = c(0.44, 1), guide = FALSE) +
-#     scale_colour_manual(
-#     values = viridis(4),
-#     labels = c("MAFFT-agnostic", "MAFFT-optimal", "PRANK")
-#   ) +
-#     scale_fill_manual(
-#     values = viridis(4), guide = FALSE,
-#     labels = c("MAFFT-agnostic", "MAFFT-optimal", "PRANK")
-#   ) +
-#   scale_x_discrete(labels = c("all", "earliest")) + 
-#     geom_hline(yintercept = 0.05, lty = 2, col = "gray42")
-# })
-# 
-# names(ggs2) <- unique(p3_results$Statistic)
-# 
-# ggs2
 
 
 ```
@@ -500,6 +465,7 @@ out <- pblapply(base_models, function(x){
 ### Effect sizes 
 
 ```{r, fig.width= 14, fig.height= 6, warning=FALSE}
+
 p3_output_files <- list.files(path = "./output/revbayes/P3_Results", recursive = TRUE, pattern = "effectsizes", full.names = TRUE)
 
 
@@ -527,11 +493,14 @@ p3_results$Align <- factor(p3_results$Align, levels = c("all.equal", "optimal", 
 p3_results$Fossils <- sapply(p3_results$model, function(x)
 strsplit(x, "_", fixed = TRUE, "[[", 1)[[1]][5], USE.NAMES = FALSE)
 
-p3_results$Fossils <- factor(p3_results$Fossils, levels = c("all", "early"))
+p3_results$Fossils[p3_results$Fossils == "full.process"] <- "no.fossils"
 
+p3_results$Fossils <- factor(p3_results$Fossils, levels = c("all", "early", "no.fossils"))
 
 p3_results$Record <- sapply(p3_results$model, function(x)
 strsplit(x, "_", fixed = TRUE, "[[", 1)[[1]][4], USE.NAMES = FALSE)
+
+p3_results$Record[p3_results$Record == "no.fossils"] <- "new"
 
 Record.labs <- c("Recent records only", "Including oldest records")
 names(Record.labs) <- c("new", "old")
@@ -555,7 +524,8 @@ ggplot(data = p3_results[p3_results$Statistic == x, ], aes(
     values = viridis(4, alpha = 0.6),
     labels = c("MAFFT-agnostic", "MAFFT-optimal", "PRANK")
   ) +
-  scale_x_discrete(labels = c("all", "earliest"))
+  scale_x_discrete(labels = c("All", "Earliest", "No fossils")) + 
+    theme(axis.text.x = element_text(angle = 35,  hjust = 1))
 })
 
 names(ggs) <- unique(p3_results$Statistic)
@@ -601,8 +571,9 @@ ggplot(data = p3_results[p3_results$Statistic == x, ], aes(
     values = viridis(4), guide = FALSE,
     labels = c("MAFFT-agnostic", "MAFFT-optimal", "PRANK")
   ) +
-  scale_x_discrete(labels = c("all", "earliest")) + 
-    geom_hline(yintercept = 0.05, lty = 2, col = "gray42")
+  scale_x_discrete(labels = c("All", "Earliest", "No fossils")) + 
+    geom_hline(yintercept = 0.05, lty = 2, col = "gray42") + 
+    theme(axis.text.x = element_text(angle = 35,  hjust = 1))
 })
 
 names(ggs2) <- unique(p3_results$Statistic)
@@ -615,6 +586,7 @@ ggs2
 ```{r, Read first two ML reps}
 # Read model names
 m <- read.table(file = "./output/revbayes/stdout/dataset.txt", header = F)
+
 # Read two replicates of ML estimates under the stepping stone algorithm
 ss.r1 <- read.table(file ="./output/revbayes/stdout/SteppingStone.txt", header = F, sep = ",")
 ss.r2 <- read.table(file = "./output/revbayes/stdout/SteppingStoneR2.txt", header = F, sep = ",")
@@ -771,7 +743,8 @@ ML.plot <-
     values = wes_palette("IsleofDogs1"),
     labels = c("MAFFT-agnostic", "MAFFT-optimal", "PRANK")
   ) +
-  scale_x_discrete(labels = c("all", "earliest"))
+  scale_x_discrete(labels = c("all", "earliest"))  + 
+    theme(axis.text.x = element_text(angle = 35,  hjust = 1))
 
 ML.plot
 ```
