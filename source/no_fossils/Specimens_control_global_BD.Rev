@@ -35,6 +35,6 @@ source("./source/no_fossils/model_Global.Rev") # molecular clock global
 source("./source/no_fossils/model_GTRG_BD.Rev") # Molecular substitution model (GTR + G)
 
 # for all models without fossils
-source("./source/no_fossils/MCMC_BD.Rev") # Run MCMC
+#source("./source/no_fossils/MCMC_BD.Rev") # Run MCMC
 
-
+source("./source/no_fossils/ML.Rev") # Run ML approximation

@@ -118,3 +118,21 @@
    -384.819
 >    Error:	Could not open file "./source/TR1_prank_old_all_global.Rev"
 >    Error:	Could not open file "./source/TR1_prank_old_early_global.Rev"
+   -271.3342
+   -273.3298
+   -273.4461
+   -93.24615
+   -94.90693
+   -101.1235
+   -248.942
+   -244.6588
+   -261.6265
+   -272.3093
+   -273.8014
+   -274.5359
+   -93.48433
+   -95.42809
+   -101.7661
+   -248.9725
+   -245.3285
+   -261.461

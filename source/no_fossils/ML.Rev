@@ -1,0 +1,29 @@
+####################
+# ML approximation #
+####################
+
+# MCMC strategy and monitoring #
+
+# initialize the model object #
+mymodel = model(bd_tree)
+
+monitors = VectorMonitors()
+
+# Create a vector of monitors #
+# 1. for the full model #
+monitors.append( mnModel(filename= base_str + ".log", printgen=100) )
+
+# 2. the tree #
+monitors.append( mnFile(filename= base_str + ".trees", printgen=100, bd_tree) )
+
+pow_p = powerPosterior(mymodel, moves, monitors, output_file_name + ".out", cats=100)
+pow_p.burnin(generations=5000,tuningInterval=200)
+pow_p.run(generations=2000)
+#pow_p.run(generations=100)
+ss = steppingStoneSampler(file=output_file_name + ".out", powerColumnName="power", likelihoodColumnName="likelihood")
+ss.marginal()
+ps = pathSampler(file=output_file_name  + ".out", powerColumnName="power", likelihoodColumnName="likelihood")
+ps.marginal()
+
+# Quit RevBayes #
+q()

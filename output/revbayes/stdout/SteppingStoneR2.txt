@@ -118,3 +118,21 @@ This typically refers to a problem with your application.
    -385.9877
 >    Error:	Could not open file "./source/TR1_prank_old_all.Rev"
 >    Error:	Could not open file "./source/TR1_prank_old_early.Rev"
+   -271.3969
+   -272.9626
+   -274.0528
+   -93.24963
+   -94.78989
+   -101.0476
+   -248.8422
+   -244.9007
+   -262.0131
+   -272.4454
+   -273.0061
+   -274.4616
+   -93.3074
+   -94.75968
+   -101.2562
+   -248.7484
+   -244.7485
+   -261.6468
