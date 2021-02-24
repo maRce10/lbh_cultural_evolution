@@ -19,7 +19,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r, fixing citation .bib files, eval = TRUE, echo = FALSE}
+```{r, fixing citation .bib files, eval = TRUE, echo = FALSE, message = FALSE, warning=FALSE}
 
 # how to cite in Rmarkdown
 # https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html
@@ -27,7 +27,7 @@ editor_options:
 # update the copy of my when compiling Rmarkdown #############
 # personal_libraries <- c(author1 = "path/and/name/of/.bib/file/from/author1", author3 = "path/and/name/of/.bib/file/from/author2", author3 = "path/and/name/of/.bib/file/from/author3")
 
-  personal_libraries <- c(author_1 = "/home/m/Documentos/library.bib", author_2 = "./CultEvolBety.bib")
+personal_libraries <- c(author_1 = "/home/m/Documentos/library.bib", author_2 = "./CultEvolBety.bib")
 
 
 # update bibtex library
@@ -40,11 +40,15 @@ if (file.exists(personal_libraries[i]))
 # combine .bib files in compiled.bib
 bibs <- list.files(pattern = ".bib$")
 
-bibs <- bibs[bibs != "combined_bibs.bib"]
+bibs <- bibs[grep("author", bibs)]
 
 if (length(bibs) > 0){
   combined_bibs_l <- lapply(bibs, readLines)
+  
   names(combined_bibs_l) <- gsub("\\.bib$", "", bibs)
+  
+  # remove empty ones
+  combined_bibs_l <- combined_bibs_l[!sapply(combined_bibs_l, function(x) x[1] == "\xfe\xff")]
 }
 
 #####################
