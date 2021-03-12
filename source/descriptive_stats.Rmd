@@ -1,0 +1,59 @@
+---
+title: <center><font size="6"><b>Descriptive stats</b></font></center>
+subtitle: <center><font size="4"><b>Long-billed hermit song cultural evolution</b></font></center>
+author: <center><font size="4"><a href="http://marceloarayasalas.weebly.com/">Marcelo Araya-Salas, PhD</a></font></center>
+date: <center>`r format(Sys.Date(), "%d-%m-%Y")`</center>
+output:
+  html_document:
+    df_print: kable
+    code_folding: hide
+    toc: yes
+    toc_depth: 3
+    toc_float:
+      collapsed: no
+      smooth_scroll: no
+fontsize: 12pt 
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, echo = FALSE}
+# WD
+knitr::opts_knit$set(root.dir = normalizePath(".."))
+
+```
+
+
+```{r sample sizes, eval = TRUE, echo = TRUE}
+
+#selected leks
+sel_leks <- c("SUR", "CCE", "HC1", "BR1", "TR1")
+
+dat <- read.csv("./data/raw/segments_by_song_type.csv", stringsAsFactors = FALSE)
+dat <- dat[dat$lek %in%  sel_leks, ]
+
+yrs <- read.csv("./data/raw/year_range_by_song_type.csv", stringsAsFactors = FALSE)
+yrs <- yrs[yrs$lek %in%  sel_leks, ]
+
+yrs$song.type.year <- paste(yrs$song.type, yrs$year, sep = "-")
+
+```
+
+
+* `r length(unique(yrs$lek))` leks
+* `r length(unique(yrs$song.type.year))` song types (~ `r round(length(unique(yrs$song.type.year)) / length(unique(yrs$lek)), 2)` song types / lek)
+
+```{r}
+
+agg <- aggregate(song.type ~ lek, data = yrs, FUN = "length")
+agg$year.range <- aggregate(year ~ lek, data = yrs, FUN = function(x) paste(range(x), collapse = "-"))$year
+agg$range <- aggregate(year ~ lek, data = yrs, FUN = function(x) max(x)- min(x))$year
+agg$total.years <- aggregate(year ~ lek, data = yrs, FUN = function(x) length(unique(x)))$year
+agg$total.gaps <- agg$range + 1 - agg$total.years
+agg$years <- aggregate(year ~ lek, data = yrs, FUN = function(x) paste(unique(x), collapse = "-"))$year
+
+agg[order(agg$song.type), ]
+
+
+```
+
