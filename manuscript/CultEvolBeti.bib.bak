@@ -1,3 +1,4 @@
+% Encoding: UTF-8
 
 @Book{Darwin1871,
   author    = {Darwin, Charles},
@@ -137,3 +138,90 @@
   volume    = {114},
   publisher = {National Acad Sciences},
 }
+
+@Book{boyd1985culture,
+  author    = {Boyd, R. and Richerson, P. J.},
+  publisher = {The University of Chicago Press},
+  title     = {Culture and the {E}volutionary {P}rocess},
+  year      = {1985},
+  address   = {Chicago},
+}
+
+@Article{payne1971songs,
+  author    = {Payne, Roger S. and McVay, Scott},
+  journal   = {Science},
+  title     = {Songs of humpback whales},
+  year      = {1971},
+  number    = {3997},
+  pages     = {585--597},
+  volume    = {173},
+  publisher = {American Association for the Advancement of Science},
+}
+
+@Article{yang2012molecular,
+  author    = {Yang, Ziheng and Rannala, Bruce},
+  journal   = {Nature Reviews Genetics},
+  title     = {Molecular phylogenetics: principles and practice},
+  year      = {2012},
+  number    = {5},
+  pages     = {303--314},
+  volume    = {13},
+  publisher = {Nature Publishing Group},
+}
+
+@Article{bapteste2013networks,
+  author    = {Bapteste, Eric and van Iersel, Leo and Janke, Axel and Kelchner, Scot and Kelk, Steven and McInerney, James O. and Morrison, David A. and Nakhleh, Luay and Steel, Mike and Stougie, Leen and others},
+  journal   = {Trends in Genetics},
+  title     = {Networks: expanding evolutionary thinking},
+  year      = {2013},
+  number    = {8},
+  pages     = {439--441},
+  volume    = {29},
+  publisher = {Elsevier},
+}
+
+@Article{gray2007pleasures,
+  author    = {Gray, Russell D. and Greenhill, Simon J. and Ross, Robert M.},
+  journal   = {Biological Theory},
+  title     = {The pleasures and perils of {D}arwinizing culture (with phylogenies)},
+  year      = {2007},
+  number    = {4},
+  pages     = {360--375},
+  volume    = {2},
+  publisher = {Springer},
+}
+
+@Article{collard2006branching,
+  author    = {Collard, Mark and Shennan, Stephen J. and Tehrani, Jamshid J.},
+  journal   = {Evolution and Human Behavior},
+  title     = {Branching, blending, and the evolution of cultural similarities and differences among human populations},
+  year      = {2006},
+  number    = {3},
+  pages     = {169--184},
+  volume    = {27},
+  publisher = {Elsevier},
+}
+
+@Article{morlon2014phylogenetic,
+  author    = {Morlon, H{\'e}l{\`e}ne},
+  journal   = {Ecology Letters},
+  title     = {Phylogenetic approaches for studying diversification},
+  year      = {2014},
+  number    = {4},
+  pages     = {508--525},
+  volume    = {17},
+  publisher = {Wiley Online Library},
+}
+
+@Article{bromham2018bayesian,
+  author    = {Bromham, Lindell and Duch{\^e}ne, Sebasti{\'a}n and Hua, Xia and Ritchie, Andrew M and Duch{\^e}ne, David A and Ho, Simon YW},
+  journal   = {Biological Reviews},
+  title     = {Bayesian molecular dating: opening up the black box},
+  year      = {2018},
+  number    = {2},
+  pages     = {1165--1191},
+  volume    = {93},
+  publisher = {Wiley Online Library},
+}
+
+@Comment{jabref-meta: databaseType:bibtex;}
