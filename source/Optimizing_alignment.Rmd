@@ -1,5 +1,5 @@
 ---
-title: <center><font size="6"><b>Optimizing MAFFT alignments</b></font></center>
+title: <center><font size="6"><b>Optimizing alignments</b></font></center>
 subtitle: <center><font size="4"><b>Long-billed hermit song cultural evolution</b></font></center>
 author: <center><font size="4"><a href="http://marceloarayasalas.weebly.com/">Marcelo Araya-Salas, PhD</a></font></center>
 date: <center>`r format(Sys.Date(), "%d-%m-%Y")`</center>

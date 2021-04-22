@@ -6,6 +6,7 @@ date: <center>`r format(Sys.Date(), "%d-%m-%Y")`</center>
 output:
   html_document:
     code_folding: hide
+    df_print: kable
     toc: yes
     toc_depth: 3
     toc_float:
