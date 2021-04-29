@@ -183,11 +183,32 @@ All phylogenetic analyses were conducted in RevBayes v. 1.0.12 and v. 1.1.0 <!--
 Our dataset on historical records of songs in hummingbird leks has three advantages in comparison to most fossil datasets used in phylogenetic analyses. First, there is no stratigraphic uncertainty. We can be certain that historical songs occurred in the year when they were recorded. Second, there are no partial fossils. Songs recorded in the past are just as complete as the most recent ones, creating no additional ambiguity in character states of historical songs. Third, the historical record is relatively rich. In all leks, there are multiple years sampled consecutively and in two leks (SUR and CCE) historical records go back to 1969 (Fig. 1d). Because leks are small and hummingbirds are actively displaying their calls, we can assume detection is nearly perfect  and thus there is no missing taxa in any of the sampled years.
 
 
-```{r, echo=FALSE}
-fs <- read.csv("../data/processed/fossil_series.csv", header = T, sep = ",")
+```{r load-packages, message=FALSE, results='hide', eval=TRUE, echo=FALSE}
+x <-
+  c(
+    "tidyr",
+    "ggplot2",
+    "viridis",
+    "coda",
+    "treeio",
+    "phytools",
+    "plyr", 
+    "kableExtra"
+  )
 
-require(ggplot2)
-require(viridis)
+lapply(x, function(y) {
+  # check if installed, if not install
+  if (!y %in% installed.packages()[, "Package"])
+    install.packages(y)
+  
+  # load package
+  try(require(y, character.only = T), silent = T)
+})
+```
+
+
+```{r sampling-times-plot, echo=FALSE}
+fs <- read.csv("../data/processed/fossil_series.csv", header = T, sep = ",")
 
 pal <- viridis(10)
 
@@ -204,8 +225,8 @@ ggplot(fs, aes(Year, Lek)) +
   theme(plot.title.position = "plot")
 ```
 
-<!--this is my proposal for fig 1, we can put it elsewhere, but I though about it when I was here--> 
-**Figure S1. **Historical sampling of socially transmitted songs in the long-billed hermit. **a)** a nice picture of the birdie. **b or c)** a spectrogram pointing to tones and trills  **c or b)** a map with the locations of leks. **d)** Distribution of historical records in five leks. Years when songs were recorded are marked in colour.
+<!--this is my proposal for fig 1, we can put it elsewhere, but I thought about it when I was here--> 
+**Figure 1. **Historical sampling of socially transmitted songs in the long-billed hermit. **a)** a nice picture of the birdie. **b or c)** a spectrogram pointing to tones and trills  **c or b)** a map with the locations of leks. **d)** Distribution of historical records in five leks. Years when songs were recorded are marked in colour.
 
 A possible complication in our analysis is that long gaps without sampling are interspaced in the three leks with deeper historical records (HC1, CCE and SUR). However, the temporal distribution of these ancestral samples is not unlike that of fossils, which are typically aggregated in discrete strata of exposed rocks [@holland2016non]. The FBDP is robust to some forms of bias in fossil sampling, including non-continuous recovery [@heath2014fossilized]. Nonetheless to better understand the effects of deep, yet discontinuous historical sampling we conducted all analyses for these leks both with the complete dataset, including long gaps without lineage sampling, and with the more recent and continuously sampled dataset. We present both sets of results for comparison. Finally, to investigate the general impact of sampling historical records on phylogenetic inference of song evolution, we the conducted an additional set of analyses, including only songs observed in the last year of sampling. For these analyses without historical records, we used the three leks (BR1, SUR and TR1) that had 3 or more distinct songs in their last year of sampling.  
 
@@ -227,7 +248,7 @@ For each test, we report a posterior predictive effect size (PPES) and a two-tai
 
 We explored how tree topology congruence by... <!--MAS writes this section-->.
 
-We also asked if inferences of diversification dynamics and song evolution were influenced by the use of different alignment strategies. To do this we compared the posterior distributions of parameter estimates between the MAFFT-agnostic, MAFFT-optimal and PRANK-TN93 alignment strategies. For diversification dynamics we compared speciation, extinction and net diversification rates, and for song evolution we focussed on substitutions rates between broad sound categories (vibratory trill to pure tone and vice versa) and substitution rates within sound categories (e.g. between fast and slow trills). We considered parameter estimates sensitive to alignment strategies if their 95% highest posterior density (HPD) intervals did not overlap. We similarly explored sensitivity to fossil use and clock models in the Supporting Material.<!--We have not done this! But I'm on it--> 
+We also asked if inferences of diversification dynamics and song evolution were influenced by the use of different alignment strategies. To do this we compared the posterior distributions of parameter estimates between the MAFFT-agnostic, MAFFT-optimal and PRANK-TN93 alignment strategies. For diversification dynamics we compared speciation and extinction rates, as well as the age of the MRCA of all songs (including extinct lineages) and the age of the MRCA of only extant songs (those present in the last year of sampling). For song evolution, we focused on substitutions rates between broad sound categories (vibratory trill to pure tone and vice versa), substitution rates within sound categories (e.g. between fast and slow trills), and stationary frequencies of sound categories. We considered parameter estimates to differ between a "query" and "target" alignment strategies if more than 5% of the posterior distribution of the parameter under the "query" alignment fell outside the95% highest posterior density (HPD) interval of the parameter estimate under the "target" alignment. We similarly explored sensitivity of diversification parameters to fossil use and clock models.<!--We have not done this! But I'm on it--> 
 
 ## Results
 
@@ -236,15 +257,110 @@ We also asked if inferences of diversification dynamics and song evolution were 
 ### Model reliabilty 
 <!--can be renamed-->
 
+
 ### Clock model selection
 <!--can be renamed-->
 
-### Treespace congruence, song evolution and diversification dynamics
+Support for a relaxed clock model of song evolution (in which different son lineages evolve at different rates) depended on the historical record and sampling strategy. When historical data was excluded, there was no increase in ML by relaxing the clock model. However, the use of historical songs akin to fossils resulted in a higher fit of the relaxed model, particularly when all historical records, including identical song sequences sampled in consecutive years are incorporate in the macroevolutionary process. While this trend was present in most leks and data sets, it tended to be stronger under the PRANK-TN93 alignment, especially in the historically largest lek (SUR) <!--double check accuracy with MAS-->
+
+```{r, include=FALSE, eval=TRUE}
+source("../source/ML.table.R", local = knitr::knit_global())
+```
+
+```{r, warning=FALSE, echo=FALSE}
+ML.plot
+```
+
+
+### Treespace congruence
 <!--can be renamed-->
 
+### Diversification dynamics
+<!--can be renamed, so far I've vomited this section-->
+```{r, include=FALSE}
+source("../source/Parameter_sensitivity.R", local = knitr::knit_global())
+```
+
+Diversification rates were not super sensitive to alignment strategy, with exception of SUR, where PRANK infers slower turnover. Age of extant taxa is VERY sensitive to alignment for leks with large gaps in their historical record (CCE, HC1, SUR). In SUR, only PRANK results imply that more than a single lineage from earliest sampling years has survived to the present. In HC1 both PRANK and MAFFT-optimal make this inference and in CCE, all alignments result in a recent origin of extant songs. Origin times of all songs are not so sensitive to alignment strategy, but PRANK tends to infer older ages.
+
+```{r plot-div-aln-h, echo=FALSE}
+p_div_h_clock_prank
+```
+
+Diversification rates were also very sensitive to historical information. In the three leks in which analyses without fossils could be conducted (BR1, TR1, SUR), fossil-free inference resulted in much slower diversification rates and markedly uncertain origin times in comparison to analyses including historical songs. For the three leks in which a long but gapped historical record could be contrasted with a shorter but complete one (CCE, HC1 and SUR) including more ancient records resulted in older age estimates for the MRCA of both extant and extant + historical songs. Here we show this for PRANK, but the same pattern holds for alternative alignments (Supporting Material).
+
+<!--sensitivity of diversification and age parameters to historical record under PRANK-->
+```{r plot-div-h-record-prank, echo=FALSE}
+p_div_h_record_prank
+```
+
+Diversification inference was also sensitive to how consecutive historical records are incorporated into the analysis. Including all consecutive samplings of identical songs resulted in higher turnover (higher speciation and extinction). Generally, age estimates were not so sensitive, with the exception of CCE and SUR (leks with longer historical sampling), in which considering only the earliest appearance of a historical song caused greater uncertainty and older estimates in the origin time of all songs (extant and historical). Here we show this for PRANK, but the same pattern holds for alternative alignments (Supporting Material).
+
+<!--sensitivity of diversification and age parameters to historical sampling under PRANK-->
+
+```{r plot-div-h-sampling-prank, echo=FALSE}
+p_div_h_sampling_prank
+```
+
+
+### Song evolution
+<!--can be renamed-->
+We looked at how the parameters of substitution models were influenced by alignment strategies. Different alignment strategies create different assumptions about sequence homology. Here leks are VERY idiosyncratic. The stationary frequencies of sound types vary across leks and they can be highly sensitive to the alignment strategy in some leks but not others. For example, pure tones are more frequent in HC1 than in other leks, but the estimated frequency varies markedly among alignment strategies, whereas in TR1 different alignments are congruent. Similarly, the PRANK alignment results in a higher frequency of medium trills and a lower frequency of fast and slow trills in SUR and CCE, compared to MAFFT-optimal. However in CCE and TR1  PRANK alignment results in a higher frequency of slow trills. <!-- these are just a couple of examples to show that each lek is doing its own thing--->
+
+```{r plot-evol-h-freq-aln, echo=FALSE}
+p_freq_h_aln
+```
+
+
+A similar scenario arises in substitution rate estimates, where the sensitivity of rate estimates and the effects of particular alignment strategies vary vastly across leks, with HC1 being particularly prone to incongruence between alignment strategies (Supporting Material?).
 
 ## Discusion
 
+## Supporting Material
+
+How sensitive are diversification rates to alignment strategies?
+```{r aln-div-sensitivity, eval=TRUE, echo=FALSE}
+p_div_h_clock_optimal
+```
+
+Sensitivity to clock model under MAFFT-agnostic
+```{r plot-div-h-clock-agnostic, echo=FALSE}
+p_div_h_clock_all.equal
+```
+
+Sensitivity to fossil record under MAFFT-optimal
+```{r plot-div-h-record-optimal, echo=FALSE}
+p_div_h_record_optimal
+```
+
+Sensitivity to fossil record under MAFFT-agnostic
+```{r plot-div-h-record-agnostic, echo=FALSE}
+p_div_h_record_all.equal
+```
+
+Sensitivity to fossil sampling under MAFFT-optimal
+```{r plot-div-h-sampling-optimal, echo=FALSE}
+p_div_h_sampling_optimal
+```
+
+Sensitivity to fossil sampling under MAFFT-agnostic
+```{r plot-div-h-sampling-agnostic, echo=FALSE}
+p_div_h_sampling_all.equal
+```
+
+Substitution rates within sound classes
+
+Assuming a relaxed clock, sampling all historical records and using old fossils (gapped historical record) when available.
+```{r plot-evol-h-evolw-aln, echo=FALSE}
+p_evolw_h_aln
+```
+
+Substitution rates between sound classes
+
+Assuming a relaxed clock, sampling all historical records and using old fossils (gapped historical record) when available.
+```{r plot-evol-h-evolb-aln, echo=FALSE}
+p_evolb_h_aln
+```
 
 
 ## References
