@@ -466,7 +466,7 @@ out <- pblapply(base_models, function(x){
 
 ```{r, fig.width= 14, fig.height= 6, warning=FALSE}
 
-p3_output_files <- list.files(path = "./output/revbayes/P3_Results", recursive = TRUE, pattern = "effectsizes", full.names = TRUE)
+p3_output_files <- list.files(path = "../output/revbayes/P3_Results/", recursive = TRUE, pattern = "effectsizes", full.names = TRUE)
 
 
 p3_results_l <- lapply(p3_output_files, function(x){

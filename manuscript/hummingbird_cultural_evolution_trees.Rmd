@@ -256,6 +256,228 @@ We also asked if inferences of diversification dynamics and song evolution were 
 
 ### Model reliabilty 
 <!--can be renamed-->
+```{r effect-size-plots, echo=FALSE}
+p3_output_files <- list.files(path = "../output/revbayes/P3_Results", recursive = TRUE, pattern = "effectsizes", full.names = TRUE)
+
+p3_results_l <- lapply(p3_output_files, function(x){
+  
+  Y <- read.csv(file.path(x))
+  Y$model <- sapply(strsplit(x, "Results/", fixed = TRUE), "[", 2)
+  
+  return(Y)
+})
+
+p3_results <- do.call(rbind, p3_results_l)
+
+
+p3_results$Lek <- sapply(p3_results$model, function(x)
+  strsplit(x, "_", fixed = TRUE, "[[", 1)[[1]][2], USE.NAMES = FALSE)
+p3_results$Lek <- factor(p3_results$Lek, levels = c("BR1", "TR1", "CCE", "HC1", "SUR"))
+
+p3_results$Align <- sapply(p3_results$model, function(x)
+  strsplit(x, "_", fixed = TRUE, "[[", 1)[[1]][3], USE.NAMES = FALSE)
+p3_results$Align <- factor(p3_results$Align, levels = c("all.equal", "optimal", "prank"))
+Align.labs <- c("MAFFT-agnostic", "MAFFT-optimal", "PRANK-TN93")
+names(Align.labs) <- c("all.equal", "optimal", "prank")
+
+p3_results$Sampling <- sapply(p3_results$model, function(x)
+  strsplit(x, "_", fixed = TRUE, "[[", 1)[[1]][5], USE.NAMES = FALSE)
+p3_results$Sampling[p3_results$Sampling == "full.process"] <- "none"
+p3_results$Sampling <- factor(p3_results$Sampling, levels = c("all", "early", "none"))
+Sampling.labs <- c("all historical", "earliest record", "none")
+names(Sampling.labs) <- c("all", "early", "none") 
+
+p3_results$Record <- sapply(p3_results$model, function(x)
+  strsplit(x, "_", fixed = TRUE, "[[", 1)[[1]][4], USE.NAMES = FALSE)
+p3_results$Record <- factor(p3_results$Record, levels= c("old", "new", "no.fossils"))
+Record.labs <- c("Old gapped record",  "Recent complete record", "No historical record")
+names(Record.labs) <- c( "old", "new", "no.fossils")
+
+ggs <- lapply(unique(p3_results$Statistic), function(x){
+  ggplot(data = p3_results[p3_results$Statistic == x, ], aes(
+    x = Sampling,
+    y = Effect.Size,
+    colour = Align,
+  )) +
+    geom_jitter(size = 3,
+                alpha = 0.7,
+                width = 0.12) +
+    facet_grid(Record ~ Lek,
+               scales = "fixed",
+               labeller = labeller(Record = Record.labs)) +
+    theme_light(base_size = 16) +
+    labs(y = "Effect size", colour = "Alignment", x = "Sampling of historical songs") +
+    scale_shape_discrete(guide = FALSE) +
+    scale_colour_manual(
+      values = viridis(3, direction = -1, alpha = 0.6),
+      labels = Align.labs
+    ) +
+    scale_x_discrete(labels = Sampling.labs) + 
+    theme(axis.text.x = element_text(angle = 35,  hjust = 1))
+})
+
+names(ggs) <- unique(p3_results$Statistic)
+```
+
+```{r p-value-plots, echo=FALSE}
+p3_results$signif <- ifelse(p3_results$Two.tailed < 0.05, " < 0.05", " >= 0.05")
+p3_results$signif <- factor(p3_results$signif, levels = c(" >= 0.05", " < 0.05"))
+p3_results$alpha <- ifelse(p3_results$Two.tailed < 0.05, 1, 0.95)
+
+ggs2 <- lapply(unique(p3_results$Statistic), function(x){
+ggplot(data = p3_results[p3_results$Statistic == x, ], aes(
+    x = Sampling,
+    y = Two.tailed,
+    colour = Align,
+    fill = Align,
+    size = signif,
+    alpha = signif,
+  )) +
+  geom_jitter(#size = 4,
+              # alpha = 0.7,
+              width = 0.12) +
+  facet_grid(Record ~ Lek,
+             scales = "fixed",
+             labeller = labeller(Record = Record.labs)) +
+  theme_light(base_size = 16) +
+  labs(y = "Two-tailed \"p-value\"", colour = "Alignment", fill = "Alignment", x = "Historical records per song", size = "\"P-value\"", alpha = "\"P-value\"") +
+  # scale_shape_discrete(guide = FALSE) +
+  scale_size_manual(values = c(3, 5)) + 
+    scale_alpha_manual(values = c(0.44, 1)) +
+    scale_colour_manual(
+    values = viridis(3, direction = -1),
+    labels = Align.labs
+  ) +
+    scale_fill_manual(
+    values = viridis(3, direction = -1), #guide = FALSE,
+    labels = Align.labs
+  ) +
+  scale_x_discrete(labels = Sampling.labs) + 
+    geom_hline(yintercept = 0.05, lty = 2, col = "gray42") + 
+    theme(axis.text.x = element_text(angle = 35,  hjust = 1))
+})
+
+names(ggs2) <- unique(p3_results$Statistic)
+```
+
+
+The reliability of model inferences depends on the alignment strategy, the lek-specific evolutionary history and the way in which historical records are sampled and incorporated in the data. Moreover, not all features of song alignments are equally sensitive to these varying datasets. For instance, the number of invariant and segregating sites as well as length of blocks of each type of site are robust features that generally match between simulated and empirical data across data sets.
+```{r plot-invar-segragating, echo=FALSE}
+ggs2$`Number Invariant Sites`
+ggs2$`Segregating-Sites`
+
+ggs2$`Max Invariant Block Length`
+ggs2$`Max Variable Block Length`
+```
+
+In contrast simulated data under our phylogenetic models often underestimates the maximum pairwise distance between two sequences in an alignment (figure and figure).
+
+```{r  plot-max-pairwise, echo=FALSE}
+ggs2$`Max Pairwise Difference`
+```
+
+```{r plot-max-pairwise-values, echo=TRUE, warning=FALSE}
+p3_empirical_files <- list.files(path = "../output/revbayes/P3_Results", recursive = TRUE, pattern = "empirical", full.names = TRUE)
+
+p3_empirical_l <- lapply(p3_empirical_files, function(x){
+  
+  Y <- read.csv(file.path(x))[,"Max.Pairwise.Difference"]
+  Y$model <- sapply(strsplit(x, "Results/", fixed = TRUE), "[", 2)  
+  Y$model <- sapply(strsplit(Y$model, "/empirical", fixed = TRUE), "[", 1)
+  
+  return(Y)
+})
+
+p3_empirical <- do.call(rbind, p3_empirical_l)
+
+p3_simulated_files <- list.files(path = "../output/revbayes/P3_Results", recursive = TRUE, pattern = "simulated", full.names = TRUE)
+
+p3_simulated_l <- lapply(p3_simulated_files, function(x){
+  
+  Y <- read.csv(file.path(x))[,"Max.Pairwise.Difference"]
+  Y_hat <- mean(Y)
+  Y_hat$lwr <- HPDinterval(mcmc(Y))[1]
+  Y_hat$upr <- HPDinterval(mcmc(Y))[2]
+  Y_hat$model <- sapply(strsplit(x, "Results/", fixed = TRUE), "[", 2)  
+  Y_hat$model <- sapply(strsplit(Y_hat$model, "/simulated", fixed = TRUE), "[", 1)
+  
+  return(Y_hat)
+})
+
+p3_simulated <- do.call(rbind, p3_simulated_l)
+
+p3_maxpwise <- data.frame(model = unlist(p3_empirical[,2]), 
+                          empirical = unlist(p3_empirical[,1]), 
+                          simulated_mean = unlist(p3_simulated[,1]), 
+                          simulated_lwr = unlist(p3_simulated[,2]),
+                          simulated_upr = unlist(p3_simulated[,3]))
+
+p3_maxpwise <- p3_maxpwise[grep("Uexp", p3_maxpwise$model),]
+
+p3_maxpwise$Lek <- sapply(p3_maxpwise$model, function(x)
+  strsplit(x, "_", fixed = TRUE, "[[", 1)[[1]][2], USE.NAMES = FALSE)
+
+p3_maxpwise$Lek <- factor(p3_maxpwise$Lek, levels = c("BR1", "TR1", "CCE", "HC1", "SUR"))
+
+p3_maxpwise$Aln <- sapply(p3_maxpwise$model, function(x)
+  strsplit(x, "_", fixed = TRUE, "[[", 1)[[1]][3], USE.NAMES = FALSE)
+
+p3_maxpwise$Sampling <- sapply(p3_maxpwise$model, function(x)
+  strsplit(x, "_", fixed = TRUE, "[[", 1)[[1]][5], USE.NAMES = FALSE)
+p3_maxpwise$Sampling[p3_maxpwise$Sampling == "full.process"] <- "none"
+p3_maxpwise$Sampling <- factor(p3_maxpwise$Sampling, levels = c("all", "early", "none"))
+
+
+p3_maxpwise$Record <- sapply(p3_maxpwise$model, function(x)
+  strsplit(x, "_", fixed = TRUE, "[[", 1)[[1]][4], USE.NAMES = FALSE)
+p3_maxpwise$Record <- factor(p3_maxpwise$Record, levels= c("old", "new", "no.fossils"))
+
+p3_maxpwise <- pivot_longer(p3_maxpwise, cols = c("empirical", "simulated_mean"), names_to = c("dataset"))
+
+p3_maxpwise$simulated_lwr[which(p3_maxpwise$dataset == "empirical")] <- NA
+p3_maxpwise$simulated_upr[which(p3_maxpwise$dataset == "empirical")] <- NA
+
+gg_maxpwise <- ggplot(data = p3_maxpwise, aes(
+    x = Sampling,
+    y = value,
+    colour = Aln,
+    shape = dataset
+  )) +
+    geom_pointrange(size = 0.5,
+               alpha = 0.6,
+                aes(min = simulated_lwr, max = simulated_upr),
+                  position = position_dodge(width = 0.5)) +
+    #geom_point(size = 3,
+    #           alpha = 0.6, 
+    #            position = position_dodge(width = 0.5))  +
+    facet_grid(Record ~ Lek,
+               scales = "fixed",
+               labeller = labeller(Record = Record.labs)) +
+    theme_light(base_size = 16) +
+    labs(y = "Maximum pairwise distance", colour = "Alignment", x = "Sampling of historical songs", shape = "Dataset") +
+    scale_colour_manual(
+      values = viridis(3, direction = -1, alpha = 0.6),
+      labels = Align.labs
+    ) +
+    scale_x_discrete(labels = Sampling.labs) + 
+    theme(axis.text.x = element_text(angle = 35,  hjust = 1)) +
+  scale_shape_manual(values = c("triangle", "circle"),
+                     labels = c("empirical" , "simulated") )
+
+gg_maxpwise
+```
+
+Minimum pairwise distance is always simulated as in empirical data, which is maybe not so surprising given than the historical records are densely sampled and songs are closely related, resulting in very low minimum pairwise differences in both empirical and simulated data.
+```{r plot-min-pairwise, echo=FALSE}
+ggs2$`Min Pairwise Difference`
+```
+
+Measurements of lek song diversity (analogous to population genetic diversity) are generally in agreement between empirical and simulated data, with exception of the lek TR1 were, simulated data does X. In SUR, data simulate after model inference based on the PRANK-TN93 alignment tends to X diversity.
+```{r plot-genetic-diversity, echo=FALSE}
+ggs2$Theta
+ggs2$`Tajima-D`
+ggs2$`Tajima-Pi`
+```
 
 
 ### Clock model selection
@@ -263,11 +485,11 @@ We also asked if inferences of diversification dynamics and song evolution were 
 
 Support for a relaxed clock model of song evolution (in which different son lineages evolve at different rates) depended on the historical record and sampling strategy. When historical data was excluded, there was no increase in ML by relaxing the clock model. However, the use of historical songs akin to fossils resulted in a higher fit of the relaxed model, particularly when all historical records, including identical song sequences sampled in consecutive years are incorporate in the macroevolutionary process. While this trend was present in most leks and data sets, it tended to be stronger under the PRANK-TN93 alignment, especially in the historically largest lek (SUR) <!--double check accuracy with MAS-->
 
-```{r, include=FALSE, eval=TRUE}
+```{r read-ML-table, include=FALSE, eval=TRUE}
 source("../source/ML.table.R", local = knitr::knit_global())
 ```
 
-```{r, warning=FALSE, echo=FALSE}
+```{r plot-ML-diff, warning=FALSE, echo=FALSE}
 ML.plot
 ```
 
@@ -277,13 +499,17 @@ ML.plot
 
 ### Diversification dynamics
 <!--can be renamed, so far I've vomited this section-->
-```{r, include=FALSE}
+```{r source-parameter-sensitivity, include=FALSE}
 source("../source/Parameter_sensitivity.R", local = knitr::knit_global())
 ```
 
 Diversification rates were not super sensitive to alignment strategy, with exception of SUR, where PRANK infers slower turnover. Age of extant taxa is VERY sensitive to alignment for leks with large gaps in their historical record (CCE, HC1, SUR). In SUR, only PRANK results imply that more than a single lineage from earliest sampling years has survived to the present. In HC1 both PRANK and MAFFT-optimal make this inference and in CCE, all alignments result in a recent origin of extant songs. Origin times of all songs are not so sensitive to alignment strategy, but PRANK tends to infer older ages.
 
 ```{r plot-div-aln-h, echo=FALSE}
+p_div_h_aln
+```
+
+```{r plot-div-clock-h, echo=FALSE}
 p_div_h_clock_prank
 ```
 
