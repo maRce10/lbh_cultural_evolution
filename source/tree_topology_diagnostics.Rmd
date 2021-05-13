@@ -6,8 +6,8 @@ date: <center>`r format(Sys.Date(), "%d-%m-%Y")`</center>
 output:
   html_document:
     code_folding: hide
-    toc: yes
-    toc_depth: 4
+    toc: no
+    toc_depth: 3
     toc_float:
       collapsed: yes
       smooth_scroll: yes
@@ -37,13 +37,13 @@ aa <- lapply(x, function(y) {
 
 knitr::opts_knit$set(root.dir = normalizePath(".."))
 
-knitr::opts_chunk$set(dpi = 38, fig.width = 18, fig.height = 10, echo = TRUE) 
+knitr::opts_chunk$set(dpi = 58, fig.width = 18, fig.height = 10, echo = TRUE) 
 
 options(knitr.kable.NA = '')
 
 source('~/Dropbox/Projects/lbh_cultural_evolution/source/custom_treespace.R')
 
-theme_set(theme_classic(base_size = 22))
+theme_set(theme_classic(base_size = 16))
 
 ```
 
@@ -56,7 +56,7 @@ saveRDS(rb.trees, "./output/revbayes_output_in_single_R_object.RDS")
 
 ```
 
-```{r, eval = FALSE, echo = TRUE}
+```{r, eval = TRUE, echo = TRUE}
 
 rb.trees <- readRDS("./output/revbayes_output_in_single_R_object.RDS")
 
@@ -91,317 +91,159 @@ kableExtra::kable_styling(kbl)
 
 # Tree spaces by leks
 
-## All fossils using pairwise shared tips
+## All fossils using most recent song types
 
-* 100 trees for each model evenly spaced along the chain
-* Some trees were removed if NAs were produced when comparing topologies (i.e. non-comparable topologies)
-
-```{r make tree distances all fossils, eval = FALSE}
-
-#selected leks
-sel_leks <- c("SUR", "CCE", "HC1", "BR1", "TR1")
-
-tree_names <- grep("early", names(rb.trees), invert = TRUE, value = TRUE)
-
-pnts_lks <- lapply(sel_leks, function(i) {
-  
-  print(i)
-  lek_trees <- grep(i, tree_names, value = TRUE)
-  
-  multi_list <- lapply(lek_trees, function(x) read.tree(file.path("./output/most_recent_revbayes_models/", x), keep.multi = TRUE))
-  
-  names(multi_list) <- sapply(basename(lek_trees), function(x) paste(strsplit(x, "_", fixed = TRUE)[[1]][1:5], collapse = "_"))
-  
-  pnts <- try(custom_treespace(multi_list, n.points = 100, method = "RF", cl = 10), silent = TRUE)
-
-  if (!is(pnts, "try-error")) 
-    return(pnts) else
-      return(NULL)
-})
-
-names(pnts_lks) <- sel_leks
-
-sapply(pnts_lks, is.null)
-
-saveRDS(pnts_lks, file = "./output/topology/tree_distance_all_fossils_pairwise_shared.RDS")
-
-```
-
-#### New and old data sets
-```{r plot tree distances ggplots all fossils, eval = TRUE, warning=FALSE}
-
-pnts_lks <- readRDS("./output/topology/tree_distance_all_fossils_pairwise_shared.RDS")
-
-ggs <- lapply(pnts_lks, function(X) {
-
-    ggplot(data = X, aes(x = x, y = y, fill = generation)) +
-    geom_path(alpha = 0.25, aes(colour = generation), size = 0.75, show.legend = FALSE) +
-    scale_colour_gradient(low = "red", high = "yellow") +
-    geom_point(shape = 21, size = 4, colour = "white", alpha = 0.6) +
-      theme(panel.background = element_blank(), axis.line = element_line(color = "grey"),
-      panel.spacing = unit(0.1, "lines"), axis.title.x = element_text(vjust = -0.5), axis.title.y = element_text(vjust = 1.5)) +
-    facet_wrap(~chain, nrow = 4) +
-      scale_fill_gradientn(colours = viridis(256)) +
-      labs(x = "MDS_v1", y = "MDS_v2") + 
-      ggtitle(label = sprintf("Tree space for %d trees", nrow(X) / length(unique(X$chain)))) 
-    })
-
-ggs
-```
-
-#### Old data set
-```{r plot tree distances ggplots old all fossils, eval = TRUE, warning=FALSE}
-
-ggs <- lapply(pnts_lks, function(X) {
-     
-  X <- X[grep("old", X$chain), ]   
-  
-  if (nrow(X) > 0)
-  ggplot(data = X, aes(x = x, y = y, fill = generation)) +
-    geom_path(alpha = 0.25, aes(colour = generation), size = 0.75, show.legend = FALSE) +
-    scale_colour_gradient(low = "red", high = "yellow") +
-    geom_point(shape = 21, size = 4, colour = "white", alpha = 0.6) +
-      theme(panel.background = element_blank(), axis.line = element_line(color = "grey"),
-      panel.spacing = unit(0.1, "lines"), axis.title.x = element_text(vjust = -0.5), axis.title.y = element_text(vjust = 1.5)) +
-    facet_wrap(~chain, nrow = 4) +
-      scale_fill_gradientn(colours = viridis(256)) +
-      labs(x = "MDS_v1", y = "MDS_v2") +
-    ggtitle(label = sprintf("Tree space for %1.0f trees", nrow(X) / length(unique(X$chain))))
-    })
-
-ggs
-```
-
-#### New data set
-```{r plot tree distances ggplots new  all fossils, eval = TRUE, warning=FALSE}
-
-ggs <- lapply(pnts_lks, function(X) {
-     
-  X <- X[grep("new", X$chain), ]   
-  
-  ggplot(data = X, aes(x = x, y = y, fill = generation)) +
-    geom_path(alpha = 0.25, aes(colour = generation), size = 0.75, show.legend = FALSE) +
-    scale_colour_gradient(low = "red", high = "yellow") +
-    geom_point(shape = 21, size = 4, colour = "white", alpha = 0.6) +
-      theme(panel.background = element_blank(), axis.line = element_line(color = "grey"),
-      panel.spacing = unit(0.1, "lines"), axis.title.x = element_text(vjust = -0.5), axis.title.y = element_text(vjust = 1.5)) +
-    facet_wrap(~chain, nrow = 4) +
-      scale_fill_gradientn(colours = viridis(256)) +
-      labs(x = "MDS_v1", y = "MDS_v2") +
-    ggtitle(label = sprintf("Tree space for %d trees", nrow(X) / length(unique(X$chain))))
-
-    })
-
-ggs
-```
-
-### Clumping molecular clocks
-
-#### Old data set
-```{r plot tree distances ggplots old all fossils clumped clocks, eval = TRUE, warning=FALSE}
-
-ggs <- lapply(pnts_lks, function(X) {
-     
-  X <- X[grep("old", X$chain), ]   
-  X$clock <- ifelse(grepl("global", X$chain), "Global", "Uexp")
-  X$chain <- gsub("_global|_Uexp", "", X$chain)
-  
-    if (nrow(X) > 0)
-    ggplot(data = X, aes(x = x, y = y)) +
-    geom_path(alpha = 0.1, size = 0.75, show.legend = FALSE) +
-    geom_point(aes(shape = clock,  col = clock), size = 4) +
-      theme(panel.background = element_blank(), axis.line = element_line(color = "grey"),
-      panel.spacing = unit(0.1, "lines"), axis.title.x = element_text(vjust = -0.5), axis.title.y = element_text(vjust = 1.5)) +
-    facet_wrap(~chain, nrow = 4) +
-      scale_color_viridis_d(begin = 0.2, end = 0.8, alpha = 0.75) +
-      labs(x = "MDS_v1", y = "MDS_v2") +
-    ggtitle(label = sprintf("Tree space for %d trees", nrow(X) / length(unique(X$chain))))
-
-    })
-
-ggs
-```
-
-#### New data set
-```{r plot tree distances ggplots new all fossils clumped clocks, eval = TRUE, warning=FALSE}
-
-ggs <- lapply(pnts_lks, function(X) {
-     
-  X <- X[grep("new", X$chain), ]   
-  X$clock <- ifelse(grepl("global", X$chain), "Global", "Uexp")
-  X$chain <- gsub("_global|_Uexp", "", X$chain)
-  
-  ggplot(data = X, aes(x = x, y = y)) +
-    geom_path(alpha = 0.1, size = 0.75, show.legend = FALSE) +
-    geom_point(aes(shape = clock,  col = clock), size = 4) +
-      theme(panel.background = element_blank(), axis.line = element_line(color = "grey"),
-      panel.spacing = unit(0.1, "lines"), axis.title.x = element_text(vjust = -0.5), axis.title.y = element_text(vjust = 1.5)) +
-    facet_wrap(~chain, nrow = 4) +
-      scale_color_viridis_d(begin = 0.2, end = 0.8, alpha = 0.75) +
-      labs(x = "MDS_v1", y = "MDS_v2") +
-    ggtitle(label = sprintf("Tree space for %d trees", nrow(X) / length(unique(X$chain))))
-
-    })
-
-ggs
-```
-
-
-## Early fossils using only pairwise shared tips
-```{r make tree distances early fossils, eval = FALSE}
+* Those printed as `NULL` did not work (too few tips)
+```{r make tree distances ggplots all fossils, eval = FALSE}
 
 #selected leks
 sel_leks <- c("SUR", "CCE", "HC1", "BR1", "TR1")
 # sel_leks <- c("SUR", "TR1")
 
-tree_names <- grep("early", names(rb.trees), value = TRUE)
+tree_names <- grep("early", names(rb.trees), invert = TRUE, value = TRUE)
 
-pnts_lks <- lapply(sel_leks, function(i) {
+pnts_lks <- pblapply(sel_leks, cl = 1, function(i) {
   
-  print(i)
   lek_trees <- grep(i, tree_names, value = TRUE)
+  # lek_files <- rb.trees[lek_files]
   
   multi_list <- lapply(lek_trees, function(x) read.tree(file.path("./output/most_recent_revbayes_models/", x), keep.multi = TRUE))
   
   names(multi_list) <- sapply(basename(lek_trees), function(x) paste(strsplit(x, "_", fixed = TRUE)[[1]][1:5], collapse = "_"))
-  
-  pnts <- try(custom_treespace(multi_list, n.points = 100, method = "RF", cl = 10), silent = TRUE)
 
-  if (!is(pnts, "try-error")) 
-    return(pnts) else
-      return(NULL)
+  pnts <- try(custom_treespace(multi_list, n.points = 100, method = "RF"), silent = TRUE)
+
+  if (is(pnts, "try-error")) pnts <- NULL
+    
+  #   
+  # gg <- ggplot(data = pnts, aes(x = x, y = y, fill = generation)) + 
+  #   geom_path(alpha = 0.25, aes(colour = generation), size = 0.75, show.legend = FALSE) + 
+  #   scale_colour_gradient(low = "red", high = "yellow") +
+  #   geom_point(shape = 21, size = 4, colour = "white", alpha = 0.6) + 
+  #     theme(panel.background = element_blank(), axis.line = element_line(color = "grey"), 
+  #     panel.spacing = unit(0.1, "lines"), axis.title.x = element_text(vjust = -0.5), axis.title.y = element_text(vjust = 1.5)) + 
+  #   facet_wrap(~chain,nrow = round(sqrt(length(unique(pnts$chain))))) + 
+  #     scale_fill_gradientn(colours = viridis(256)) +
+  #    labs(x = "MDS_v1", y = "MDS_v2") else
+  #   # ggtitle(label = sprintf("Tree space for %d trees", nrow(pnts) / length(unique(pnts$chain)))) else
+  #     gg <- NULL
+
+return(pnts)
+  
 })
 
 names(pnts_lks) <- sel_leks
 
-sapply(pnts_lks, is.null)
-
-saveRDS(pnts_lks, file = "./output/topology/tree_distance_early_fossils_pairwise_shared.RDS")
+saveRDS(pnts_lks, file = "./output/rwty/tree_distance_all_fossils_pairwise_shared.RDS")
 
 ```
 
-#### New and old data sets
-```{r plot tree distances ggplots early fossils, eval = TRUE, warning=FALSE}
+```{r plot tree distances ggplots all fossils, eval = TRUE}
 
-pnts_lks <- readRDS("./output/topology/tree_distance_early_fossils_pairwise_shared.RDS")
+readRDS("./output/rwty/rwty_tree_distance_plots_all_fossils.RDS")
 
-ggs <- lapply(pnts_lks, function(X) {
 
-    ggplot(data = X, aes(x = x, y = y, fill = generation)) +
-    geom_path(alpha = 0.25, aes(colour = generation), size = 0.75, show.legend = FALSE) +
+```
+
+## All fossils using tips shared by 90% of trees
+```{r make tree distances ggplots all fossils shared, eval = FALSE}
+
+#selected leks
+sel_leks <- c("SUR", "CCE", "HC1", "BR1", "TR1")
+# sel_leks <- c("SUR", "TR1")
+
+tree_names <- grep("early", names(rb.trees), invert = TRUE, value = TRUE)
+
+ggs <- pblapply(sel_leks, cl = 1, function(i) {
+  
+  lek_trees <- grep(i, tree_names, value = TRUE)
+  # lek_files <- rb.trees[lek_files]
+  
+  multi_list <- lapply(lek_trees, function(x) read.tree(file.path("./output/most_recent_revbayes_models/", x), keep.multi = TRUE))
+  
+  names(multi_list) <- sapply(basename(lek_trees), function(x) paste(strsplit(x, "_", fixed = TRUE)[[1]][1:5], collapse = "_"))
+
+  pnts <- try(custom_treespace(multi_list, n.points = 100, method = "shared"), silent = TRUE)
+
+  if (!is(pnts, "try-error"))
+  gg <- ggplot(data = pnts, aes(x = x, y = y, fill = generation)) + 
+    geom_path(alpha = 0.25, aes(colour = generation), size = 0.75, show.legend = FALSE) + 
     scale_colour_gradient(low = "red", high = "yellow") +
-    geom_point(shape = 21, size = 4, colour = "white", alpha = 0.6) +
-      theme(panel.background = element_blank(), axis.line = element_line(color = "grey"),
-      panel.spacing = unit(0.1, "lines"), axis.title.x = element_text(vjust = -0.5), axis.title.y = element_text(vjust = 1.5)) +
-    facet_wrap(~chain, nrow = 4) +
+    geom_point(shape = 21, size = 4, colour = "white", alpha = 0.6) + 
+      theme(panel.background = element_blank(), axis.line = element_line(color = "grey"), 
+      panel.spacing = unit(0.1, "lines"), axis.title.x = element_text(vjust = -0.5), axis.title.y = element_text(vjust = 1.5)) + 
+    facet_wrap(~chain,nrow = round(sqrt(length(unique(pnts$chain))))) + 
       scale_fill_gradientn(colours = viridis(256)) +
-      labs(x = "MDS_v1", y = "MDS_v2") + 
-    ggtitle(label = sprintf("Tree space for %1.0f trees", nrow(X) / length(unique(X$chain)))) 
+   labs(x = "MDS_v1", y = "MDS_v2") else
+    # ggtitle(label = sprintf("Tree space for %d trees", nrow(pnts) / length(unique(pnts$chain)))) else
+      gg <- NULL
 
-    })
+return(gg)
+  
+})
 
-ggs
+names(ggs) <- sel_leks
+
+# saveRDS(ggs,file = "./output/rwty/rwty_tree_distance_plots_all_fossils_shared.RDS")
 
 ```
 
-#### New data set
-```{r plot tree distances ggplots new early fossils, eval = TRUE, warning=FALSE}
+```{r plot tree distances ggplots all fossils shared, eval = TRUE}
 
-ggs <- lapply(pnts_lks, function(X) {
-     
-  X <- X[grep("new", X$chain), ]   
-  
-  ggplot(data = X, aes(x = x, y = y, fill = generation)) +
-    geom_path(alpha = 0.25, aes(colour = generation), size = 0.75, show.legend = FALSE) +
-    scale_colour_gradient(low = "red", high = "yellow") +
-    geom_point(shape = 21, size = 4, colour = "white", alpha = 0.6) +
-      theme(panel.background = element_blank(), axis.line = element_line(color = "grey"),
-      panel.spacing = unit(0.1, "lines"), axis.title.x = element_text(vjust = -0.5), axis.title.y = element_text(vjust = 1.5)) +
-    facet_wrap(~chain, nrow = 4) +
-      scale_fill_gradientn(colours = viridis(256)) +
-      labs(x = "MDS_v1", y = "MDS_v2") +
-    ggtitle(label = sprintf("Tree space for %1.0f trees", nrow(X) / length(unique(X$chain))))
-  })
-
-ggs
+readRDS("./output/rwty/rwty_tree_distance_plots_all_fossils_shared.RDS")
 
 
 ```
 
-#### Old data set
-```{r plot tree distances ggplots old early fossils, eval = TRUE, warning=FALSE}
+## Early fossils using tips shared by 90% of trees
+```{r make tree distances ggplots early fossils, eval = FALSE}
 
-ggs <- lapply(pnts_lks, function(X) {
-     
-  X <- X[grep("old", X$chain), ]   
+#selected leks
+sel_leks <- c("SUR", "CCE", "HC1", "BR1", "TR1")
+# sel_leks <- c("SUR", "TR1")
+
+# tree_names <- grep("early", names(rb.trees), value = TRUE)
+tree_names <- names(rb.trees)
+pnts_lks <- pblapply(sel_leks, cl = 1, function(i) {
   
-  if (nrow(X) > 0)
-  ggplot(data = X, aes(x = x, y = y, fill = generation)) +
-    geom_path(alpha = 0.25, aes(colour = generation), size = 0.75, show.legend = FALSE) +
-    scale_colour_gradient(low = "red", high = "yellow") +
-    geom_point(shape = 21, size = 4, colour = "white", alpha = 0.6) +
-      theme(panel.background = element_blank(), axis.line = element_line(color = "grey"),
-      panel.spacing = unit(0.1, "lines"), axis.title.x = element_text(vjust = -0.5), axis.title.y = element_text(vjust = 1.5)) +
-    facet_wrap(~chain, nrow = 4) +
-      scale_fill_gradientn(colours = viridis(256)) +
-      labs(x = "MDS_v1", y = "MDS_v2") +
-    ggtitle(label = sprintf("Tree space for %1.0f trees", nrow(X) / length(unique(X$chain))))
-  })
+  lek_trees <- grep(i, tree_names, value = TRUE)
+  # lek_files <- rb.trees[lek_files]
+  
+  multi_list <- lapply(lek_trees, function(x) read.tree(file.path("./output/most_recent_revbayes_models/", x), keep.multi = TRUE))
+  
+  names(multi_list) <- sapply(basename(lek_trees), function(x) paste(strsplit(x, "_", fixed = TRUE)[[1]][1:5], collapse = "_"))
 
-ggs
+  pnts <- try(custom_treespace(multi_list, n.points = 100, method = "RF"), silent = TRUE)
 
+  if (!is(pnts, "try-error"))
+  return(pnts) else return(NULL)
+#   gg <- if (!is(pnts, "try-error")) ggplot(data = pnts, aes(x = x, y = y, fill = generation)) + 
+#     geom_path(alpha = 0.25, aes(colour = generation), size = 0.75, show.legend = FALSE) + 
+#     scale_colour_gradient(low = "red", high = "yellow") +
+#     geom_point(shape = 21, size = 4, colour = "white") + 
+#       theme(panel.background = element_blank(), axis.line = element_line(color = "grey"), 
+#       panel.spacing = unit(0.1, "lines"), axis.title.x = element_text(vjust = -0.5), axis.title.y = element_text(vjust = 1.5)) + 
+#     facet_wrap(~chain, nrow = round(sqrt(length(unique(pnts$chain))))) + 
+#       scale_fill_gradientn(colours = viridis(256)) +
+#    labs(x = "MDS_v1", y = "MDS_v2") else
+#     # ggtitle(label = sprintf("Tree space for %d trees", nrow(pnts) / length(unique(pnts$chain)))) else
+#       NULL
+# 
+# return(gg)
+  
+})
+
+names(pnts_lks) <- sel_leks
+
+saveRDS(pnts_lks, file = "./output/rwty/tree_distance_fossils_pairwise_shared.RDS")
 
 ```
 
-### Clumping molecular clocks
+```{r plot tree distances ggplots early fossils, eval = TRUE}
 
-#### Old data set
-```{r plot tree distances ggplots old early fossils clumped clocks, eval = TRUE, warning=FALSE}
+readRDS("./output/rwty/rwty_tree_distance_plots_early_fossils.RDS")
 
-ggs <- lapply(pnts_lks, function(X) {
-     
-  X <- X[grep("old", X$chain), ]   
-  X$clock <- ifelse(grepl("global", X$chain), "Global", "Uexp")
-  X$chain <- gsub("_global|_Uexp", "", X$chain)
-  
-    if (nrow(X) > 0)
-    ggplot(data = X, aes(x = x, y = y)) +
-    geom_path(alpha = 0.1, size = 0.75, show.legend = FALSE) +
-    geom_point(aes(shape = clock,  col = clock), size = 4) +
-      theme(panel.background = element_blank(), axis.line = element_line(color = "grey"),
-      panel.spacing = unit(0.1, "lines"), axis.title.x = element_text(vjust = -0.5), axis.title.y = element_text(vjust = 1.5)) +
-    facet_wrap(~chain, nrow = 4) +
-      scale_color_viridis_d(begin = 0.2, end = 0.8, alpha = 0.75) +
-      labs(x = "MDS_v1", y = "MDS_v2") +
-    ggtitle(label = sprintf("Tree space for %1.0f trees", nrow(X) / length(unique(X$chain))))
 
-    })
-
-ggs
-```
-
-#### New data set
-```{r plot tree distances ggplots new early fossils clumped clocks, eval = TRUE, warning=FALSE}
-
-ggs <- lapply(pnts_lks, function(X) {
-     
-  X <- X[grep("new", X$chain), ]   
-  X$clock <- ifelse(grepl("global", X$chain), "Global", "Uexp")
-  X$chain <- gsub("_global|_Uexp", "", X$chain)
-  
-  ggplot(data = X, aes(x = x, y = y)) +
-    geom_path(alpha = 0.1, size = 0.75, show.legend = FALSE) +
-    geom_point(aes(shape = clock,  col = clock), size = 4) +
-      theme(panel.background = element_blank(), axis.line = element_line(color = "grey"),
-      panel.spacing = unit(0.1, "lines"), axis.title.x = element_text(vjust = -0.5), axis.title.y = element_text(vjust = 1.5)) +
-    facet_wrap(~chain, nrow = 4) +
-      scale_color_viridis_d(begin = 0.2, end = 0.8, alpha = 0.75) +
-      labs(x = "MDS_v1", y = "MDS_v2") +
-    ggtitle(label = sprintf("Tree space for %1.0f trees", nrow(X) / length(unique(X$chain))))
-
-    })
-
-ggs
 ```
 
 <font size="4">R session information</font>
